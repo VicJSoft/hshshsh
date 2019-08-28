@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
+import persistencia.SharePreferences;
 
 public class LoginController implements Initializable {
 
@@ -40,6 +41,8 @@ public class LoginController implements Initializable {
     {
 
         setValidatorsRequired();
+        setCredeciales();
+        
     }
 
     private void setValidatorsRequired(){
@@ -66,6 +69,19 @@ public class LoginController implements Initializable {
             }
         });
         
+    }
+    private void setCredeciales()
+    {
+        SharePreferences sharePreferences = SharePreferences.getCredenciales();
+        System.out.println(sharePreferences.getRecordar());
+        if(sharePreferences.getRecordar())
+        {
+            cb_recordar.setSelected(true);
+        }
+        else
+        {
+            cb_recordar.setSelected(false);
+        }
     }
     
 

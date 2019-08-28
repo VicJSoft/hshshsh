@@ -1,0 +1,67 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27/08/2019, 09:19:24 PM
+    Author     : VAPESIN
+*/
+
+
+.jfx-text-field {
+        /*color linea al enfocar*/
+    -jfx-focus-color: red;
+        /*color linea sin enfocar*/
+    -jfx-unfocus-color: #4d4d4d;
+    
+    -fx-padding: 0.333333em 0 0.333333em 0;
+     -fx-border-color: red;
+    -fx-border-style: solid;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    
+}
+/*Linea inferior sin foco*/
+.jfx-text-field > .input-line {
+    -fx-background-color: -jfx-unfocus-color;
+    -fx-background-color: transparent;
+
+    -fx-pref-height: 1px;
+    -fx-translate-y: 1px;
+   
+    
+}
+/*Linea inferior al enfocar, 
+que además es independiente a la de sin foco*/
+.jfx-text-field > .input-focused-line {
+   /* -fx-background-color: -jfx-focus-color;*/
+   -fx-background-color: transparent;
+    -fx-pref-height: 2px;
+    -fx-translate-y: 1px;
+}
+
+.jfx-text-field{
+    -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT;
+    -fx-prompt-text-fill: #4D4D4D;
+    
+}
+.jfx-text-field:focused {
+    -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT;
+    -fx-prompt-text-fill: #4D4D4D;
+}
+
+.jfx-text-field:error {
+    -jfx-focus-color: #D34336;
+    -jfx-unfocus-color: #D34336;
+}
+
+.jfx-text-field .error-label {
+    -fx-text-fill: #D34336;
+    -fx-translate-y: -11px;
+
+ }
+
+.jfx-text-field .error-icon {
+    -fx-fill: #D34336;
+}

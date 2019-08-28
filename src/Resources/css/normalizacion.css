@@ -1,0 +1,52 @@
+* {
+    -boton-color: #5AB444;
+    -boton-color-focused: #5AB44430;
+    -borde-text-field: #29156E;
+    -borde-text-field-focus: #29156E30;
+}
+.ventana-redonda{
+    /*Sombra personalizada, para sombra generica sin ver tanto cada parametro
+    mejor usar         primaryStage.getScene().getRoot().setEffect(new DropShadow());
+    */
+    /*  -fx-background-color: derive(cadetblue, -20%); */
+
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+}
+.ventana{
+     -fx-background-insets: 12;
+     -fx-background-color: #FFF;
+       /*-fx-effect: dropshadow( gaussian, rgba(0, 0, 0, .32), 10, 0.8, 0.0, 0.0 );*/
+}
+.button{
+    -fx-background-color:  -boton-color;    
+}
+.button:hover{
+    -fx-background-color: derive(-boton-color, 20%);
+
+}
+.button:pressed{
+    -fx-background-color: derive(-boton-color,-20%);
+}
+.button-cerrar{
+    -fx-background-color: white;
+    -fx-border-radius: 0 12 0 0;
+    -fx-background-radius: 0 12 0 0 ;
+}
+.button-cerrar:hover{
+    -fx-background-color: red;
+}
+/*
+.text-field{
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+     
+    -fx-border-color: derive( -boton-color,10%);
+
+    -fx-focus-color: -boton-color;
+    -fx-faint-focus-color: -boton-color-focused;
+
+
+}
+*/
+

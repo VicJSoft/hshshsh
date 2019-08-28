@@ -16,10 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 public class LoginController implements Initializable {
 
@@ -29,7 +26,6 @@ public class LoginController implements Initializable {
     private Button btn_login;
     @FXML
     private Button btn_cerrar;
-    
     @FXML
     private AnchorPane fondoAP;
     private double xOffset = 0;
@@ -40,12 +36,10 @@ public class LoginController implements Initializable {
     private JFXPasswordField txt_contrasena;
     
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) 
+    {
 
         setValidatorsRequired();
-
-
-        
     }
 
     private void setValidatorsRequired(){
@@ -82,16 +76,14 @@ public class LoginController implements Initializable {
         primaryStage.setX(event.getScreenX()- xOffset);
         primaryStage.setY(event.getScreenY() - yOffset );
     }
-
     @FXML
     private void pressedWindow_Click(MouseEvent event) {
         xOffset = event.getSceneX();//guarda coord iniciales del clic
         yOffset = event.getSceneY();
     }
-
-
     @FXML
-    private void cbRecordar_Click(ActionEvent event) {
+    private void cbRecordar_Click(ActionEvent event)
+    {
         
     }
 

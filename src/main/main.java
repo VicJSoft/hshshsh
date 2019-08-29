@@ -13,7 +13,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import persistencia.SharePreferences;
 
 /**
  *
@@ -33,7 +32,7 @@ public class main extends Application {
         
         primaryStage.show();
 
-        SharePreferences.initConfig();// genera el archivo por defecto .json donde se almacenarán las credenciales para el inicio de decisión
+        
     }
     
     public static void main(String[] args){

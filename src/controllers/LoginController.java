@@ -41,7 +41,14 @@ public class LoginController implements Initializable {
     {
 
         setValidatorsRequired();
-        setCredeciales();
+        try
+        {
+             getCredeciales();
+        }
+        catch(NullPointerException e)
+        {   
+        }
+       
         
     }
 
@@ -70,18 +77,25 @@ public class LoginController implements Initializable {
         });
         
     }
-    private void setCredeciales()
+    private void getCredeciales()
     {
         SharePreferences sharePreferences = SharePreferences.getCredenciales();
-        System.out.println(sharePreferences.getRecordar());
         if(sharePreferences.getRecordar())
         {
             cb_recordar.setSelected(true);
+            txt_usuario.setText(sharePreferences.getUsuario());
         }
         else
         {
             cb_recordar.setSelected(false);
         }
+    }
+    private void setCredenciales()
+    {
+        SharePreferences sharePreferences = new SharePreferences();
+        sharePreferences.setRecordar(cb_recordar.isSelected());
+        sharePreferences.setUsuario(txt_usuario.getText());
+        SharePreferences.setCredenciales(sharePreferences);
     }
     
 
@@ -104,8 +118,12 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void btnLogin_Click(ActionEvent event) {
-        
+    private void btnLogin_Click(ActionEvent event) 
+    {
+        if(cb_recordar.isSelected())
+            setCredenciales();
+        else
+            SharePreferences.initConfig();
     }
 
     @FXML

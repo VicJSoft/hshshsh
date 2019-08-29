@@ -24,6 +24,10 @@ public class SharePreferences
     private boolean recordar;
     private String usuario;
 
+    public SharePreferences()
+    {
+        
+    }
     public SharePreferences(boolean recordar, String usuario) {
         this.recordar = recordar;
         this.usuario = usuario;
@@ -81,9 +85,35 @@ public class SharePreferences
         } 
         catch (FileNotFoundException ex) 
         {
+            initConfig();// genera el archivo por defecto .json donde se almacenarán las credenciales para el inicio de decisión
             Logger.getLogger(SharePreferences.class.getName()).log(Level.SEVERE, null, ex);
         }
         return sharedPreferences;
+    }
+    public static void setCredenciales(SharePreferences sharePreferences)
+    {
+        Gson gson = new Gson();
+        Writer writer=null;
+        try
+        {
+            writer = new FileWriter(CREFENCIALES);
+            gson.toJson(sharePreferences, writer);
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(SharePreferences.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            try
+            {
+                writer.close();
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(SharePreferences.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     

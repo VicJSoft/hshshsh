@@ -1,29 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package persistencia;
+package Resources.persistencia;
 
-import com.google.gson.Gson;
+/*** IMPORTS ***************************************************************************************************************************************/
 import java.io.FileNotFoundException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import com.google.gson.Gson;
+import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+/**************************************************************************************************************************************************/
 /**
  *
  * @author vicen
  */
+/*** CLASS ****************************************************************************************************************************************/
 public class SharePreferences 
 {
+    /*** VARIABLES OR INSTANCES GLOBALS************************************************************************************************************/
     public static final String CREFENCIALES="config.json";// este archivo se guarda en la raiz de la carperta
     private boolean recordar;
     private String usuario;
-
+    
+    /***********************************************************************************************************************************************/
+    /***CUZTOMIZED PUBLIC METHODS*******************************************************************************************************************/
     public SharePreferences()
     {
         
@@ -114,8 +114,7 @@ public class SharePreferences
                 Logger.getLogger(SharePreferences.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-    
-    
-    
+    } 
+    /***********************************************************************************************************************************************/
 }
+/***************************************************************************************************************************************************/

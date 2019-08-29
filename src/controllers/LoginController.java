@@ -1,41 +1,50 @@
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+/*** IMPORTS/****************************************************************************************************************************************/
+import Resources.conexionBBDD.ConexionLectura;
+import Resources.conexionBBDD.ConexionSQL;
 import com.jfoenix.validation.RequiredFieldValidator;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
+import Resources.persistencia.SharePreferences;
+import com.jfoenix.controls.JFXPasswordField;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ChangeListener;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXCheckBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
-import persistencia.SharePreferences;
+import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
+import java.util.ResourceBundle;
+import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.fxml.FXML;
+import java.net.URL;
+/**************************************************************************************************************************************************/
+
+/*** CLASS/****************************************************************************************************************************************/
+
 
 public class LoginController implements Initializable {
 
+/*** VARIABLES OR INSTANCES GLOBALS****************************************************************************************************************/
+    @FXML
+    private JFXPasswordField txt_contrasena;
+    @FXML
+    private JFXTextField txt_usuario;
     @FXML
     private JFXCheckBox cb_recordar;
-    @FXML
-    private Button btn_login;
-    @FXML
-    private Button btn_cerrar;
     @FXML
     private AnchorPane fondoAP;
     private double xOffset = 0;
     private double yOffset = 0;
     @FXML
-    private JFXTextField txt_usuario;
+    private Button btn_login;
     @FXML
-    private JFXPasswordField txt_contrasena;
+    private Button btn_cerrar;
+/**************************************************************************************************************************************************/
     
+/*** OVERRIDE PUBLIC METHODS/**********************************************************************************************************************/
     @Override
     public void initialize(URL location, ResourceBundle resources) 
     {
@@ -47,16 +56,60 @@ public class LoginController implements Initializable {
         }
         catch(NullPointerException e)
         {   
-        }
-       
+        }   
+    }
+/**************************************************************************************************************************************************/
+/*** FXML METHODS/*********************************************************************************************************************************/
+    @FXML
+    private void dragWindow_Click(MouseEvent event) {
+
+        Stage primaryStage = (Stage)( ((Node) (event.getSource() ) ).getScene().getWindow() );
+        primaryStage.setX(event.getScreenX()- xOffset);
+        primaryStage.setY(event.getScreenY() - yOffset );
+    }
+    @FXML
+    private void pressedWindow_Click(MouseEvent event) {
+        xOffset = event.getSceneX();//guarda coord iniciales del clic
+        yOffset = event.getSceneY();
+    }
+    /***ELIMINAR***/
+    @FXML
+    private void cbRecordar_Click(ActionEvent event)
+    {
         
     }
+    /**************/
 
+    @FXML
+    private void btnLogin_Click(ActionEvent event) 
+    {
+        
+        ConexionLectura conexionLectura = new ConexionLectura();
+        ConexionSQL conexionSQL = new ConexionSQL();
+        if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(), conexionSQL.getConexion()))
+        {
+            //conexion a la siguiente pantalla
+            System.out.println("Entre");
+            if(cb_recordar.isSelected())
+            setCredenciales();
+            else
+                SharePreferences.initConfig();
+        }
+        else
+        {    
+            //mensaje de no conexion
+            System.out.println("Error de credenciales");
+        }
+    }
+
+    @FXML
+    private void btnCerrar_Click(ActionEvent event) {
+        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
+    }
+/**************************************************************************************************************************************************/
+/***CUZTOMIZED PUBLIC METHODS/*********************************************************************************************************************************/
     private void setValidatorsRequired(){
-        
-      
         txt_usuario.getValidators().add(new RequiredFieldValidator("Este campo no debe estar vacío..."));
-        
         txt_usuario.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -64,18 +117,14 @@ public class LoginController implements Initializable {
                   txt_usuario.validate();
             }
         });
-        
-         
-         txt_contrasena.getValidators().add(new RequiredFieldValidator("Este campo no debe estar vacío..."));
-        
+        txt_contrasena.getValidators().add(new RequiredFieldValidator("Este campo no debe estar vacío..."));
         txt_contrasena.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(!newValue)
                     txt_contrasena.validate();
             }
-        });
-        
+        }); 
     }
     private void getCredeciales()
     {
@@ -97,39 +146,6 @@ public class LoginController implements Initializable {
         sharePreferences.setUsuario(txt_usuario.getText());
         SharePreferences.setCredenciales(sharePreferences);
     }
-    
-
-    @FXML
-    private void dragWindow_Click(MouseEvent event) {
-
-        Stage primaryStage = (Stage)( ((Node) (event.getSource() ) ).getScene().getWindow() );
-        primaryStage.setX(event.getScreenX()- xOffset);
-        primaryStage.setY(event.getScreenY() - yOffset );
-    }
-    @FXML
-    private void pressedWindow_Click(MouseEvent event) {
-        xOffset = event.getSceneX();//guarda coord iniciales del clic
-        yOffset = event.getSceneY();
-    }
-    @FXML
-    private void cbRecordar_Click(ActionEvent event)
-    {
-        
-    }
-
-    @FXML
-    private void btnLogin_Click(ActionEvent event) 
-    {
-        if(cb_recordar.isSelected())
-            setCredenciales();
-        else
-            SharePreferences.initConfig();
-    }
-
-    @FXML
-    private void btnCerrar_Click(ActionEvent event) {
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
-    }
-    
-    
+    /**************************************************************************************************************************************************/
 }
+/******************************************************************************************************************************************************/

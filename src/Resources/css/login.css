@@ -64,7 +64,7 @@ que además es independiente a la de sin foco*/
 }
 
 .jfx-text-field .error-label,
-.jfx-password-field .erroor-label{
+.jfx-password-field .error-label{
     -fx-text-fill: #D34336;
     -fx-translate-y: -7px;   
  }

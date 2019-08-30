@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
 import java.net.URL;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import services.Servicios;
 /**************************************************************************************************************************************************/
 
 /*** CLASS/****************************************************************************************************************************************/
@@ -72,13 +75,7 @@ public class LoginController implements Initializable {
         xOffset = event.getSceneX();//guarda coord iniciales del clic
         yOffset = event.getSceneY();
     }
-    /***ELIMINAR***/
-    @FXML
-    private void cbRecordar_Click(ActionEvent event)
-    {
-        
-    }
-    /**************/
+
 
     @FXML
     private void btnLogin_Click(ActionEvent event) 
@@ -91,7 +88,7 @@ public class LoginController implements Initializable {
             //conexion a la siguiente pantalla
             System.out.println("Entre");
             if(cb_recordar.isSelected())
-            setCredenciales();
+                setCredenciales();
             else
                 SharePreferences.initConfig();
         }
@@ -99,13 +96,32 @@ public class LoginController implements Initializable {
         {    
             //mensaje de no conexion
             System.out.println("Error de credenciales");
+            
         }
     }
 
     @FXML
     private void btnCerrar_Click(ActionEvent event) {
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
+        Servicios.cerrarVentana(event);
     }
+    
+    
+    @FXML
+    private void txtUsuario_ReleasedKey(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER){
+            txt_contrasena.requestFocus();
+        }
+    }
+
+    @FXML
+    private void txtPassword_ReleasedKey(KeyEvent event) {
+         if(event.getCode() == KeyCode.ENTER){
+            btn_login.fire();
+            txt_usuario.requestFocus();
+        }
+    }
+    /**************/
+    
 /**************************************************************************************************************************************************/
 /***CUZTOMIZED PUBLIC METHODS/*********************************************************************************************************************************/
     private void setValidatorsRequired(){
@@ -141,11 +157,11 @@ public class LoginController implements Initializable {
     }
     private void setCredenciales()
     {
-        SharePreferences sharePreferences = new SharePreferences();
-        sharePreferences.setRecordar(cb_recordar.isSelected());
-        sharePreferences.setUsuario(txt_usuario.getText());
+        SharePreferences sharePreferences = new SharePreferences(cb_recordar.isSelected(),txt_usuario.getText());
         SharePreferences.setCredenciales(sharePreferences);
     }
+
+
     /**************************************************************************************************************************************************/
 }
 /******************************************************************************************************************************************************/

@@ -90,6 +90,7 @@ public class SharePreferences
         }
         return sharedPreferences;
     }
+    
     public static void setCredenciales(SharePreferences sharePreferences)
     {
         Gson gson = new Gson();

@@ -34,17 +34,17 @@
                   <Insets />
                </VBox.margin>
             </Separator>
-            <JFXTextField fx:id="txt_usuario" prefHeight="40.0" promptText="Usuario">
+            <JFXTextField fx:id="txt_usuario" onKeyReleased="#txtUsuario_ReleasedKey" prefHeight="40.0" promptText="Usuario">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>
             </JFXTextField>
-            <JFXPasswordField fx:id="txt_contrasena" prefHeight="40.0" promptText="Contraseña">
+            <JFXPasswordField fx:id="txt_contrasena" onKeyReleased="#txtPassword_ReleasedKey" prefHeight="40.0" promptText="Contraseña">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>
             </JFXPasswordField>
-            <JFXCheckBox fx:id="cb_recordar" alignment="TOP_RIGHT" onAction="#cbRecordar_Click" text="Recordar">
+            <JFXCheckBox fx:id="cb_recordar" alignment="TOP_RIGHT" text="Recordar">
                <font>
                   <Font name="SansSerif Regular" size="13.0" />
                </font>
@@ -88,7 +88,6 @@
       <String fx:value="ventana-redonda" />
    </styleClass>
    <stylesheets>
-      <URL value="@../Resources/css/estilo.css" />
       <URL value="@../Resources/css/login.css" />
       <URL value="@../Resources/css/normalizacion.css" />
    </stylesheets>

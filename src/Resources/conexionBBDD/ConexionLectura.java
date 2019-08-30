@@ -15,6 +15,7 @@ public class ConexionLectura
     String query="";
     ResultSet rs;
     boolean key;
+    
     public boolean obtenerEmpleado(String nombre, String password,Connection connection)
     {
         query = "select * from empleados where nombre='"+nombre+"' and password='"+password+"'";

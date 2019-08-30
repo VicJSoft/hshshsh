@@ -16,24 +16,18 @@ public class ConexionLectura
     ResultSet rs;
     boolean key;
     
-    public boolean obtenerEmpleado(String nombre, String password,Connection connection)
+    public boolean obtenerEmpleado(String nombre, String password,Connection connection)throws SQLException
     {
-        query = "select * from empleados where nombre='"+nombre+"' and password='"+password+"'";
-        try
+        query = "select * from empleados where nombre='"+nombre+"' and password='"+password+"'";      
+        key=false;
+        ps = connection.prepareStatement(query);
+        rs= ps.executeQuery();
+        if(rs.first())
         {
-            key=false;
-            ps = connection.prepareStatement(query);
-            rs= ps.executeQuery();
-            if(rs.first())
-            {
-                key=true;
-            }
-            ps.close();
+            key=true;
         }
-        catch(SQLException ex)   
-        {
-            
-        }
+        ps.close();
+      
         return key;
     }
     

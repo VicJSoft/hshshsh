@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import services.Servicios;
@@ -83,21 +86,41 @@ public class LoginController implements Initializable {
         
         ConexionLectura conexionLectura = new ConexionLectura();
         ConexionSQL conexionSQL = new ConexionSQL();
-        if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(), conexionSQL.getConexion()))
-        {
-            //conexion a la siguiente pantalla
-            System.out.println("Entre");
-            if(cb_recordar.isSelected())
-                setCredenciales();
+        //captura de excepción, para un mejor manejo si hay error de conexion.
+        try {
+            if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(), conexionSQL.getConexion()))
+            {
+                //conexion a la siguiente pantalla
+                System.out.println("Entre");
+                if(cb_recordar.isSelected())
+                    setCredenciales();
+                else
+                    SharePreferences.initConfig();
+            }
             else
-                SharePreferences.initConfig();
+            {
+                //mensaje de no conexion
+                // TODO generar ventana de error con descricion de credenciales no correctas
+                Servicios.crearVentanaError(
+                        this.btn_login.getScene().getWindow(),
+                        new Exception("Error de credenciales."),
+                        "Error Credenciales", 
+                        "Usuario/Contraseña incorrecto(s)");
+                
+                System.out.println("Error de credenciales");
+                
+            }
+        } catch (SQLException ex) {
+            //TODO Generar ventana de error con esta exception.
+            //TODO Crear ventana de error.
+            Servicios.crearVentanaError(
+                    this.btn_login.getScene().getWindow(),
+                    ex,
+                    "Error SQL", 
+                    "Error conexión de base de datos");
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else
-        {    
-            //mensaje de no conexion
-            System.out.println("Error de credenciales");
-            
-        }
+    
     }
 
     @FXML

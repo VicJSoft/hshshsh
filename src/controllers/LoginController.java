@@ -59,6 +59,8 @@ public class LoginController implements Initializable {
         try
         {
              getCredeciales();
+             //si no falla, entonces obtuvo el usuario, por lo tanto enfoca el campo contraseña directamente.
+             txt_contrasena.requestFocus();
         }
         catch(NullPointerException e)
         {   

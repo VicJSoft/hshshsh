@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root id="AnchorPane" prefHeight="270.0" prefWidth="651.0" styleClass="ventana" stylesheets="@../Resources/css/normalizacion.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="283.0" prefWidth="651.0">
+         <children>
+            <AnchorPane fx:id="ap_tittleBar" layoutX="12.0" layoutY="12.0" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" prefHeight="32.0" prefWidth="627.0" styleClass="tittle-bar">
+               <children>
+                  <ImageView fx:id="iv_icon" fitHeight="24.0" fitWidth="27.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Resources/imagenes/error.png" />
+                     </image></ImageView>
+                  <Button fx:id="btn_cerrar" layoutX="584.0" onAction="#btnCerrar_Click" prefHeight="32.0" prefWidth="43.0" styleClass="boton-cerrar" stylesheets="@../Resources/css/normalizacion.css" text="X" textAlignment="CENTER">
+                     <font>
+                        <Font name="Gadugi" size="26.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <padding>
+                        <Insets bottom="-5.0" left="-10.0" right="-10.0" top="-5.0" />
+                     </padding>
+                  </Button>
+                  <Label fx:id="lbl_tittleBar" layoutX="35.0" layoutY="2.0" prefHeight="30.0" prefWidth="172.0" text="Set Tittle Here" textFill="#828282">
+                     <font>
+                        <Font name="Gadugi" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Label fx:id="lbl_tittleContent" layoutX="37.0" layoutY="45.0" prefHeight="43.0" prefWidth="402.0" text="Set tittle content here" textFill="#828282">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <JFXTextArea fx:id="txt_contentError" editable="false" layoutX="33.0" layoutY="91.0" prefHeight="118.0" prefWidth="586.0" promptText="Set Content here" styleClass="area-texto" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasfasdasdasd">
+               <font>
+                  <Font name="Gadugi" size="17.0" />
+               </font>
+            </JFXTextArea>
+            <Button fx:id="btn_aceptar" layoutX="536.0" layoutY="231.0" mnemonicParsing="false" onAction="#btnCerrar_Click" prefHeight="25.0" prefWidth="93.0" styleClass="boton" text="Aceptar" />
+         </children>
+      </AnchorPane>
+   </children>
+</fx:root>

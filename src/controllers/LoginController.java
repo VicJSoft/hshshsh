@@ -72,16 +72,13 @@ public class LoginController implements Initializable {
 /**************************************************************************************************************************************************/
 /*** FXML METHODS/*********************************************************************************************************************************/
     @FXML
-    private void dragWindow_Click(MouseEvent event) {
+    private void window_Drag(MouseEvent event) {
 
-        Stage primaryStage = (Stage)( ((Node) (event.getSource() ) ).getScene().getWindow() );
-        primaryStage.setX(event.getScreenX()- xOffset);
-        primaryStage.setY(event.getScreenY() - yOffset );
+        Servicios.tittleBar_Drag(event);
     }
     @FXML
-    private void pressedWindow_Click(MouseEvent event) {
-        xOffset = event.getSceneX();//guarda coord iniciales del clic
-        yOffset = event.getSceneY();
+    private void windows_Pressed(MouseEvent event) {
+       Servicios.tittleBar_Pressed(event);
     }
 
 
@@ -107,22 +104,24 @@ public class LoginController implements Initializable {
                 //mensaje de no conexion
                 // TODO generar ventana de error con descricion de credenciales no correctas
                 Servicios.crearVentanaError(
-                        this.btn_login.getScene().getWindow(),
-                        new Exception("Error de credenciales."),
+                        this.btn_login.getScene().getWindow(),                        
                         "Error Credenciales", 
-                        "Usuario/Contraseña incorrecto(s)");
+                        "Usuario/Contraseña incorrecto(s)",
+                        "Credenciales incorrectas, si sigue teniendo problemas, contacte al administrador"
+                                + "del sistema.");
                 
                 System.out.println("Error de credenciales");
                 
             }
+            
         } catch (SQLException ex) {
             //TODO Generar ventana de error con esta exception.
             //TODO Crear ventana de error.
             Servicios.crearVentanaError(
                     this.btn_login.getScene().getWindow(),
-                    ex,
                     "Error SQL", 
-                    "Error conexión de base de datos");
+                    "Error conexión de base de datos",
+                    ex.getMessage() + "\n\nAditional information.");
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     

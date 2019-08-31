@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="fondoAP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#dragWindow_Click" onMousePressed="#pressedWindow_Click" prefHeight="395.0" prefWidth="445.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<AnchorPane fx:id="fondoAP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#window_Drag" onMousePressed="#windows_Pressed" prefHeight="395.0" prefWidth="445.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
       <VBox alignment="CENTER_LEFT" prefHeight="386.0" prefWidth="445.0" spacing="22.0">
          <children>
@@ -52,7 +52,7 @@
                   <Insets left="10.0" />
                </VBox.margin>
             </JFXCheckBox>
-            <Button fx:id="btn_login" mnemonicParsing="false" onAction="#btnLogin_Click" prefHeight="40.0" prefWidth="398.0" text="Iniciar sesión" textFill="WHITE">
+            <Button fx:id="btn_login" mnemonicParsing="false" onAction="#btnLogin_Click" prefHeight="40.0" prefWidth="398.0" styleClass="boton" text="Iniciar sesión" textFill="WHITE">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -71,7 +71,7 @@
             <Insets left="40.0" right="40.0" />
          </padding>
       </VBox>
-      <Button fx:id="btn_cerrar" layoutX="393.0" layoutY="12.0" onAction="#btnCerrar_Click" prefHeight="44.0" prefWidth="0.0" styleClass="button-cerrar" text="X" textAlignment="CENTER">
+      <Button fx:id="btn_cerrar" layoutX="393.0" layoutY="12.0" onAction="#btnCerrar_Click" prefHeight="44.0" prefWidth="0.0" styleClass="button-cerrar-login" text="X" textAlignment="CENTER">
          <font>
             <Font name="Gadugi" size="20.0" />
          </font>

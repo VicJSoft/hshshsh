@@ -5,7 +5,6 @@
  */
 package main;
 
-import controllers.Ventana_ErrorController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

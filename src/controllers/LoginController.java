@@ -1,8 +1,8 @@
 package controllers;
 
 /*** IMPORTS/****************************************************************************************************************************************/
-import Resources.conexionBBDD.ConexionLectura;
-import Resources.conexionBBDD.ConexionSQL;
+import services.sql.ConexionLectura;
+import services.sql.ConexionSQL;
 import com.jfoenix.validation.RequiredFieldValidator;
 import Resources.persistencia.SharePreferences;
 import com.jfoenix.controls.JFXPasswordField;

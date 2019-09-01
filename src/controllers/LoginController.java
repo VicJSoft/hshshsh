@@ -83,13 +83,14 @@ public class LoginController implements Initializable {
 
 
     @FXML
-    private void btnLogin_Click(ActionEvent event) 
+    private void btnLogin_Click(ActionEvent event) throws ClassNotFoundException, InstantiationException 
     {
         
-        ConexionLectura conexionLectura = new ConexionLectura();
-        ConexionSQL conexionSQL = new ConexionSQL();
-        //captura de excepción, para un mejor manejo si hay error de conexion.
+        
         try {
+            ConexionLectura conexionLectura = new ConexionLectura();
+            ConexionSQL conexionSQL = new ConexionSQL();
+            //captura de excepción, para un mejor manejo si hay error de conexion.
             if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(), conexionSQL.getConexion()))
             {
                 //conexion a la siguiente pantalla
@@ -114,14 +115,15 @@ public class LoginController implements Initializable {
                 
             }
             
-        } catch (SQLException ex) {
+        } catch (SQLException| ClassNotFoundException|InstantiationException|IllegalAccessException ex) {
             //TODO Generar ventana de error con esta exception.
             //TODO Crear ventana de error.
             Servicios.crearVentanaError(
                     this.btn_login.getScene().getWindow(),
                     "Error SQL", 
                     "Error conexión de base de datos",
-                    ex.getMessage() + "\n\nAditional information.");
+                    ex.getMessage() + "\n\nAsegurese de que el servidor de la base de datos este activo."
+                            + "\nSi sigue presentando el problema, contacte al desarrollador.");
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     

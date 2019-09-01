@@ -14,11 +14,15 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import services.Servicios;
 
 /**
@@ -77,6 +81,15 @@ public class Ventana_ErrorController extends AnchorPane{
     @FXML
     private void tittleBar_Pressed(MouseEvent event) {
         Servicios.tittleBar_Pressed(event);
+    }
+    
+    @FXML
+    void apVentana_enter(KeyEvent event) {
+        if(event.getCode()==KeyCode.ENTER){
+            //((Stage) ((Node)event.getSource()).getScene().getWindow()).close();
+            Servicios.cerrarVentana(event);
+        }
+
     }
 
    

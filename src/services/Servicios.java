@@ -7,6 +7,7 @@ package services;
 
 import controllers.Ventana_ErrorController;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +25,8 @@ public class Servicios {
     private static double xOffset;
     private static double yOffset;
     
-    public static void cerrarVentana(ActionEvent event){
+    
+    public static void cerrarVentana(Event event){
         Servicios.cerrarVentana( (Stage) ((Node)event.getSource()).getScene().getWindow());
     }
     

@@ -23,16 +23,13 @@ public class ConexionSQL
    Connection connection=null;
    /************************************************************************************************************************************************/
    /***CUZTOMIZED PUBLIC METHODS/*******************************************************************************************************************/
-   public Connection getConexion() 
+   public Connection getConexion() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException 
    {
-       try
-       {
+       
            Class.forName(NAME).newInstance();
            connection = DriverManager.getConnection(PATH,USER,PASS);
-       }
-       catch (IllegalAccessException | ClassNotFoundException | InstantiationException | SQLException ex) {
-           Logger.getLogger(ConexionSQL.class.getName()).log(Level.SEVERE, null, ex);
-       }
+       
+       
        return connection;
    }
    

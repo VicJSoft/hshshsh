@@ -23,6 +23,7 @@ public class main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        //Parent root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
         //Scene scene = new Scene(new Ventana_ErrorController(null, new Exception("Erro xd"), STYLESHEET_MODENA, STYLESHEET_CASPIAN));
         Scene scene = new Scene(root);

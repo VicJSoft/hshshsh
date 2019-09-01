@@ -11,11 +11,15 @@ import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import controllers.Ventana_PrincipalController;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
 /**
  *
  * @author VicEspino
@@ -49,6 +53,22 @@ public class Servicios {
         stage.show();
     }
     
+    public static void crearVentana(AnchorPane ventana){
+        
+        Stage stage = new Stage();
+        Scene scene = new Scene(ventana);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+        
+        
+    }
+    
+    public static void crearVentana(String rutaXML) throws IOException {
+       
+    }
+    
     public static void tittleBar_Pressed(MouseEvent event){
         Servicios.xOffset = event.getSceneX();//guarda coord iniciales del clic.        
         Servicios.yOffset = event.getSceneY();
@@ -60,6 +80,8 @@ public class Servicios {
         primaryStage.setX(event.getScreenX()- xOffset);
         primaryStage.setY(event.getScreenY() - yOffset );
     }
+
+    
     
     
 }

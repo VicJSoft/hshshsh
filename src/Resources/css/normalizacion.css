@@ -19,11 +19,15 @@
      -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, .32), 10, 0.8, 0.0, 0.0 );
 }
 
+.ventana-drawer{
+    -fx-background-insets: 0 12 0 0;
+}
+.button{
+    -fx-cursor:hand;
+}
 .boton{
     -fx-background-color:  -boton-color;   
-    -fx-text-fill: #FFF;
-    -fx-cursor: hand;
-
+    -fx-text-fill: #FFF;    
 }
 .boton:hover{
     -fx-background-color: derive(-boton-color, 20%);
@@ -64,4 +68,36 @@
 
 .tittle-bar{
     -fx-background-color: derive(-boton-color,65%);
+}
+
+.boton-hamburguesa{
+    -fx-background-color: transparent;
+    -fx-background-radius:0;
+    -fx-border-radius:0;
+}
+
+.boton-hamburguesa:hover{
+    -fx-background-color: yellowgreen;
+    
+}
+
+.boton-hamburguesa:pressed{
+    -fx-background-color: derive(red,50%);
+}
+
+.button-drawer{
+    
+    -fx-background-color: #FFF;
+    -fx-border-color: transparent;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    
+    
+}
+.button-drawer:hover{
+    -fx-background-color: derive(-boton-color, 40%);
+}
+.button-drawer:pressed{
+    -fx-background-color: derive(-boton-color,5%);
+    
 }

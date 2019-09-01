@@ -10,6 +10,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXCheckBox;
+import java.io.IOException;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
@@ -23,8 +24,13 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.StageStyle;
 import services.Servicios;
 /**************************************************************************************************************************************************/
 
@@ -83,7 +89,7 @@ public class LoginController implements Initializable {
 
 
     @FXML
-    private void btnLogin_Click(ActionEvent event) throws ClassNotFoundException, InstantiationException 
+    private void btnLogin_Click(ActionEvent event) 
     {
         
         
@@ -95,10 +101,25 @@ public class LoginController implements Initializable {
             {
                 //conexion a la siguiente pantalla
                 System.out.println("Entre");
+               // Servicios.crearVentana(new Ventana_PrincipalController());
+               /// Servicios.crearVentana("/views/Ventana_PrincipalController.fxml");
+               
+                Parent ventana = FXMLLoader.load(getClass().getResource("/views/Ventana_Principal.fxml"));
+        
+                Stage stage = new Stage();
+                Scene scene = new Scene(ventana);
+                scene.setFill(Color.TRANSPARENT);
+                stage.setScene(scene);
+                stage.initStyle(StageStyle.TRANSPARENT);
+                stage.show();
+                
+                Servicios.cerrarVentana(event);
+               
                 if(cb_recordar.isSelected())
                     setCredenciales();
                 else
                     SharePreferences.initConfig();
+                 ((Stage)this.btn_login.getScene().getWindow()).close();
             }
             else
             {
@@ -114,8 +135,8 @@ public class LoginController implements Initializable {
                 System.out.println("Error de credenciales");
                 
             }
-            
-        } catch (SQLException| ClassNotFoundException|InstantiationException|IllegalAccessException ex) {
+            //TODO acomodar la exception.
+        } catch (SQLException| ClassNotFoundException|InstantiationException|IllegalAccessException | IOException ex) {
             //TODO Generar ventana de error con esta exception.
             //TODO Crear ventana de error.
             Servicios.crearVentanaError(

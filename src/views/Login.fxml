@@ -59,9 +59,6 @@
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
             </Button>
          </children>
          <opaqueInsets>
@@ -74,10 +71,7 @@
       <Button fx:id="btn_cerrar" layoutX="393.0" layoutY="12.0" onAction="#btnCerrar_Click" prefHeight="44.0" prefWidth="0.0" styleClass="button-cerrar-login" text="X" textAlignment="CENTER">
          <font>
             <Font name="Gadugi" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
+         </font>      
       </Button>
    </children>
    <opaqueInsets>

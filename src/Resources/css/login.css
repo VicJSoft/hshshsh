@@ -8,6 +8,11 @@ and open the template in the editor.
     Author     : VicEspino
 */
 
+*{
+    -boton-color: #5AB444;
+    -boton-color-focused: #5AB44430;
+   
+}
 
 .jfx-text-field ,
 .jfx-password-field{
@@ -64,7 +69,7 @@ que además es independiente a la de sin foco*/
 }
 
 .jfx-text-field .error-label,
-.jfx-password-field .erroor-label{
+.jfx-password-field .error-label{
     -fx-text-fill: #D34336;
     -fx-translate-y: -7px;   
  }
@@ -72,4 +77,17 @@ que además es independiente a la de sin foco*/
 .jfx-text-field .error-icon,
 .jfx-password-field .error-icon{
     -fx-fill: #D34336;
+}
+
+.button-cerrar-login{
+    -fx-background-color: transparent;
+    -fx-border-radius: 0 12 0 0;
+    -fx-background-radius: 0 12 0 0 ;
+}
+.button-cerrar-login:hover{
+    -fx-background-color: red;
+}
+
+.button-cerrar-login:pressed{
+    -fx-background-color: derive(red,90%);
 }

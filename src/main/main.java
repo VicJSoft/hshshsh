@@ -16,14 +16,16 @@ import javafx.stage.StageStyle;
 
 /**
  *
- * @author VAPESIN
+ * @author VicEspino
  */
 public class main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        //Parent root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+        //Scene scene = new Scene(new Ventana_ErrorController(null, new Exception("Erro xd"), STYLESHEET_MODENA, STYLESHEET_CASPIAN));
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
@@ -32,6 +34,7 @@ public class main extends Application {
         
         primaryStage.show();
 
+        
     }
     
     public static void main(String[] args){

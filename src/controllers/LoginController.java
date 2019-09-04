@@ -1,58 +1,181 @@
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+/*** IMPORTS/****************************************************************************************************************************************/
+import services.sql.ConexionLectura;
+import services.sql.ConexionSQL;
 import com.jfoenix.validation.RequiredFieldValidator;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
+import Resources.persistencia.SharePreferences;
+import com.jfoenix.controls.JFXPasswordField;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Point2D;
+import javafx.beans.value.ChangeListener;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXCheckBox;
+import java.io.IOException;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
+import java.util.ResourceBundle;
+import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.fxml.FXML;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.StageStyle;
+import services.Servicios;
+/**************************************************************************************************************************************************/
+
+/*** CLASS/****************************************************************************************************************************************/
+
 
 public class LoginController implements Initializable {
 
+/*** VARIABLES OR INSTANCES GLOBALS****************************************************************************************************************/
+    @FXML
+    private JFXPasswordField txt_contrasena;
+    @FXML
+    private JFXTextField txt_usuario;
     @FXML
     private JFXCheckBox cb_recordar;
-    @FXML
-    private Button btn_login;
-    @FXML
-    private Button btn_cerrar;
-    
     @FXML
     private AnchorPane fondoAP;
     private double xOffset = 0;
     private double yOffset = 0;
     @FXML
-    private JFXTextField txt_usuario;
+    private Button btn_login;
     @FXML
-    private JFXPasswordField txt_contrasena;
+    private Button btn_cerrar;
+/**************************************************************************************************************************************************/
     
+/*** OVERRIDE PUBLIC METHODS/**********************************************************************************************************************/
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) 
+    {
 
         setValidatorsRequired();
+        try
+        {
+             getCredeciales();
+             //si no falla, entonces obtuvo el usuario, por lo tanto enfoca el campo contraseña directamente.
+             txt_contrasena.requestFocus();
+        }
+        catch(NullPointerException e)
+        {   
+            
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, e);
 
+        }   
+    }
+/**************************************************************************************************************************************************/
+/*** FXML METHODS/*********************************************************************************************************************************/
+    @FXML
+    private void window_Drag(MouseEvent event) {
 
-        
+        Servicios.tittleBar_Drag(event);
+    }
+    @FXML
+    private void windows_Pressed(MouseEvent event) {
+       Servicios.tittleBar_Pressed(event);
     }
 
+
+    @FXML
+    private void btnLogin_Click(ActionEvent event) 
+    {
+        
+        
+        try {
+            ConexionLectura conexionLectura = new ConexionLectura();
+            ConexionSQL conexionSQL = new ConexionSQL();
+            //captura de excepción, para un mejor manejo si hay error de conexion.
+            if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(), conexionSQL.getConexion()))
+            {
+                //conexion a la siguiente pantalla
+                System.out.println("Entre");
+               // Servicios.crearVentana(new Ventana_PrincipalController());
+               /// Servicios.crearVentana("/views/Ventana_PrincipalController.fxml");
+               
+                Parent ventana = FXMLLoader.load(getClass().getResource("/views/Ventana_Principal.fxml"));
+        
+                Stage stage = new Stage();
+                Scene scene = new Scene(ventana);
+                scene.setFill(Color.TRANSPARENT);
+                stage.setScene(scene);
+                stage.initStyle(StageStyle.TRANSPARENT);
+                stage.show();
+                
+                Servicios.cerrarVentana(event);
+               
+                if(cb_recordar.isSelected())
+                    setCredenciales();
+                else
+                    SharePreferences.initConfig();
+                 ((Stage)this.btn_login.getScene().getWindow()).close();
+            }
+            else
+            {
+                //mensaje de no conexion
+                // TODO generar ventana de error con descricion de credenciales no correctas
+                Servicios.crearVentanaError(
+                        this.btn_login.getScene().getWindow(),                        
+                        "Error Credenciales", 
+                        "Usuario/Contraseña incorrecto(s)",
+                        "Credenciales incorrectas, si sigue teniendo problemas, contacte al administrador"
+                                + "del sistema.");
+                
+                System.out.println("Error de credenciales");
+                
+            }
+            //TODO acomodar la exception.
+        } catch (SQLException| ClassNotFoundException|InstantiationException|IllegalAccessException | IOException ex) {
+            //TODO Generar ventana de error con esta exception.
+            //TODO Crear ventana de error.
+            Servicios.crearVentanaError(
+                    this.btn_login.getScene().getWindow(),
+                    "Error SQL", 
+                    "Error conexión de base de datos",
+                    ex.getMessage() + "\n\nAsegurese de que el servidor de la base de datos este activo."
+                            + "\nSi sigue presentando el problema, contacte al desarrollador.");
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+
+    @FXML
+    private void btnCerrar_Click(ActionEvent event) {
+        Servicios.cerrarVentana(event);
+    }
+    
+    
+    @FXML
+    private void txtUsuario_ReleasedKey(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER){
+            txt_contrasena.requestFocus();
+        }
+    }
+
+    @FXML
+    private void txtPassword_ReleasedKey(KeyEvent event) {
+         if(event.getCode() == KeyCode.ENTER){
+            btn_login.fire();
+            txt_usuario.requestFocus();
+        }
+    }
+    /**************/
+    
+/**************************************************************************************************************************************************/
+/***CUZTOMIZED PUBLIC METHODS/*********************************************************************************************************************************/
     private void setValidatorsRequired(){
-        
-      
         txt_usuario.getValidators().add(new RequiredFieldValidator("Este campo no debe estar vacío..."));
-        
         txt_usuario.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -60,50 +183,35 @@ public class LoginController implements Initializable {
                   txt_usuario.validate();
             }
         });
-        
-         
-         txt_contrasena.getValidators().add(new RequiredFieldValidator("Este campo no debe estar vacío..."));
-        
+        txt_contrasena.getValidators().add(new RequiredFieldValidator("Este campo no debe estar vacío..."));
         txt_contrasena.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(!newValue)
                     txt_contrasena.validate();
             }
-        });
-        
+        }); 
     }
-    
-
-    @FXML
-    private void dragWindow_Click(MouseEvent event) {
-
-        Stage primaryStage = (Stage)( ((Node) (event.getSource() ) ).getScene().getWindow() );
-        primaryStage.setX(event.getScreenX()- xOffset);
-        primaryStage.setY(event.getScreenY() - yOffset );
+    private void getCredeciales()
+    {
+        SharePreferences sharePreferences = SharePreferences.getCredenciales();
+        if(sharePreferences.getRecordar())
+        {
+            cb_recordar.setSelected(true);
+            txt_usuario.setText(sharePreferences.getUsuario());
+        }
+        else
+        {
+            cb_recordar.setSelected(false);
+        }
     }
-
-    @FXML
-    private void pressedWindow_Click(MouseEvent event) {
-        xOffset = event.getSceneX();//guarda coord iniciales del clic
-        yOffset = event.getSceneY();
-    }
-
-
-    @FXML
-    private void cbRecordar_Click(ActionEvent event) {
-        
+    private void setCredenciales()
+    {
+        SharePreferences sharePreferences = new SharePreferences(cb_recordar.isSelected(),txt_usuario.getText());
+        SharePreferences.setCredenciales(sharePreferences);
     }
 
-    @FXML
-    private void btnLogin_Click(ActionEvent event) {
-        
-    }
 
-    @FXML
-    private void btnCerrar_Click(ActionEvent event) {
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
-    }
-    
-    
+    /**************************************************************************************************************************************************/
 }
+/******************************************************************************************************************************************************/

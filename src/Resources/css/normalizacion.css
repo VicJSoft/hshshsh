@@ -1,4 +1,4 @@
-* {
+*{
     -boton-color: #5AB444;
     -boton-color-focused: #5AB44430;
     -borde-text-field: #29156E;
@@ -16,37 +16,88 @@
 .ventana{
      -fx-background-insets: 12;
      -fx-background-color: #FFF;
-       /*-fx-effect: dropshadow( gaussian, rgba(0, 0, 0, .32), 10, 0.8, 0.0, 0.0 );*/
+     -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, .32), 10, 0.8, 0.0, 0.0 );
+}
+
+.ventana-drawer{
+    -fx-background-insets: 0 12 0 0;
 }
 .button{
-    -fx-background-color:  -boton-color;    
+    -fx-cursor:hand;
 }
-.button:hover{
+.boton{
+    -fx-background-color:  -boton-color;   
+    -fx-text-fill: #FFF;    
+}
+.boton:hover{
     -fx-background-color: derive(-boton-color, 20%);
 
 }
-.button:pressed{
+.boton:pressed{
     -fx-background-color: derive(-boton-color,-20%);
 }
-.button-cerrar{
-    -fx-background-color: white;
-    -fx-border-radius: 0 12 0 0;
-    -fx-background-radius: 0 12 0 0 ;
+
+.boton-cerrar{
+    -fx-background-color: transparent;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: #828282;
+    
 }
-.button-cerrar:hover{
+.boton-cerrar:hover{
     -fx-background-color: red;
+    -fx-text-fill: #FFF;
 }
-/*
-.text-field{
-    -fx-border-radius: 3;
-    -fx-background-radius: 3;
-     
-    -fx-border-color: derive( -boton-color,10%);
-
-    -fx-focus-color: -boton-color;
-    -fx-faint-focus-color: -boton-color-focused;
-
-
+.boton-cerrar:pressed{
+    -fx-background-color: derive(red,50%);
 }
-*/
 
+ 
+
+.area-texto{
+    
+}
+.area-texto> .input-line{
+    -fx-background-color: transparent;
+}
+
+.area-texto> .input-line,
+.area-texto> .input-focused-line{
+    -fx-background-color: transparent;
+}
+
+.tittle-bar{
+    -fx-background-color: derive(-boton-color,65%);
+}
+
+.boton-hamburguesa{
+    -fx-background-color: transparent;
+    -fx-background-radius:0;
+    -fx-border-radius:0;
+}
+
+.boton-hamburguesa:hover{
+    -fx-background-color: yellowgreen;
+    
+}
+
+.boton-hamburguesa:pressed{
+    -fx-background-color: derive(red,50%);
+}
+
+.button-drawer{
+    
+    -fx-background-color: #FFF;
+    -fx-border-color: transparent;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    
+    
+}
+.button-drawer:hover{
+    -fx-background-color: derive(-boton-color, 40%);
+}
+.button-drawer:pressed{
+    -fx-background-color: derive(-boton-color,5%);
+    
+}

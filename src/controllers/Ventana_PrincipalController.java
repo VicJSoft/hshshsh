@@ -6,6 +6,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.events.JFXDrawerEvent;
 import controllers.Ventana_ErrorController;
 import java.io.IOException;
 import java.net.URL;
@@ -13,6 +14,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,6 +45,10 @@ public class Ventana_PrincipalController implements Initializable {
     private Button btn_Hamburguesa;
     @FXML
     private JFXDrawer drawer_Menu;
+    @FXML
+    private Button btn_maximizar;
+    @FXML
+    private Button btn_minimizar;
 
  
 
@@ -76,6 +82,36 @@ public class Ventana_PrincipalController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        drawer_Menu.setOnDrawerClosed((event) -> {
+           drawer_Menu.toBack();
+        });
+        drawer_Menu.setOnDrawerOpening(new EventHandler<JFXDrawerEvent>() {
+            @Override
+            public void handle(JFXDrawerEvent event) {
+
+                drawer_Menu.toFront();
+            }
+        });
+            
+        try {
+            FXMLLoader drawerLoader = new FXMLLoader(getClass().getResource("/views/DrawerMenu.fxml"));
+            VBox vbox_menu = drawerLoader.load();
+            //Controlador propio de la vista.
+            DrawerMenuController drawerController = drawerLoader.getController();
+            drawer_Menu.setSidePane(vbox_menu);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    @FXML
+    private void btnMaximizar_Click(ActionEvent event) {
+    }
+
+    @FXML
+    private void btnMinimizar_Click(ActionEvent event) {
     }
     
 }

@@ -14,9 +14,10 @@
     -fx-background-radius: 12;
 }
 .ventana{
-     -fx-background-insets: 12;
-     -fx-background-color: #FFF;
-     -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, .32), 10, 0.8, 0.0, 0.0 );
+    -fx-background-insets: 12;
+    -fx-background-color: #FFF;
+    -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, .32), 10, 0.8, 0.0, 0.0 );
+    -fx-padding:12;
 }
 
 .ventana-drawer{
@@ -37,7 +38,7 @@
     -fx-background-color: derive(-boton-color,-20%);
 }
 
-
+.boton-toolbar,
 .boton-cerrar{
     -fx-background-color: transparent;
     -fx-border-radius: 0;
@@ -53,19 +54,13 @@
     -fx-background-color: derive(red,50%);
 }
 
-.boton-toolbar{
-    -fx-background-color: transparent;
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-    -fx-text-fill: #828282;
-}
-
+ 
 .boton-toolbar:hover{
-    -fx-background-color: derive(-boton-color,20%);
+    -fx-background-color: derive(-boton-color,30%);
 
 }
 .boton-toolbar:pressed{
-    -fx-background-color: derive(-boton-color,30%);
+    -fx-background-color: derive(-boton-color,40%);
 
 }
 

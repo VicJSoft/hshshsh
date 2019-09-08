@@ -7,23 +7,27 @@ package controllers;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.events.JFXDrawerEvent;
-import controllers.Ventana_ErrorController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import services.Servicios;
 
 /**
@@ -32,7 +36,8 @@ import services.Servicios;
  * @author VicEspino
  */
 public class Ventana_PrincipalController implements Initializable {
-
+    @FXML
+    private AnchorPane root;
     @FXML
     private AnchorPane ap_tittleBar;
     @FXML
@@ -50,37 +55,8 @@ public class Ventana_PrincipalController implements Initializable {
     @FXML
     private Button btn_minimizar;
 
- 
 
-    @FXML
-    private void btnCerrar_Click(ActionEvent event) {
-        
-        Servicios.cerrarVentana(event);
-        
-    }
-
-    @FXML
-    private void tittleBarr_Drag(MouseEvent event) {
-        Servicios.tittleBar_Drag(event);
-    }
-
-    @FXML
-    private void tittleBar_Pressed(MouseEvent event) {
-        Servicios.tittleBar_Pressed(event);
-    }
-    
-    @FXML
-    private void btnHamburguesa_Click(ActionEvent event){
-        
-         if (drawer_Menu.isOpened()) {
-            drawer_Menu.close();
-        } else {
-            drawer_Menu.open();
-        }
-        
-    }
-
-    @Override
+  @Override
     public void initialize(URL location, ResourceBundle resources) {
         drawer_Menu.setOnDrawerClosed((event) -> {
            drawer_Menu.toBack();
@@ -97,8 +73,10 @@ public class Ventana_PrincipalController implements Initializable {
             FXMLLoader drawerLoader = new FXMLLoader(getClass().getResource("/views/DrawerMenu.fxml"));
             VBox vbox_menu = drawerLoader.load();
             //Controlador propio de la vista.
+            //TODO setear eventos con interfaces a cada boton.
             DrawerMenuController drawerController = drawerLoader.getController();
             drawer_Menu.setSidePane(vbox_menu);
+            drawer_Menu.setAlignment(Pos.TOP_LEFT);
 
         } catch (IOException ex) {
             Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,12 +84,122 @@ public class Ventana_PrincipalController implements Initializable {
         
     }
 
+
     @FXML
+    private void btnCerrar_Click(ActionEvent event) {
+        
+        Servicios.cerrarVentana(event);
+        
+    }
+
+    @FXML
+    private void tittleBarr_Drag(MouseEvent event) {
+               
+        Stage ventana = Servicios.getStageFromEvent(event);
+
+        //si esta maximizada y se aplica un drag, entonces minimizará
+        if(ventana.isMaximized()){
+              
+            //crear lógica, para que cuando se quite el maximizado, el raton 
+            //se encuentre en la misma posición de proporción del toolba
+           
+            double clickSceneX = event.getSceneX();
+            double clickSceneY = event.getSceneY();
+            double clickScreenX =event.getScreenX();
+            double clickScreenY =event.getScreenY();
+            
+            double widthMaximized = ventana.getScene().getWidth();
+            double heightMaximized = ventana.getScene().getHeight();
+            
+            //obtiene la proporcion del la posición del click.(50%, 60% etc).//la proporcion siempre es la misma.
+            double proporcionClickX =clickSceneX/widthMaximized;
+            double proporcionClickY = clickSceneY/heightMaximized;
+            
+
+            maximizarVentana(event, false);
+            // //coords del raton una vez minimizado ( ya con el nuevo tamaño de ventana)//(ventana.getScene().getWidth()*proporcionClickX)                     
+           
+            //Posicion donde deberia encontrarse mi raton en ventana desmaximizada
+            double nuevaPosMouseClicX = (ventana.getScene().getWidth()*proporcionClickX);
+            double nuevaPosMouseClicY = (ventana.getScene().getHeight()*proporcionClickY);
+            //clickScreenX-12, pone la ventana en la posicion del raton, y si se resta la nueva pos del raton, entonces
+            //obtenemos que la ventana se desplaza en proporcion a donde estaba maximizada
+            ventana.setX( clickScreenX- 12 -(nuevaPosMouseClicX)  );
+            ventana.setY( clickScreenY -12 - (nuevaPosMouseClicY)  );
+            
+            //Se guardan las coords de referencia nuevas.
+            Servicios.setOffsets(
+                    clickScreenX -12 -(nuevaPosMouseClicX),
+                    clickScreenY +12 - (nuevaPosMouseClicY) );
+                     
+            return;
+        }else{            
+           Servicios.tittleBar_Drag(event);
+        
+        }
+    }
+    @FXML
+    private void tittleBar_Released(MouseEvent event) {
+        
+        if(event.getScreenY()<=1){
+            maximizarVentana(event,true);
+        }
+        
+    }
+
+    @FXML
+    private void tittleBar_Pressed(MouseEvent event) {
+        
+        Servicios.tittleBar_Pressed(event);
+    }
+    
+        @FXML
     private void btnMaximizar_Click(ActionEvent event) {
+                
+        Stage stage =Servicios.getStageFromEvent(event); 
+        
+        if(stage.isMaximized()){            
+            maximizarVentana(event, false);
+        }else{
+            maximizarVentana(event, true);
+            
+        }
+    
     }
 
     @FXML
     private void btnMinimizar_Click(ActionEvent event) {
+        Servicios.minimizeWindows(event);
     }
+    
+    @FXML
+    private void btnHamburguesa_Click(ActionEvent event){
+        
+         if (drawer_Menu.isOpened()) {
+            drawer_Menu.close();
+        } else {
+            drawer_Menu.open();
+        }
+        
+    }
+
+   
+
+    private void maximizarVentana(Event event,boolean state){
+        Stage ventana = Servicios.getStageFromEvent(event);
+        if(state){
+            ventana.setX(0);
+            ventana.setY(0);
+
+            ventana.setMaximized(true);
+            root.getStyleClass().remove("ventana");
+        }
+        else{
+            ventana.setMaximized(false);
+            root.getStyleClass().add("ventana");
+            
+        }
+    }
+
     
 }

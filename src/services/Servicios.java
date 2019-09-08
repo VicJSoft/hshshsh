@@ -17,9 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
-import controllers.Ventana_PrincipalController;
 import java.io.IOException;
-import javafx.fxml.FXMLLoader;
 /**
  *
  * @author VicEspino
@@ -53,6 +51,31 @@ public class Servicios {
         stage.show();
     }
     
+    
+    public static void maximizeWindow(Stage stage,boolean state){
+        stage.setMaximized(state);
+    }
+
+    public static void toggleMaximizeWindow(Stage stage){
+        if(stage.isMaximized()){
+            stage.setMaximized(false);
+        }
+        else{
+            stage.setMaximized(true);
+        }
+        
+    }
+    
+    public static void toggleMaximizeWindow(Event event){
+        
+        toggleMaximizeWindow(Servicios.getStageFromEvent(event)); 
+        
+    }
+    
+    public static Stage getStageFromEvent(Event event){
+        return ((Stage)((Node)event.getSource()).getScene().getWindow());
+    }
+    
     public static void crearVentana(AnchorPane ventana){
         
         Stage stage = new Stage();
@@ -74,11 +97,23 @@ public class Servicios {
         Servicios.yOffset = event.getSceneY();
     }
     
+    
     public static void tittleBar_Drag(MouseEvent event){
         
-        Stage primaryStage = (Stage)( ((Node) (event.getSource() ) ).getScene().getWindow() );
+        Stage primaryStage = getStageFromEvent(event);
         primaryStage.setX(event.getScreenX()- xOffset);
         primaryStage.setY(event.getScreenY() - yOffset );
+    }
+    
+    public static void setOffsets(double x, double y){
+        xOffset = x;
+        yOffset = y;
+    }
+    
+    public static void minimizeWindows(ActionEvent event) {
+        
+        getStageFromEvent(event).setIconified(true);
+        
     }
 
     

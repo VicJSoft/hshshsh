@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -27,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import services.Servicios;
 
@@ -143,6 +145,9 @@ public class Ventana_PrincipalController implements Initializable {
         
         if(event.getScreenY()<=1){
             maximizarVentana(event,true);
+            Stage ventana =Servicios.getStageFromEvent(event); 
+            ventana.setX(0);
+            ventana.setY(0);
         }
         
     }
@@ -156,12 +161,21 @@ public class Ventana_PrincipalController implements Initializable {
         @FXML
     private void btnMaximizar_Click(ActionEvent event) {
                 
-        Stage stage =Servicios.getStageFromEvent(event); 
+        Stage ventana =Servicios.getStageFromEvent(event); 
         
-        if(stage.isMaximized()){            
+        if(ventana.isMaximized()){                       
+            Screen screen = Screen.getPrimary();
+            Rectangle2D sbounds = screen.getBounds();
+
+            double sw = sbounds.getWidth() ;
+            double sh = sbounds.getHeight();
             maximizarVentana(event, false);
+            ventana.setX((sw/2)-(ventana.getWidth()/2));
+            ventana.setY((sh/2)-(ventana.getHeight()/2));
         }else{
             maximizarVentana(event, true);
+            ventana.setX(0);
+            ventana.setY(0);
             
         }
     
@@ -177,6 +191,7 @@ public class Ventana_PrincipalController implements Initializable {
         
          if (drawer_Menu.isOpened()) {
             drawer_Menu.close();
+            
         } else {
             drawer_Menu.open();
         }
@@ -187,10 +202,7 @@ public class Ventana_PrincipalController implements Initializable {
 
     private void maximizarVentana(Event event,boolean state){
         Stage ventana = Servicios.getStageFromEvent(event);
-        if(state){
-            ventana.setX(0);
-            ventana.setY(0);
-
+        if(state){            
             ventana.setMaximized(true);
             root.getStyleClass().remove("ventana");
         }

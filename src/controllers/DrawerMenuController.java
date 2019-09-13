@@ -9,17 +9,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
 
 /**
- * FXML Controller class
+ * FXML Controller Drawer
  *
  * @author VicEspino
  */
 public class DrawerMenuController implements Initializable {
 
     @FXML
-    private VBox vbox_menu;
+    private AnchorPane menu;
 
     /**
      * Initializes the controller class.

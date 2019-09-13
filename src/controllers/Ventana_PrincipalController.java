@@ -19,16 +19,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import services.Servicios;
 
@@ -73,13 +68,11 @@ public class Ventana_PrincipalController implements Initializable {
             
         try {
             FXMLLoader drawerLoader = new FXMLLoader(getClass().getResource("/views/DrawerMenu.fxml"));
-            VBox vbox_menu = drawerLoader.load();
+            AnchorPane menu = drawerLoader.load();
             //Controlador propio de la vista.
             //TODO setear eventos con interfaces a cada boton.
             DrawerMenuController drawerController = drawerLoader.getController();
-            drawer_Menu.setSidePane(vbox_menu);
-            drawer_Menu.setAlignment(Pos.TOP_LEFT);
-
+            drawer_Menu.setSidePane(menu);
         } catch (IOException ex) {
             Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -103,7 +96,7 @@ public class Ventana_PrincipalController implements Initializable {
         if(ventana.isMaximized()){
               
             //crear lógica, para que cuando se quite el maximizado, el raton 
-            //se encuentre en la misma posición de proporción del toolba
+            //se encuentre en la misma posición de proporción del toolbar.
            
             double clickSceneX = event.getSceneX();
             double clickSceneY = event.getSceneY();
@@ -134,7 +127,7 @@ public class Ventana_PrincipalController implements Initializable {
                     clickScreenX -12 -(nuevaPosMouseClicX),
                     clickScreenY +12 - (nuevaPosMouseClicY) );
                      
-            return;
+            //return;
         }else{            
            Servicios.tittleBar_Drag(event);
         
@@ -163,15 +156,18 @@ public class Ventana_PrincipalController implements Initializable {
                 
         Stage ventana =Servicios.getStageFromEvent(event); 
         
-        if(ventana.isMaximized()){                       
+        if(ventana.isMaximized()){                       /*
             Screen screen = Screen.getPrimary();
             Rectangle2D sbounds = screen.getBounds();
 
             double sw = sbounds.getWidth() ;
             double sh = sbounds.getHeight();
             maximizarVentana(event, false);
+          
             ventana.setX((sw/2)-(ventana.getWidth()/2));
-            ventana.setY((sh/2)-(ventana.getHeight()/2));
+            ventana.setY((sh/2)-(ventana.getHeight()/2));*/
+            maximizarVentana(event, false);
+            ventana.centerOnScreen();
         }else{
             maximizarVentana(event, true);
             ventana.setX(0);

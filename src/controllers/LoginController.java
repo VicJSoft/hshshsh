@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,6 +54,9 @@ public class LoginController implements Initializable {
     private Button btn_login;
     @FXML
     private Button btn_cerrar;
+    ConexionLectura conexionLectura = new ConexionLectura();
+    ConexionSQL conexionSQL = new ConexionSQL();
+    Connection connection = conexionSQL.getConexion();
 /**************************************************************************************************************************************************/
     
 /*** OVERRIDE PUBLIC METHODS/**********************************************************************************************************************/
@@ -88,15 +92,15 @@ public class LoginController implements Initializable {
 
 
     @FXML
-    private void btnLogin_Click(ActionEvent event) 
+    private void btnLogin_Click(ActionEvent event) throws IOException, SQLException 
     {
         
         
-        try {
-            ConexionLectura conexionLectura = new ConexionLectura();
-            ConexionSQL conexionSQL = new ConexionSQL();
+        if(connection!=null)
+        {
+            
             //captura de excepción, para un mejor manejo si hay error de conexion.
-            if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(), conexionSQL.getConexion()))
+            if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(),connection))
             {
                 //conexion a la siguiente pantalla
                 System.out.println("Entre");
@@ -134,19 +138,18 @@ public class LoginController implements Initializable {
                 System.out.println("Error de credenciales");
                 
             }
-            //TODO acomodar la exception.
-        } catch (SQLException| ClassNotFoundException|InstantiationException|IllegalAccessException | IOException ex) {
-            //TODO Generar ventana de error con esta exception.
+        }
+        else
+        {
+        //TODO Generar ventana de error con esta exception.
             //TODO Crear ventana de error.
             Servicios.crearVentanaError(
                     this.btn_login.getScene().getWindow(),
                     "Error SQL", 
                     "Error conexión de base de datos",
-                    ex.getMessage() + "\n\nAsegurese de que el servidor de la base de datos este activo."
+                    "\n\nAsegurese de que el servidor de la base de datos este activo."
                             + "\nSi sigue presentando el problema, contacte al desarrollador.");
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
     }
 
     @FXML

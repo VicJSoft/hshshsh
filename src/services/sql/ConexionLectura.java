@@ -20,14 +20,17 @@ public class ConexionLectura
     {
         query = "select * from empleados where nombre='"+nombre+"' and password='"+password+"'";      
         key=false;
-        ps = connection.prepareStatement(query);
-        rs= ps.executeQuery();
-        if(rs.first())
+        try
         {
-            key=true;
+            ps = connection.prepareStatement(query);
+            rs= ps.executeQuery();
+            if(rs.first())
+            {
+                key=true;
+            }
+            ps.close();
         }
-        ps.close();
-      
+        catch(SQLException sql){}
         return key;
     }
     

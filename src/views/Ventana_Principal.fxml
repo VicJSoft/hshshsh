@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="655.0" prefWidth="1091.0" styleClass="ventana" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ventana_PrincipalController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="655.0" prefWidth="1091.0" styleClass="ventana" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ventana_PrincipalController">
    <children>
       <AnchorPane fx:id="ap_tittleBar" layoutX="12.0" layoutY="14.0" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" onMouseReleased="#tittleBar_Released" prefHeight="34.0" prefWidth="1081.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -71,5 +71,6 @@
          </graphic>
       </Button>
       <JFXDrawer fx:id="drawer_Menu" alignment="TOP_LEFT" defaultDrawerSize="230.0" layoutX="12.0" layoutY="60.0" prefHeight="607.0" prefWidth="135.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="34.0" />
+      <AnchorPane fx:id="container" layoutX="20.0" layoutY="98.0" prefHeight="530.0" prefWidth="1040.0" />
    </children>
 </AnchorPane>

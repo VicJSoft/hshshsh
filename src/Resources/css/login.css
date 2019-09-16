@@ -20,14 +20,12 @@ and open the template in the editor.
     -jfx-focus-color: blue;
         /*color linea sin enfocar*/
     -jfx-unfocus-color: blue;
-    
     -fx-padding: 0.333333em 0 0.333333em 0;
     -fx-border-color:  derive( -boton-color,10%);
     -fx-border-style: solid;
     -fx-border-radius: 3;
     -fx-background-radius: 3;
     -fx-padding: 0 0 0 12;
-
     -fx-text-fill: black;
     -fx-prompt-text-fill: #A2A2A2;
 }

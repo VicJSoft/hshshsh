@@ -36,6 +36,8 @@ public class Ventana_PrincipalController implements Initializable {
     @FXML
     private AnchorPane root;
     @FXML
+    public AnchorPane container;
+    @FXML
     private AnchorPane ap_tittleBar;
     @FXML
     private ImageView iv_iconBar;
@@ -55,6 +57,7 @@ public class Ventana_PrincipalController implements Initializable {
 
   @Override
     public void initialize(URL location, ResourceBundle resources) {
+       
         drawer_Menu.setOnDrawerClosed((event) -> {
            drawer_Menu.toBack();
         });
@@ -72,6 +75,7 @@ public class Ventana_PrincipalController implements Initializable {
             //Controlador propio de la vista.
             //TODO setear eventos con interfaces a cada boton.
             DrawerMenuController drawerController = drawerLoader.getController();
+           
             drawer_Menu.setSidePane(menu);
         } catch (IOException ex) {
             Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);

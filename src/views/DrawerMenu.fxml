@@ -36,7 +36,7 @@
                      </image></ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Clientes">
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#clientes" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Clientes">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>
@@ -47,7 +47,7 @@
                      </image></ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Servicios">
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#servicios" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Servicios">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>             
@@ -58,7 +58,7 @@
                      </image></ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Taxistas">
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#taxistas" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Taxistas">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>

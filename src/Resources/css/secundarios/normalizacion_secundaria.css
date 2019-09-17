@@ -15,20 +15,7 @@ and open the template in the editor.
     -color-blanco :#FFFFFF;
     -boton-color: #5AB444;
 }
-.mainFxmlClass {
 
-}
-.ventana{
-    -fx-background-insets: 12;
-    -fx-background-color: -color-blanco;
-    -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, .32), 10, 0.8, 0.0, 0.0 );
-    -fx-padding:12;
-}
-.titulo
-{
-    -fx-text-fill: -label-color-1;
-    -fx-font-size: 44pt;
-}
 .button{
     -fx-cursor:hand;
 }

@@ -5,8 +5,13 @@
  */
 package controllers;
 
+import Resources.interfaces.Cargar_Secundaria;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.events.JFXDrawerEvent;
+import controllers.secundarios.ClientesController;
+import controllers.secundarios.EmpleadosController;
+import controllers.secundarios.ServiciosController;
+import controllers.secundarios.TaxistasController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,6 +51,8 @@ public class Ventana_PrincipalController implements Initializable {
     @FXML
     private Label lbl_tittleBar;
     @FXML
+    private Label lbl_title;
+    @FXML
     private Button btn_Hamburguesa;
     @FXML
     private JFXDrawer drawer_Menu;
@@ -54,7 +61,7 @@ public class Ventana_PrincipalController implements Initializable {
     @FXML
     private Button btn_minimizar;
 
-
+  
   @Override
     public void initialize(URL location, ResourceBundle resources) {
        
@@ -68,14 +75,75 @@ public class Ventana_PrincipalController implements Initializable {
                 drawer_Menu.toFront();
             }
         });
-            
+        try 
+        {
+            /*Seccion por defecto*/
+            lbl_tittleBar.setText(Cargar_Secundaria.SECCION[3]);
+            lbl_title.setText(Cargar_Secundaria.SECCION[3]);
+            FXMLLoader empleadosLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[3]));
+            container.getChildren().add( empleadosLoader.load());
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         try {
             FXMLLoader drawerLoader = new FXMLLoader(getClass().getResource("/views/DrawerMenu.fxml"));
             AnchorPane menu = drawerLoader.load();
             //Controlador propio de la vista.
             //TODO setear eventos con interfaces a cada boton.
             DrawerMenuController drawerController = drawerLoader.getController();
-           
+            drawerController.setGuardarEnviarListener(
+            new Cargar_Secundaria() {
+                @Override
+                public void ventana(int pos) {
+                    container.getChildren().clear();
+                    try
+                    {
+                        switch (pos) 
+                        {
+                            case 0:
+                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[0]);
+                                lbl_title.setText(Cargar_Secundaria.SECCION[0]);
+                                FXMLLoader empleadosLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[0]));
+                                container.getChildren().add( empleadosLoader.load());
+                                //EmpleadosController empleadosController = empleadosLoader.getController();
+                                break;
+                            case 1:
+                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[1]);
+                                lbl_title.setText(Cargar_Secundaria.SECCION[1]);
+                                FXMLLoader taxistasLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[1]));
+                                container.getChildren().add(taxistasLoader.load());
+                                //TaxistasController taxistasController = taxistasLoader.getController();
+                                break;
+                            case 2:
+                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[2]);
+                                lbl_title.setText(Cargar_Secundaria.SECCION[2]);
+                                FXMLLoader clientesLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[2]));
+                                container.getChildren().add(clientesLoader.load());
+                                //ClientesController clientesController = clientesLoader.getController();
+                                break;    
+                            case 3:
+                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[3]);
+                                lbl_title.setText(Cargar_Secundaria.SECCION[3]);
+                                FXMLLoader serviciosLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[3]));
+                                container.getChildren().add( serviciosLoader.load());
+                                //ServiciosController serviciosController = serviciosLoader.getController();
+                                break;
+                            default:
+                                break;
+                        }
+                        
+                    } 
+                    catch (IOException ex) 
+                    {
+                      Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    drawer_Menu.close();
+                }
+            });
+            
             drawer_Menu.setSidePane(menu);
         } catch (IOException ex) {
             Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);

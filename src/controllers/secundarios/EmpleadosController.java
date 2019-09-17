@@ -7,6 +7,8 @@ package controllers.secundarios;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -21,7 +23,11 @@ public class EmpleadosController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // TO
     }    
+    @FXML
+    void agregar(ActionEvent event) {
+        System.out.println("<3 Hola Vicente & Paulina <3");
+    }
     
 }

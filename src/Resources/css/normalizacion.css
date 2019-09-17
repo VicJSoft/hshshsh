@@ -3,6 +3,7 @@
     -boton-color-focused: #5AB44430;
     -borde-text-field: #29156E;
     -borde-text-field-focus: #29156E30;
+    -label-color-1: #707070;
 }
 .ventana-redonda{
     /*Sombra personalizada, para sombra generica sin ver tanto cada parametro
@@ -110,4 +111,9 @@
 .button-drawer:pressed{
     -fx-background-color: derive(-boton-color,5%);
     
+}
+.titulo
+{
+    -fx-text-fill: -label-color-1;
+    -fx-font-size: 44pt;
 }

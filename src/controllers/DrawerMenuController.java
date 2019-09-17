@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import Resources.interfaces.Cargar_Secundaria;
 import controllers.secundarios.EmpleadosController;
 import java.io.IOException;
 import java.net.URL;
@@ -30,25 +31,29 @@ import services.Servicios;
  */
 public class DrawerMenuController implements Initializable {
 
-   public static Ventana_PrincipalController ventana_PrincipalController;
+    private Cargar_Secundaria cargar_Secundaria;
     @FXML
     private AnchorPane menu;
     
     @FXML
     private void empleados(ActionEvent event)
-    {
-        try {
-            FXMLLoader empleadosLoader = new FXMLLoader(getClass().getResource("/views/secundarios/Empleados.fxml"));
-           
-            AnchorPane menu= empleadosLoader.load();
-            //Controlador propio de la vista.
-            //TODO setear eventos con interfaces a cada boton.
-            EmpleadosController empleadosController = empleadosLoader.getController();
-           
-        } catch (IOException ex) {
-          
-            Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    {  
+        cargar_Secundaria.ventana(0);
+    }
+    @FXML
+    private void taxistas(ActionEvent event)
+    {  
+        cargar_Secundaria.ventana(1);
+    }
+    @FXML
+    private void clientes(ActionEvent event)
+    {  
+        cargar_Secundaria.ventana(2);
+    }
+    @FXML
+    private void servicios(ActionEvent event)
+    {  
+        cargar_Secundaria.ventana(3);
     }
     @FXML 
     private void cerrarSesion(ActionEvent event) throws IOException
@@ -67,6 +72,9 @@ public class DrawerMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    } 
+    public void setGuardarEnviarListener(Cargar_Secundaria cargar_Secundaria){
+        this.cargar_Secundaria = cargar_Secundaria;
+    }
     
 }

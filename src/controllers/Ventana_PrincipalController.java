@@ -131,6 +131,13 @@ public class Ventana_PrincipalController implements Initializable {
                                 container.getChildren().add( serviciosLoader.load());
                                 //ServiciosController serviciosController = serviciosLoader.getController();
                                 break;
+                            case 4:
+                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[4]);
+                                lbl_title.setText(Cargar_Secundaria.SECCION[4]);
+                                FXMLLoader taxisLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[4]));
+                                container.getChildren().add( taxisLoader.load());
+                                //ServiciosController serviciosController = serviciosLoader.getController();
+                                break;
                             default:
                                 break;
                         }

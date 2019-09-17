@@ -54,7 +54,7 @@
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Resources/imagenes/iconos/Taxi/taxi.png" />
+                        <Image url="@../Resources/imagenes/iconos/Taxi/taxi-money.png" />
                      </image></ImageView>
                </graphic>
             </Button>
@@ -67,6 +67,18 @@
                      <image>
                         <Image url="@../Resources/imagenes/iconos/Taxi_user/taxi_user.png" />
                      </image></ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#taxis" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Taxis">
+               <font>
+                  <Font name="Century Gothic" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Resources/imagenes/iconos/Taxi/taxi.png" />
+                     </image>
+                  </ImageView>
                </graphic>
             </Button>
             <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Estadísticas">

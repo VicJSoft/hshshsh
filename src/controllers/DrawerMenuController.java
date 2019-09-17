@@ -55,6 +55,11 @@ public class DrawerMenuController implements Initializable {
     {  
         cargar_Secundaria.ventana(3);
     }
+    @FXML
+    private void taxis(ActionEvent event)
+    {  
+        cargar_Secundaria.ventana(4);
+    }
     @FXML 
     private void cerrarSesion(ActionEvent event) throws IOException
     {

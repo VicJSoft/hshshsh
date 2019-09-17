@@ -5,7 +5,6 @@
  */
 package Resources.interfaces;
 
-import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -13,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
  */
 public interface Cargar_Secundaria 
 {
-    public final String SECCION[]={"Empleados","Taxistas","Clientes","Servicios"};
-    public final String SECCIONPATH[]={"/views/secundarios/Empleados.fxml","/views/secundarios/Taxistas.fxml","/views/secundarios/Clientes.fxml","/views/secundarios/Servicios.fxml"};
+    public final String SECCION[]={"Empleados","Taxistas","Clientes","Servicios","Taxis"};
+    public final String SECCIONPATH[]={"/views/secundarios/Empleados.fxml","/views/secundarios/Taxistas.fxml","/views/secundarios/Clientes.fxml","/views/secundarios/Servicios.fxml","/views/secundarios/Taxis.fxml"};
     public abstract void ventana(int pos);
 }

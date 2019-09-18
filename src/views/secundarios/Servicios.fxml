@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="1065.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.secundarios.ServiciosController">
     <children>
-      <JFXTreeTableView layoutX="28.0" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="15.0">
+      <JFXTreeTableView layoutX="28.0" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="98.0">
          <columns>
             <TreeTableColumn prefWidth="250.0" sortable="false" text="Nombre" />
             <TreeTableColumn prefWidth="115.0" text="Teléfono" />
@@ -22,8 +22,8 @@
             <TreeTableColumn prefWidth="63.0" text="Unidad" />
          </columns>
       </JFXTreeTableView>
-      <JFXTextField layoutX="26.5" layoutY="37.0" prefHeight="25.0" prefWidth="399.0" promptText="Buscar servicios" />
-      <HBox alignment="CENTER" layoutX="674.0" layoutY="12.0" prefHeight="75.0" prefWidth="299.0" spacing="20.0" AnchorPane.bottomAnchor="393.0" AnchorPane.leftAnchor="674.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="12.0">
+      <JFXTextField layoutX="26.5" layoutY="37.0" prefHeight="25.0" prefWidth="399.0" promptText="Buscar servicios" AnchorPane.leftAnchor="26.5" AnchorPane.rightAnchor="639.5" AnchorPane.topAnchor="37.0" />
+      <HBox alignment="CENTER" layoutX="674.0" layoutY="12.0" prefHeight="75.0" prefWidth="299.0" spacing="20.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="12.0">
          <children>
             <JFXButton prefHeight="31.0" prefWidth="72.0" styleClass="boton">
                <graphic>

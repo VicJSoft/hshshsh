@@ -81,7 +81,8 @@ public class Ventana_PrincipalController implements Initializable {
             lbl_tittleBar.setText(Cargar_Secundaria.SECCION[3]);
             lbl_title.setText(Cargar_Secundaria.SECCION[3]);
             FXMLLoader empleadosLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[3]));
-            container.getChildren().add( empleadosLoader.load());
+            AnchorPane contenedor =empleadosLoader.load();
+            container.getChildren().addAll(contenedor.getChildren());
         } 
         catch (IOException ex) 
         {
@@ -98,7 +99,10 @@ public class Ventana_PrincipalController implements Initializable {
             new Cargar_Secundaria() {
                 @Override
                 public void ventana(int pos) {
+                    
                     container.getChildren().clear();
+                    AnchorPane contenedor=null;
+                    
                     try
                     {
                         switch (pos) 
@@ -107,40 +111,43 @@ public class Ventana_PrincipalController implements Initializable {
                                 lbl_tittleBar.setText(Cargar_Secundaria.SECCION[0]);
                                 lbl_title.setText(Cargar_Secundaria.SECCION[0]);
                                 FXMLLoader empleadosLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[0]));
-                                container.getChildren().add( empleadosLoader.load());
+                                contenedor =empleadosLoader.load();
+                               
                                 //EmpleadosController empleadosController = empleadosLoader.getController();
                                 break;
                             case 1:
                                 lbl_tittleBar.setText(Cargar_Secundaria.SECCION[1]);
                                 lbl_title.setText(Cargar_Secundaria.SECCION[1]);
                                 FXMLLoader taxistasLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[1]));
-                                container.getChildren().add(taxistasLoader.load());
+                                contenedor=taxistasLoader.load();
                                 //TaxistasController taxistasController = taxistasLoader.getController();
                                 break;
                             case 2:
                                 lbl_tittleBar.setText(Cargar_Secundaria.SECCION[2]);
                                 lbl_title.setText(Cargar_Secundaria.SECCION[2]);
                                 FXMLLoader clientesLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[2]));
-                                container.getChildren().add(clientesLoader.load());
+                                contenedor=clientesLoader.load();
                                 //ClientesController clientesController = clientesLoader.getController();
                                 break;    
                             case 3:
                                 lbl_tittleBar.setText(Cargar_Secundaria.SECCION[3]);
                                 lbl_title.setText(Cargar_Secundaria.SECCION[3]);
                                 FXMLLoader serviciosLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[3]));
-                                container.getChildren().add( serviciosLoader.load());
+                                contenedor = serviciosLoader.load();
                                 //ServiciosController serviciosController = serviciosLoader.getController();
                                 break;
                             case 4:
                                 lbl_tittleBar.setText(Cargar_Secundaria.SECCION[4]);
                                 lbl_title.setText(Cargar_Secundaria.SECCION[4]);
                                 FXMLLoader taxisLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[4]));
-                                container.getChildren().add( taxisLoader.load());
+                                contenedor=taxisLoader.load();
                                 //ServiciosController serviciosController = serviciosLoader.getController();
                                 break;
                             default:
                                 break;
+                                
                         }
+                        container.getChildren().addAll(contenedor.getChildren());
                         
                     } 
                     catch (IOException ex) 

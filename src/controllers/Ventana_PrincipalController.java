@@ -8,10 +8,6 @@ package controllers;
 import Resources.interfaces.Cargar_Secundaria;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.events.JFXDrawerEvent;
-import controllers.secundarios.ClientesController;
-import controllers.secundarios.EmpleadosController;
-import controllers.secundarios.ServiciosController;
-import controllers.secundarios.TaxistasController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +19,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -181,37 +176,8 @@ public class Ventana_PrincipalController implements Initializable {
         //si esta maximizada y se aplica un drag, entonces minimizará
         if(ventana.isMaximized()){
               
-            //crear lógica, para que cuando se quite el maximizado, el raton 
-            //se encuentre en la misma posición de proporción del toolbar.
            
-            double clickSceneX = event.getSceneX();
-            double clickSceneY = event.getSceneY();
-            double clickScreenX =event.getScreenX();
-            double clickScreenY =event.getScreenY();
-            
-            double widthMaximized = ventana.getScene().getWidth();
-            double heightMaximized = ventana.getScene().getHeight();
-            
-            //obtiene la proporcion del la posición del click.(50%, 60% etc).//la proporcion siempre es la misma.
-            double proporcionClickX =clickSceneX/widthMaximized;
-            double proporcionClickY = clickSceneY/heightMaximized;
-            
-
-            maximizarVentana(event, false);
-            // //coords del raton una vez minimizado ( ya con el nuevo tamaño de ventana)//(ventana.getScene().getWidth()*proporcionClickX)                     
-           
-            //Posicion donde deberia encontrarse mi raton en ventana desmaximizada
-            double nuevaPosMouseClicX = (ventana.getScene().getWidth()*proporcionClickX);
-            double nuevaPosMouseClicY = (ventana.getScene().getHeight()*proporcionClickY);
-            //clickScreenX-12, pone la ventana en la posicion del raton, y si se resta la nueva pos del raton, entonces
-            //obtenemos que la ventana se desplaza en proporcion a donde estaba maximizada
-            ventana.setX( clickScreenX- 12 -(nuevaPosMouseClicX)  );
-            ventana.setY( clickScreenY -12 - (nuevaPosMouseClicY)  );
-            
-            //Se guardan las coords de referencia nuevas.
-            Servicios.setOffsets(
-                    clickScreenX -12 -(nuevaPosMouseClicX),
-                    clickScreenY +12 - (nuevaPosMouseClicY) );
+            minimizarVentanaHaciendoDrag(ventana,event);         
                      
             //return;
         }else{            
@@ -282,6 +248,15 @@ public class Ventana_PrincipalController implements Initializable {
 
    
 
+    /**
+     * Hara´ un toogle para maximizar la ventana, así mismo tooggle ala 
+     * clase CSS que genera la sombra a la ventana.
+     * @param event
+     * Evento de donde se obtendra´ la ventana.
+     * @param state 
+     * True = setMaximized(true).
+     * False = setMaximized(false).
+     */
     private void maximizarVentana(Event event,boolean state){
         Stage ventana = Servicios.getStageFromEvent(event);
         if(state){            
@@ -293,6 +268,48 @@ public class Ventana_PrincipalController implements Initializable {
             root.getStyleClass().add("ventana");
             
         }
+    }
+    /**
+     * Des-maximizara´ la ventana cuando se haga un drag en pantalla completa.
+     * @param ventana
+     * Ventana (stage), a la cual se le aplicara´esta des-maximización.
+     * @param event 
+     * MouseEvent que provendra´ del clic en la barra titulo de la ventana.
+     */
+    private void minimizarVentanaHaciendoDrag(Stage ventana,MouseEvent event){
+    
+          //crear lógica, para que cuando se quite el maximizado, el raton 
+            //se encuentre en la misma posición de proporción del toolbar.
+           
+            double clickSceneX = event.getSceneX();
+            double clickSceneY = event.getSceneY();
+            double clickScreenX =event.getScreenX();
+            double clickScreenY =event.getScreenY();
+            
+            double widthMaximized = ventana.getScene().getWidth();
+            double heightMaximized = ventana.getScene().getHeight();
+            
+            //obtiene la proporcion del la posición del click.(50%, 60% etc).//la proporcion siempre es la misma.
+            double proporcionClickX =clickSceneX/widthMaximized;
+            double proporcionClickY = clickSceneY/heightMaximized;
+            
+
+            maximizarVentana(event, false);
+            // //coords del raton una vez minimizado ( ya con el nuevo tamaño de ventana)//(ventana.getScene().getWidth()*proporcionClickX)                     
+           
+            //Posicion donde deberia encontrarse mi raton en ventana desmaximizada
+            double nuevaPosMouseClicX = (ventana.getScene().getWidth()*proporcionClickX);
+            double nuevaPosMouseClicY = (ventana.getScene().getHeight()*proporcionClickY);
+            //clickScreenX-12, pone la ventana en la posicion del raton, y si se resta la nueva pos del raton, entonces
+            //obtenemos que la ventana se desplaza en proporcion a donde estaba maximizada
+            ventana.setX( clickScreenX- 12 -(nuevaPosMouseClicX)  );
+            ventana.setY( clickScreenY -12 - (nuevaPosMouseClicY)  );
+            
+            //Se guardan las coords de referencia nuevas.
+            Servicios.setOffsets(
+                    clickScreenX -12 -(nuevaPosMouseClicX),
+                    clickScreenY +12 - (nuevaPosMouseClicY) );
+        
     }
 
     

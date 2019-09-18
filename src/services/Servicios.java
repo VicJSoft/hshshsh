@@ -11,7 +11,6 @@ import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,7 +18,8 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import java.io.IOException;
 /**
- *
+ * Esta clase proporciona metódos generalers para el código de todo el proyecto,
+ * para no repetir el código, teniendo un manejor m´a sencillo.
  * @author VicEspino
  */
 public class Servicios {
@@ -27,15 +27,32 @@ public class Servicios {
     private static double xOffset;
     private static double yOffset;
     
-    
+    /**
+     * Cierra una ventna de donde provenga el evento proporcionado.
+     * @param event 
+     */
     public static void cerrarVentana(Event event){
         Servicios.cerrarVentana( (Stage) ((Node)event.getSource()).getScene().getWindow());
     }
-    
+    /**
+     * Cierra la ventana del stage proporcionado.
+     * @param stage 
+     */
     public static void cerrarVentana(Stage stage){
         stage.close();
     }
-    
+    /**
+     * Crea una ventana de error, de estilo modal. Necesita indicar quien es la ventana padre, 
+     * para hacerla modeal.
+     * @param ownerWindowError
+     * Ventana padre de la ventana error a crear.
+     * @param tittleBar
+     * Titulo que llevara´ la ventana de error.
+     * @param tittleContent
+     * Titulo interno de la ventana.
+     * @param contentMessage 
+     * Texto que informara´ sobre el error especificado.
+     */
     public static void crearVentanaError(Window ownerWindowError,String tittleBar,String tittleContent,String contentMessage){
         //TODO Crear XML de la ventana error.
         System.out.println("Error presente.");
@@ -50,54 +67,36 @@ public class Servicios {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.show();
     }
-    
-    
-    public static void maximizeWindow(Stage stage,boolean state){
-        stage.setMaximized(state);
-    }
-
-    public static void toggleMaximizeWindow(Stage stage){
-        if(stage.isMaximized()){
-            stage.setMaximized(false);
-        }
-        else{
-            stage.setMaximized(true);
-        }
-        
-    }
-    
-    public static void toggleMaximizeWindow(Event event){
-        
-        toggleMaximizeWindow(Servicios.getStageFromEvent(event)); 
-        
-    }
-    
+    /**
+     * Retorna el stage dueño del evento proporcionado.
+     * @param event
+     * Evento de donde se obtendra´ el stage.
+     * @return 
+     * 
+     */
     public static Stage getStageFromEvent(Event event){
         return ((Stage)((Node)event.getSource()).getScene().getWindow());
     }
     
-    public static void crearVentana(AnchorPane ventana){
-        
-        Stage stage = new Stage();
-        Scene scene = new Scene(ventana);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.show();
-        
-        
-    }
+
     
     public static void crearVentana(String rutaXML) throws IOException {
        
     }
-    
+    /**
+     * Cambiar´a el alor de los offsets, para el uso del servicio drag.
+     * @param event 
+     */
     public static void tittleBar_Pressed(MouseEvent event){
         Servicios.xOffset = event.getSceneX();//guarda coord iniciales del clic.        
         Servicios.yOffset = event.getSceneY();
     }
     
-    
+    /**
+     * Mueve la ventana de donde proviene el MouseEvent, 
+     * para desplazarlo en la ventana.
+     * @param event 
+     */
     public static void tittleBar_Drag(MouseEvent event){
         
         Stage primaryStage = getStageFromEvent(event);
@@ -105,11 +104,24 @@ public class Servicios {
         primaryStage.setY(event.getScreenY() - yOffset );
     }
     
+    /**
+     * Setea offsets de referencía que ser´an usados principalmente para desplazar una ventana
+     * en la pantalla.
+     * @param x
+     * Coord X de referencia.
+     * @param y 
+     * Coord Y de referencia.
+     */
     public static void setOffsets(double x, double y){
         xOffset = x;
         yOffset = y;
     }
     
+    /**
+     * Minimizara´ la ventana de donde proviene este evento.
+     * @param event 
+     * Evento que debera´ venir del clic del botón de minimizar de una ventana.
+     */
     public static void minimizeWindows(ActionEvent event) {
         
         getStageFromEvent(event).setIconified(true);

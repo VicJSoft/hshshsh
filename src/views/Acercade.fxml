@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="239.0" styleClass="ventana-blanca" stylesheets="@../Resources/css/normalizacion.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="controllers.AcercadeController">
+   <children>
+      <AnchorPane fx:id="ap_tittleBar" layoutX="24.0" layoutY="24.0" prefHeight="31.0" prefWidth="239.0" styleClass="tittle-bar" stylesheets="@../Resources/css/normalizacion.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button layoutX="151.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnCerrar_Click" styleClass="boton-cerrar" stylesheets="@../Resources/css/normalizacion.css" text="X" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="34.0" layoutY="9.0" styleClass="tittle-bar" stylesheets="@../Resources/css/normalizacion.css" text="VicJsoft" />
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="172.0" fitWidth="180.0" layoutX="34.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="88.0" layoutY="245.0" text="CONTACTO" />
+      <Label layoutX="80.0" layoutY="271.0" text="VicJSoft - 2019" />
+      <Label layoutX="66.0" layoutY="298.0" text="VicJsoft@gmail.com" />
+   </children>
+</AnchorPane>

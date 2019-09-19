@@ -35,27 +35,27 @@ public class DrawerMenuController implements Initializable {
     @FXML
     private void empleados(ActionEvent event)
     {  
-        cargar_Secundaria.ventana(0);
+        cargar_Secundaria.ventana("/views/secundarios/Empleados.fxml","Empleados");
     }
     @FXML
     private void taxistas(ActionEvent event)
     {  
-        cargar_Secundaria.ventana(1);
+        cargar_Secundaria.ventana("/views/secundarios/Taxistas.fxml","Taxistas");
     }
     @FXML
     private void clientes(ActionEvent event)
     {  
-        cargar_Secundaria.ventana(2);
+        cargar_Secundaria.ventana("/views/secundarios/Clientes.fxml","Clientes");
     }
     @FXML
     private void servicios(ActionEvent event)
     {  
-        cargar_Secundaria.ventana(3);
+        cargar_Secundaria.ventana("/views/secundarios/Servicios.fxml","Servicios");
     }
     @FXML
     private void taxis(ActionEvent event)
     {  
-        cargar_Secundaria.ventana(4);
+        cargar_Secundaria.ventana("/views/secundarios/Taxis.fxml","Taxis");
     }
     @FXML 
     private void cerrarSesion(ActionEvent event) throws IOException

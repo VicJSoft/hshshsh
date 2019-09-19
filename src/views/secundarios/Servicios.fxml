@@ -13,12 +13,12 @@
     <children>
       <JFXTreeTableView layoutX="28.0" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="98.0">
          <columns>
-            <TreeTableColumn prefWidth="250.0" sortable="false" text="Nombre" />
-            <TreeTableColumn prefWidth="115.0" text="Teléfono" />
-            <TreeTableColumn prefWidth="235.0" resizable="false" text="Dirección" />
-            <TreeTableColumn prefWidth="174.0" text="Referencias" />
-            <TreeTableColumn prefWidth="152.0" sortable="false" text="Notas" />
-            <TreeTableColumn prefWidth="63.0" text="Unidad" />
+            <TreeTableColumn prefWidth="163.0" sortable="false" text="Nombre" />
+            <TreeTableColumn minWidth="0.0" prefWidth="117.0" text="Teléfono" />
+            <TreeTableColumn minWidth="0.0" prefWidth="221.0" resizable="false" text="Dirección" />
+            <TreeTableColumn prefWidth="228.0" text="Referencias" />
+            <TreeTableColumn prefWidth="209.0" sortable="false" text="Notas" />
+            <TreeTableColumn maxWidth="75.0" minWidth="5.0" prefWidth="75.0" text="Unidad" />
          </columns>
       </JFXTreeTableView>
       <JFXTextField layoutX="26.5" layoutY="37.0" prefHeight="25.0" prefWidth="399.0" promptText="Buscar servicios" AnchorPane.leftAnchor="26.5" AnchorPane.rightAnchor="639.5" AnchorPane.topAnchor="37.0" />

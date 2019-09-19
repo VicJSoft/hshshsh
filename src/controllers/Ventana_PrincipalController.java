@@ -72,10 +72,10 @@ public class Ventana_PrincipalController implements Initializable {
         });
         try 
         {
-            /*Seccion por defecto*/
-            lbl_tittleBar.setText(Cargar_Secundaria.SECCION[3]);
-            lbl_title.setText(Cargar_Secundaria.SECCION[3]);
-            FXMLLoader empleadosLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[3]));
+            ///Seccion por defecto
+            lbl_tittleBar.setText("Servicios");
+            lbl_title.setText("Servicios");
+            FXMLLoader empleadosLoader = new FXMLLoader(getClass().getResource("/views/secundarios/Servicios.fxml"));
             AnchorPane contenedor =empleadosLoader.load();
             container.getChildren().addAll(contenedor.getChildren());
         } 
@@ -91,67 +91,28 @@ public class Ventana_PrincipalController implements Initializable {
             //TODO setear eventos con interfaces a cada boton.
             DrawerMenuController drawerController = drawerLoader.getController();
             drawerController.setGuardarEnviarListener(
-            new Cargar_Secundaria() {
+                    new Cargar_Secundaria() {
                 @Override
-                public void ventana(int pos) {
-                    
-                    container.getChildren().clear();
-                    AnchorPane contenedor=null;
-                    
-                    try
-                    {
-                        switch (pos) 
-                        {
-                            case 0:
-                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[0]);
-                                lbl_title.setText(Cargar_Secundaria.SECCION[0]);
-                                FXMLLoader empleadosLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[0]));
-                                contenedor =empleadosLoader.load();
-                               
-                                //EmpleadosController empleadosController = empleadosLoader.getController();
-                                break;
-                            case 1:
-                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[1]);
-                                lbl_title.setText(Cargar_Secundaria.SECCION[1]);
-                                FXMLLoader taxistasLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[1]));
-                                contenedor=taxistasLoader.load();
-                                //TaxistasController taxistasController = taxistasLoader.getController();
-                                break;
-                            case 2:
-                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[2]);
-                                lbl_title.setText(Cargar_Secundaria.SECCION[2]);
-                                FXMLLoader clientesLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[2]));
-                                contenedor=clientesLoader.load();
-                                //ClientesController clientesController = clientesLoader.getController();
-                                break;    
-                            case 3:
-                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[3]);
-                                lbl_title.setText(Cargar_Secundaria.SECCION[3]);
-                                FXMLLoader serviciosLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[3]));
-                                contenedor = serviciosLoader.load();
-                                //ServiciosController serviciosController = serviciosLoader.getController();
-                                break;
-                            case 4:
-                                lbl_tittleBar.setText(Cargar_Secundaria.SECCION[4]);
-                                lbl_title.setText(Cargar_Secundaria.SECCION[4]);
-                                FXMLLoader taxisLoader = new FXMLLoader(getClass().getResource(Cargar_Secundaria.SECCIONPATH[4]));
-                                contenedor=taxisLoader.load();
-                                //ServiciosController serviciosController = serviciosLoader.getController();
-                                break;
-                            default:
-                                break;
-                                
-                        }
-                        container.getChildren().addAll(contenedor.getChildren());
+                public void ventana(String routeFXML,String tittleWindow) {
+                    try {
+                        FXMLLoader loaderVentanaInterna = new FXMLLoader(getClass().getResource(routeFXML));
+                        AnchorPane ventanaInterna = loaderVentanaInterna.load();
+                        container.getChildren().clear();
+                        container.getChildren().addAll(ventanaInterna.getChildren());
                         
-                    } 
-                    catch (IOException ex) 
-                    {
-                      Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+                        lbl_tittleBar.setText(tittleWindow);
+                        lbl_title.setText(tittleWindow);
+                        
+                        drawer_Menu.close();
+                        
+                    } catch (IOException ex) {
+                        Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    drawer_Menu.close();
+                    
+                    
                 }
-            });
+            }
+            );
             
             drawer_Menu.setSidePane(menu);
         } catch (IOException ex) {

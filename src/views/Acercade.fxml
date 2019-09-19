@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="239.0" styleClass="ventana-blanca" stylesheets="@../Resources/css/normalizacion.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="controllers.AcercadeController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="239.0" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AcercadeController">
    <children>
-      <AnchorPane fx:id="ap_tittleBar" layoutX="24.0" layoutY="24.0" prefHeight="31.0" prefWidth="239.0" styleClass="tittle-bar" stylesheets="@../Resources/css/normalizacion.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="ap_tittleBar" layoutX="24.0" layoutY="24.0" onMouseDragged="#window_drag" onMousePressed="#windows_Presed" onMouseReleased="#window_Released" prefHeight="31.0" prefWidth="239.0" styleClass="tittle-bar" stylesheets="@../Resources/css/normalizacion.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button layoutX="151.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnCerrar_Click" styleClass="boton-cerrar" stylesheets="@../Resources/css/normalizacion.css" text="X" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
@@ -29,4 +29,8 @@
       <Label layoutX="80.0" layoutY="271.0" text="VicJSoft - 2019" />
       <Label layoutX="66.0" layoutY="298.0" text="VicJsoft@gmail.com" />
    </children>
+   <styleClass>
+      <String fx:value="ventana-blanca" />
+      <String fx:value="ventana" />
+   </styleClass>
 </AnchorPane>

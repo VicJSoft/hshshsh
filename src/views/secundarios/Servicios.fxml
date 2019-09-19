@@ -3,14 +3,13 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
-<?import java.net.URL?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="1065.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.secundarios.ServiciosController">
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="1065.0" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.secundarios.ServiciosController">
     <children>
       <JFXTreeTableView layoutX="28.0" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="98.0">
          <columns>
@@ -25,7 +24,7 @@
       <JFXTextField layoutX="26.5" layoutY="37.0" prefHeight="25.0" prefWidth="399.0" promptText="Buscar servicios" AnchorPane.leftAnchor="26.5" AnchorPane.rightAnchor="639.5" AnchorPane.topAnchor="37.0" />
       <HBox alignment="CENTER" layoutX="674.0" layoutY="12.0" prefHeight="75.0" prefWidth="299.0" spacing="20.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="12.0">
          <children>
-            <JFXButton prefHeight="31.0" prefWidth="72.0" styleClass="boton">
+            <JFXButton prefHeight="31.0" prefWidth="72.0" styleClass="boton-toolbar">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -34,7 +33,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton prefHeight="17.0" prefWidth="67.0" styleClass="boton">
+            <JFXButton prefHeight="17.0" prefWidth="67.0" styleClass="boton-toolbar">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -43,7 +42,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton prefHeight="0.0" prefWidth="67.0" styleClass="boton">
+            <JFXButton prefHeight="0.0" prefWidth="67.0" styleClass="boton-toolbar">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -55,9 +54,5 @@
          </children>
       </HBox>
    </children>
-   <stylesheets>
-       <URL value="@/Resources/css/secundarios/servicios.css" />
-      <URL value="@../../Resources/css/secundarios/normalizacion_secundaria.css" />
-   </stylesheets>
    
 </AnchorPane>

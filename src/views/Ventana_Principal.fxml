@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="655.0" prefWidth="1090.0" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ventana_PrincipalController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="655.0" prefWidth="1090.0" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ventana_PrincipalController">
    <children>
       <Label fx:id="lbl_title" layoutX="46.0" layoutY="63.0" prefHeight="87.0" prefWidth="352.0" styleClass="titulo" text="titulo" AnchorPane.leftAnchor="46.0" AnchorPane.topAnchor="51.0" />
       <AnchorPane fx:id="ap_tittleBar" layoutX="12.0" layoutY="14.0" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" onMouseReleased="#tittleBar_Released" prefHeight="34.0" prefWidth="1081.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -73,7 +73,7 @@
          </graphic>
       </Button>
       <JFXDrawer fx:id="drawer_Menu" alignment="TOP_LEFT" defaultDrawerSize="230.0" layoutX="12.0" layoutY="60.0" prefHeight="607.0" prefWidth="135.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="34.0" />
-      <AnchorPane fx:id="container" layoutX="25.0" layoutY="150.0" prefHeight="467.0" prefWidth="1065.0" stylesheets="@../Resources/css/secundarios/normalizacion_secundaria.css" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="150.0" />
+      <AnchorPane fx:id="container" layoutX="25.0" layoutY="150.0" prefHeight="467.0" prefWidth="1065.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="150.0" />
    </children>
    <styleClass>
       <String fx:value="ventana" />

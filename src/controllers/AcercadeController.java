@@ -7,17 +7,11 @@
 
 package controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import services.Servicios;
@@ -33,7 +27,7 @@ public class AcercadeController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    private Button btn_cerrar;
+    private AnchorPane ap_tittleBar;
  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -44,6 +38,18 @@ public class AcercadeController implements Initializable {
     private void btnCerrar_Click(ActionEvent event) {
         
         Servicios.cerrarVentana(event);
+    }
+
+    @FXML
+    private void window_Released(MouseEvent event) {
+    }
+
+    @FXML
+    private void window_drag(MouseEvent event) {
+    }
+
+    @FXML
+    private void windows_Presed(MouseEvent event) {
     }
 
     

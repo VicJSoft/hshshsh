@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import java.io.IOException;
+import java.net.URL;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 /**
  * Esta clase proporciona metódos generalers para el código de todo el proyecto,
  * para no repetir el código, teniendo un manejor m´a sencillo.
@@ -79,9 +82,28 @@ public class Servicios {
     }
     
 
-    
-    public static void crearVentana(String rutaXML) throws IOException {
-       
+    /**
+     * Crea ventana modal dado un owner, y un URL a partir de getClass().getResources();
+     * @param urlXML
+     * Recurso a crear ventana.
+     * @param ownerWindowError
+     * Si es nulo el owner, sigifica que será una ventana normal
+     * @throws IOException 
+     */
+    public static void crearVentana(URL urlXML,Stage ownerWindowError) throws IOException {
+        
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(urlXML);
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        
+        if(ownerWindowError!= null){
+            stage.initOwner(ownerWindowError);            
+            stage.initModality(Modality.WINDOW_MODAL);
+        }
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
     }
     /**
      * Cambiar´a el alor de los offsets, para el uso del servicio drag.

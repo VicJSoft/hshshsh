@@ -94,6 +94,10 @@ public class Ventana_PrincipalController implements Initializable {
                     new Cargar_Secundaria() {
                 @Override
                 public void ventana(String routeFXML,String tittleWindow) {
+                    if(routeFXML==null&&tittleWindow==null){
+                        drawer_Menu.close();
+                        return;
+                    }
                     try {
                         FXMLLoader loaderVentanaInterna = new FXMLLoader(getClass().getResource(routeFXML));
                         AnchorPane ventanaInterna = loaderVentanaInterna.load();

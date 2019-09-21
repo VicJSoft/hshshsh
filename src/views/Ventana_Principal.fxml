@@ -72,8 +72,8 @@
             </ImageView>
          </graphic>
       </Button>
-      <JFXDrawer fx:id="drawer_Menu" alignment="TOP_LEFT" defaultDrawerSize="230.0" layoutX="12.0" layoutY="60.0" prefHeight="607.0" prefWidth="135.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="34.0" />
-      <AnchorPane fx:id="container" layoutX="25.0" layoutY="150.0" prefHeight="467.0" prefWidth="1065.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="150.0" />
+      <JFXDrawer fx:id="drawer_Menu" alignment="TOP_LEFT" defaultDrawerSize="230.0" layoutX="12.0" layoutY="60.0" prefHeight="607.0" prefWidth="135.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="34.0" />
+      <AnchorPane fx:id="container" layoutX="25.0" layoutY="150.0" prefHeight="467.0" prefWidth="1065.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0" />
    </children>
    <styleClass>
       <String fx:value="ventana" />

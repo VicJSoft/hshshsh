@@ -63,10 +63,9 @@ public class DrawerMenuController implements Initializable {
      @FXML
     private void btnAcercaDe_Click(ActionEvent event) {
         try {
-            cargar_Secundaria.ventana(null, null);
-
             Servicios.crearVentana(
                     getClass().getResource("/views/Acercade.fxml"), Servicios.getStageFromEvent(event));
+            
             } catch (IOException ex) {
                  Logger.getLogger(DrawerMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }

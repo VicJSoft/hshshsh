@@ -5,9 +5,13 @@
  */
 package controllers.secundarios;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import services.Servicios;
 
 /**
  * FXML Controller class
@@ -23,5 +27,33 @@ public class ServiciosController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void btnAdd_OnAction(ActionEvent event) throws IOException {
+       /* Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/views/crud/ServiciosCRUD.fxml"));
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        
+        
+        stage.initOwner(Servicios.getStageFromEvent(event));            
+        stage.initModality(Modality.WINDOW_MODAL);
+        
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+*/    
+       Servicios.crearVentana(
+               getClass().getResource("/views/crud/ServiciosCRUD.fxml"),
+               Servicios.getStageFromEvent(event));
+    }
+
+    @FXML
+    private void btnDelete_OnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void btnEdit_OnAction(ActionEvent event) {
+    }
     
 }

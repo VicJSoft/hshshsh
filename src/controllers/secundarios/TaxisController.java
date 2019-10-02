@@ -5,9 +5,13 @@
  */
 package controllers.secundarios;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import services.Servicios;
 
 /**
  * FXML Controller class
@@ -23,5 +27,10 @@ public class TaxisController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void btnAdd_OnAction(ActionEvent event) throws IOException {
+        
+    }
     
 }

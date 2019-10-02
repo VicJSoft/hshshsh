@@ -122,7 +122,17 @@
     -fx-text-fill: -label-color-1;
     -fx-font-size: 44pt;
 }
-.jfx-text-field{
+.titulo-CRUD-windows{
+    -fx-text-fill: -label-color-1;
+    -fx-font-size: 30pt;
+}
+.tittle-seccion-CRUD{
+     -fx-text-fill: -label-color-1;
+    -fx-font-size: 18pt;
+}
+
+
+.text-field-busqueda{
     -fx-padding: 0.333333em 0 0.333333em 0;
     -fx-border-color:  derive( -boton-color,10%);
     -fx-border-style: solid;
@@ -133,7 +143,7 @@
     -fx-prompt-text-fill: #A2A2A2;
 }
 /*Linea inferior sin foco*/
-.jfx-text-field > .input-line
+.text-field-busqueda > .input-line
 {
     -fx-background-color: -jfx-unfocus-color;
     -fx-background-color: transparent;
@@ -144,13 +154,13 @@
 }
 /*Linea inferior al enfocar, 
 que además es independiente a la de sin foco*/
-.jfx-text-field > .input-focused-line{
+.text-field-busqueda > .input-focused-line{
    /* -fx-background-color: -jfx-focus-color;*/
    -fx-background-color: transparent;
     -fx-pref-height: 2px;
     -fx-translate-y: 1px;
 }
-.jfx-text-field:focused
+.text-field-busqueda:focused
 {
     -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT;
     -fx-prompt-text-fill: #4D4D4D;
@@ -158,6 +168,12 @@ que además es independiente a la de sin foco*/
     -fx-text-fill: #2A2A2A;
  }
  
+ 
+ .jfx-text-field{
+     -fx-font-family: gadugi;
+     -fx-font-size: 15px;
+     
+ }
  
 /*******************************************************************************
      *           
@@ -215,5 +231,38 @@ que además es independiente a la de sin foco*/
     }
 
 
-
-
+    .boton-aceptar{
+    
+        -fx-background-color:-boton-color;
+        -fx-font-family: gadugi;
+        -fx-text-fill:-color-blanco;
+        -fx-border-radius:3;
+        -fx-backgorund-radius:3;
+    }
+    .boton-aceptar:hover{
+        -fx-background-color: derive(-boton-color,40%);
+    }
+    .boton-aceptar:pressed{
+        -fx-background-color: derive(-boton-color,10%);
+    }
+    
+    .boton-cancelar{
+        -fx-border-color:-boton-color;
+        -fx-background-color:-color-blanco;
+        -fx-font-family: gadugi;
+        -fx-text-fill:-boton-color;
+        -fx-border-radius:3;
+        -fx-backgorund-radius:3;
+        
+    }
+    .boton-cancelar:hover{
+        -fx-background-color: derive(gray,80%);
+    }
+    .boton-cancelar:pressed{
+        -fx-background-color: derive(gray,50%);
+    }
+    
+    .jfx-combo-box{
+        -fx-font-family: gadugi;
+        -fx-font-size: 15px;
+    }

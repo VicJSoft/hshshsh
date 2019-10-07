@@ -49,7 +49,11 @@ public class ClientesCRUDController implements Initializable {
     private void btnCerrar_Click(ActionEvent event) {
         Servicios.cerrarVentana(event);
     }
-
+    @FXML
+    void btn_Cancelar_Click(ActionEvent event) 
+    {
+        Servicios.cerrarVentana(event);
+    }
     @FXML
     private void tittleBar_Released(MouseEvent event) {
     }

@@ -266,3 +266,15 @@ que además es independiente a la de sin foco*/
         -fx-font-family: gadugi;
         -fx-font-size: 15px;
     }
+    /*radio button*/
+    .customized-jfx-radio-button
+    {
+        -fx-text-fill: borde-text-field;
+        -jfx-selected-color: -boton-color;
+        -jfx-unselected-color: -label-color-1;
+    }
+    /*date and times */
+    .jfx-date-picker,.jfx-time-picker
+    {
+        -jfx-default-color:-boton-color;
+    }

@@ -42,8 +42,8 @@
       <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="248.0" prefHeight="25.0" prefWidth="182.0" promptText="Placa" />
       <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="302.0" layoutY="248.0" prefHeight="31.0" prefWidth="182.0" promptText="Modelo" />
       <Button layoutX="403.0" layoutY="410.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
-      <Button layoutX="283.0" layoutY="410.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
-      <JFXComboBox focusColor="#5ab444" labelFloat="true" layoutX="302.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Marca" />
+      <Button layoutX="283.0" layoutY="410.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
+      <JFXComboBox fx:id="comboBox_marca" focusColor="#5ab444" labelFloat="true" layoutX="302.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Marca" />
       <Label layoutX="440.0" layoutY="474.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="10.0" />

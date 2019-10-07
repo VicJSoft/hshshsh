@@ -5,6 +5,8 @@
  */
 package controllers.crud;
 
+import Resources.statics.Statics;
+import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -36,17 +38,29 @@ public class EmpleadosCRUDController implements Initializable {
     private Label lbl_tittleBar;
     @FXML
     private Label lbl_tittle;
+    @FXML
+    private JFXComboBox<String> comboBox_sexo;
+
+    @FXML
+    private JFXComboBox<String> comboBox_tipo_empleado;
+
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        comboBox_sexo.setItems(Statics.sexo);
+        comboBox_tipo_empleado.setItems(Statics.tipo_empledo);
     }    
-
+    
     @FXML
     private void btnCerrar_Click(ActionEvent event) {
+        Servicios.cerrarVentana(event);
+    }
+    @FXML
+    void btn_Cancelar_Click(ActionEvent event) 
+    {
         Servicios.cerrarVentana(event);
     }
 

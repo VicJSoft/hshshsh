@@ -5,6 +5,8 @@
  */
 package controllers.crud;
 
+import Resources.statics.Statics;
+import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -36,6 +38,9 @@ public class TaxisCRUDController implements Initializable {
     private Label lbl_tittleBar;
     @FXML
     private Label lbl_tittle;
+    @FXML
+    private JFXComboBox<String> comboBox_marca;
+
 
     /**
      * Initializes the controller class.
@@ -43,10 +48,18 @@ public class TaxisCRUDController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        comboBox_marca.setItems(Statics.marcas);
+        
+        
     }    
 
-     @FXML
+    @FXML
     private void btnCerrar_Click(ActionEvent event) {
+        Servicios.cerrarVentana(event);
+    }
+    @FXML
+    void btn_Cancelar_Click(ActionEvent event) 
+    {
         Servicios.cerrarVentana(event);
     }
 

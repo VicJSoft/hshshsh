@@ -53,7 +53,7 @@
       <Separator layoutX="129.0" layoutY="421.0" prefHeight="3.0" prefWidth="371.0" />
       <JFXTextField labelFloat="true" layoutX="42.0" layoutY="458.0" prefHeight="31.0" prefWidth="224.0" promptText="Observaciones" />
       <Button layoutX="379.0" layoutY="525.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
-      <Button layoutX="252.0" layoutY="524.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
+      <Button layoutX="252.0" layoutY="524.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
       <Label layoutX="429.0" layoutY="567.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="10.0" />

@@ -55,11 +55,11 @@
       <Separator layoutX="95.0" layoutY="545.0" prefHeight="3.0" prefWidth="405.0" />
       <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="583.0" prefHeight="25.0" prefWidth="182.0" promptText="Observaciones" />
       <Button layoutX="387.0" layoutY="626.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
-      <Button layoutX="260.0" layoutY="625.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
-      <JFXComboBox focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="301.0" prefHeight="25.0" prefWidth="182.0" promptText="Sexo" />
+      <Button layoutX="260.0" layoutY="625.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
+      <JFXComboBox fx:id="comboBox_sexo" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="301.0" prefHeight="25.0" prefWidth="182.0" promptText="Sexo" />
       <JFXDatePicker layoutX="262.0" layoutY="239.0" prefHeight="31.0" prefWidth="220.0" promptText="Fecha de Nacimiento" />
       <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="239.0" prefHeight="25.0" prefWidth="182.0" promptText="Contraseña" />
-      <JFXComboBox focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="301.0" prefHeight="25.0" prefWidth="182.0" promptText="Tipo de empleado" />
+      <JFXComboBox fx:id="comboBox_tipo_empleado" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="301.0" prefHeight="25.0" prefWidth="182.0" promptText="Tipo de empleado" />
       <Label layoutX="419.0" layoutY="663.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="10.0" />

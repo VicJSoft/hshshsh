@@ -17,7 +17,7 @@
             <TreeTableColumn maxWidth="300.0" minWidth="163.0" prefWidth="216.0" sortable="false" text="Nombre" />
             <TreeTableColumn maxWidth="140.0" minWidth="130.0" prefWidth="130.0" text="Teléfono" />
             <TreeTableColumn maxWidth="500.0" minWidth="215.0" prefWidth="215.0" text="Dirección" />
-            <TreeTableColumn maxWidth="500.0" minWidth="210.0" prefWidth="210.0" text="Referencias" />
+            <TreeTableColumn maxWidth="500.0" minWidth="210.0" prefWidth="210.0" text="Observaciones" />
             <TreeTableColumn maxWidth="500.0" minWidth="199.0" prefWidth="199.0" sortable="false" text="Notas" />
             <TreeTableColumn maxWidth="75.0" minWidth="70.0" prefWidth="70.0" text="Unidad" />
          </columns>

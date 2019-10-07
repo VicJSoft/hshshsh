@@ -76,14 +76,17 @@ public class DrawerMenuController implements Initializable {
     @FXML 
     private void cerrarSesion(ActionEvent event) throws IOException
     {
-        Parent ventana = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+       /* Parent ventana = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(ventana);
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
-                
+         */
+        Servicios.crearVentana(
+               getClass().getResource("/views/Login.fxml"),
+               null);
         Servicios.cerrarVentana(event);
                
     }

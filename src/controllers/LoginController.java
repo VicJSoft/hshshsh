@@ -107,10 +107,11 @@ public class LoginController implements Initializable {
                 System.out.println("Entre");
                // Servicios.crearVentana(new Ventana_PrincipalController());
                /// Servicios.crearVentana("/views/Ventana_PrincipalController.fxml");
-               /*Servicios.crearVentana(
+               Servicios.crearVentana(
                getClass().getResource("/views/Ventana_Principal.fxml"),
-               Servicios.getStageFromEvent(event));*/
-                  Parent ventana = FXMLLoader.load(getClass().getResource("/views/Ventana_Principal.fxml"));
+               null);
+               
+                 /* Parent ventana = FXMLLoader.load(getClass().getResource("/views/Ventana_Principal.fxml"));
                       Stage primaryStage = new Stage();
                       Scene scene = new Scene(ventana);
                       scene.setFill(Color.TRANSPARENT);
@@ -119,7 +120,7 @@ public class LoginController implements Initializable {
                       primaryStage.getScene().getRoot().setEffect(new DropShadow());
 
                       primaryStage.show();
-
+*/
                 if(cb_recordar.isSelected())
                     setCredenciales();
                 else

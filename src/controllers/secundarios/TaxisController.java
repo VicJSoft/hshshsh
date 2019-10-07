@@ -29,8 +29,12 @@ public class TaxisController implements Initializable {
     }    
 
     @FXML
-    private void btnAdd_OnAction(ActionEvent event) throws IOException {
-        
+    private void btnAdd_OnAction(ActionEvent event) throws IOException 
+    {
+         Servicios.crearVentana(
+               getClass().getResource("/views/crud/TaxisCRUD.fxml"),
+               Servicios.getStageFromEvent(event));
+    
     }
     
 }

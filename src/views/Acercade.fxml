@@ -20,7 +20,7 @@
                <padding>
                   <Insets bottom="-5.0" left="-10.0" right="-10.0" top="-5.0" />
                </padding></Button>
-            <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="7.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="5.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
                </image>
@@ -33,9 +33,10 @@
             <Image url="@../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
          </image>
       </ImageView>
-      <Label layoutX="114.0" layoutY="240.0" text="CONTACTO" />
-      <Label layoutX="106.0" layoutY="272.0" text="VicJSoft - 2019" />
-      <Label layoutX="92.0" layoutY="301.0" text="VicJsoft@gmail.com" />
+      <Label layoutX="117.0" layoutY="266.0" text="CONTACTO" />
+      <Label layoutX="106.0" layoutY="302.0" text="VicJSoft © 2019" />
+      <Label layoutX="92.0" layoutY="340.0" text="VicJsoft@gmail.com" />
+      <Label layoutX="96.0" layoutY="373.0" text="Creating the future!" />
    </children>
    <styleClass>
       <String fx:value="ventana-blanca" />

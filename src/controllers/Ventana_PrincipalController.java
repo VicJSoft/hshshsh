@@ -161,6 +161,14 @@ public class Ventana_PrincipalController implements Initializable {
         }
         
     }
+    @FXML
+    void cerrarHamburger(MouseEvent event) 
+    {
+        if (drawer_Menu.isOpened()) {
+            drawer_Menu.close();
+            
+        }
+    }
 
     @FXML
     private void tittleBar_Pressed(MouseEvent event) {

@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import services.Servicios;
 
 /**
  * FXML Controller class
@@ -44,8 +45,9 @@ public class TaxisCRUDController implements Initializable {
         // TODO
     }    
 
-    @FXML
+     @FXML
     private void btnCerrar_Click(ActionEvent event) {
+        Servicios.cerrarVentana(event);
     }
 
     @FXML
@@ -54,10 +56,13 @@ public class TaxisCRUDController implements Initializable {
 
     @FXML
     private void tittleBarr_Drag(MouseEvent event) {
+        Servicios.tittleBar_Drag(event);
     }
 
     @FXML
     private void tittleBar_Pressed(MouseEvent event) {
+    
+        Servicios.tittleBar_Pressed(event);
     }
     
 }

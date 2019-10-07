@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -106,18 +107,19 @@ public class LoginController implements Initializable {
                 System.out.println("Entre");
                // Servicios.crearVentana(new Ventana_PrincipalController());
                /// Servicios.crearVentana("/views/Ventana_PrincipalController.fxml");
-               
-                Parent ventana = FXMLLoader.load(getClass().getResource("/views/Ventana_Principal.fxml"));
-        
-                Stage stage = new Stage();
-                Scene scene = new Scene(ventana);
-                scene.setFill(Color.TRANSPARENT);
-                stage.setScene(scene);
-                stage.initStyle(StageStyle.TRANSPARENT);
-                stage.show();
-                
-                Servicios.cerrarVentana(event);
-               
+               /*Servicios.crearVentana(
+               getClass().getResource("/views/Ventana_Principal.fxml"),
+               Servicios.getStageFromEvent(event));*/
+                  Parent ventana = FXMLLoader.load(getClass().getResource("/views/Ventana_Principal.fxml"));
+                      Stage primaryStage = new Stage();
+                      Scene scene = new Scene(ventana);
+                      scene.setFill(Color.TRANSPARENT);
+                      primaryStage.setScene(scene);
+                      primaryStage.initStyle(StageStyle.TRANSPARENT);
+                      primaryStage.getScene().getRoot().setEffect(new DropShadow());
+
+                      primaryStage.show();
+
                 if(cb_recordar.isSelected())
                     setCredenciales();
                 else

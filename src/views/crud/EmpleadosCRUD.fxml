@@ -65,6 +65,6 @@
             <Font size="10.0" />
          </font>
       </Label>
-      <JFXPasswordField fx:id="textField_password" layoutX="42.0" layoutY="239.0" prefHeight="31.0" prefWidth="194.0" promptText="Contraseña" />
+      <JFXPasswordField fx:id="textField_password" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="239.0" prefHeight="31.0" prefWidth="194.0" promptText="Contraseña" />
    </children>
 </AnchorPane>

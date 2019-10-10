@@ -28,7 +28,7 @@ public class ConexionSQL
    /***CUZTOMIZED PUBLIC METHODS
      * @return /*******************************************************************************************************************/
   
-   public Connection getConexion() 
+   public  Connection getConexion() 
    {
        try {
            Class.forName(NAME).newInstance();

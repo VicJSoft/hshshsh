@@ -5,6 +5,7 @@ import services.sql.ConexionLectura;
 import services.sql.ConexionSQL;
 import com.jfoenix.validation.RequiredFieldValidator;
 import Resources.persistencia.SharePreferences;
+import Resources.statics.Statics;
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
@@ -105,22 +106,13 @@ public class LoginController implements Initializable {
             {
                 //conexion a la siguiente pantalla
                 System.out.println("Entre");
-               // Servicios.crearVentana(new Ventana_PrincipalController());
-               /// Servicios.crearVentana("/views/Ventana_PrincipalController.fxml");
+                Statics.setConnections(connection);
+                System.out.println(connection);
+                        
                Servicios.crearVentana(
                getClass().getResource("/views/Ventana_Principal.fxml"),
                null);
-               
-                 /* Parent ventana = FXMLLoader.load(getClass().getResource("/views/Ventana_Principal.fxml"));
-                      Stage primaryStage = new Stage();
-                      Scene scene = new Scene(ventana);
-                      scene.setFill(Color.TRANSPARENT);
-                      primaryStage.setScene(scene);
-                      primaryStage.initStyle(StageStyle.TRANSPARENT);
-                      primaryStage.getScene().getRoot().setEffect(new DropShadow());
-
-                      primaryStage.show();
-*/
+              
                 if(cb_recordar.isSelected())
                     setCredenciales();
                 else

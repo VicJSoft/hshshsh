@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.events.JFXDrawerEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,7 +56,7 @@ public class Ventana_PrincipalController implements Initializable {
     private Button btn_maximizar;
     @FXML
     private Button btn_minimizar;
-
+   
   
   @Override
     public void initialize(URL location, ResourceBundle resources) {

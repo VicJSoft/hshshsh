@@ -269,7 +269,7 @@ que además es independiente a la de sin foco*/
     /*radio button*/
     .customized-jfx-radio-button
     {
-        -fx-text-fill: -borde-text-field;
+        -fx-text-fill: borde-text-field;
         -jfx-selected-color: -boton-color;
         -jfx-unselected-color: -label-color-1;
     }

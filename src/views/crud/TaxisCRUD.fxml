@@ -38,10 +38,10 @@
       <Label fx:id="lbl_tittle" layoutX="32.0" layoutY="65.0" prefHeight="58.0" prefWidth="144.0" styleClass="titulo-CRUD-windows" text="Taxis " AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0" />
       <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos Vehículo" AnchorPane.leftAnchor="20.0" />
       <Separator layoutX="232.0" layoutY="132.0" prefHeight="3.0" prefWidth="274.0" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Unidad" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="248.0" prefHeight="25.0" prefWidth="182.0" promptText="Placa" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="302.0" layoutY="248.0" prefHeight="31.0" prefWidth="182.0" promptText="Modelo" />
-      <Button layoutX="403.0" layoutY="410.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
+      <JFXTextField fx:id="textField_unidad" focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Unidad" />
+      <JFXTextField fx:id="textField_placa" focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="248.0" prefHeight="25.0" prefWidth="182.0" promptText="Placa" />
+      <JFXTextField fx:id="textField_modelo" focusColor="#5ab444" labelFloat="true" layoutX="302.0" layoutY="248.0" prefHeight="31.0" prefWidth="182.0" promptText="Modelo" />
+      <Button fx:id="btn_Agregar" layoutX="403.0" layoutY="410.0" mnemonicParsing="false" onAction="#btn_Agregar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
       <Button layoutX="283.0" layoutY="410.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
       <JFXComboBox fx:id="comboBox_marca" focusColor="#5ab444" labelFloat="true" layoutX="302.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Marca" />
       <Label layoutX="440.0" layoutY="474.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="15.0">
@@ -49,6 +49,6 @@
             <Font size="10.0" />
          </font>
       </Label>
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="337.0" prefHeight="25.0" prefWidth="182.0" promptText="Taxista" />
+      <JFXComboBox fx:id="comboBox_taxista" focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="346.0" prefHeight="31.0" prefWidth="419.0" promptText="Taxista" />
    </children>
 </AnchorPane>

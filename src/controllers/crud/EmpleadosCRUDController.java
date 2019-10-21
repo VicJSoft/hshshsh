@@ -23,7 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import services.Servicios;
-import services.sql.ConexionEscrituraEmpleados;
+import services.sql.write.ConexionEscrituraEmpleados;
 
 /**
  * FXML Controller class

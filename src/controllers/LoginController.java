@@ -1,7 +1,7 @@
 package controllers;
 
 /*** IMPORTS/****************************************************************************************************************************************/
-import services.sql.ConexionLectura;
+import services.sql.read.ConexionLecturaEmpleados;
 import services.sql.ConexionSQL;
 import com.jfoenix.validation.RequiredFieldValidator;
 import Resources.persistencia.SharePreferences;
@@ -56,7 +56,7 @@ public class LoginController implements Initializable {
     private Button btn_login;
     @FXML
     private Button btn_cerrar;
-    ConexionLectura conexionLectura = new ConexionLectura();
+    ConexionLecturaEmpleados conexionLectura = new ConexionLecturaEmpleados();
     ConexionSQL conexionSQL = new ConexionSQL();
     Connection connection = conexionSQL.getConexion();
 /**************************************************************************************************************************************************/

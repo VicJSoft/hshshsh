@@ -1,9 +1,12 @@
-package services.sql;
+package services.sql.write;
 
+import Models.Empleados;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -27,8 +30,14 @@ public class ConexionEscrituraClientes
             ps.setString(2, nombre );
             ps.setString(3, calle );
             ps.setString(4, colonia);
-            ps.setString(5, numExt);
-            ps.setString(6, numInt);
+            if(numExt.equals(""))
+                ps.setString(5, null);
+            else
+                ps.setString(5, numExt);
+            if(numInt.equals(""))
+                ps.setString(6, null);
+            else
+                ps.setString(6, numInt);
             ps.setString(7, observaciones);
             ps.executeUpdate();
             key=true;
@@ -40,5 +49,5 @@ public class ConexionEscrituraClientes
         }
         
         return key;
-    }
+    } 
 }

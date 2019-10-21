@@ -13,19 +13,19 @@
 <AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="1065.0" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.secundarios.TaxistasController">
     
     <children>
-      <JFXTreeTableView layoutX="26.5" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="98.0">
+      <JFXTreeTableView fx:id="table_taxistas" layoutX="26.5" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="98.0">
          <columns>
-            <TreeTableColumn maxWidth="500.0" minWidth="250.0" prefWidth="250.0" sortable="false" text="Nombre" />
-            <TreeTableColumn maxWidth="130.0" minWidth="130.0" prefWidth="130.0" text="Teléfono" />
-            <TreeTableColumn maxWidth="1000.0" prefWidth="277.0" text="Dirección" />
-            <TreeTableColumn maxWidth="1000.0" minWidth="248.0" prefWidth="248.0" text="Observaciones" />
-            <TreeTableColumn maxWidth="135.0" minWidth="135.0" prefWidth="135.0" sortable="false" text="Fecha de nacimiento" />
+            <TreeTableColumn fx:id="column_nombre" maxWidth="500.0" minWidth="250.0" prefWidth="250.0" sortable="false" text="Nombre" />
+            <TreeTableColumn fx:id="column_telefono" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" text="Teléfono" />
+            <TreeTableColumn fx:id="column_direccion" maxWidth="1000.0" minWidth="250.0" prefWidth="277.0" text="Dirección" />
+            <TreeTableColumn fx:id="column_obsevaciones" maxWidth="1000.0" minWidth="248.0" prefWidth="248.0" text="Observaciones" />
+            <TreeTableColumn fx:id="column_nacimiento" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" sortable="false" text="Fecha de nacimiento" />
          </columns>
          <columnResizePolicy>
             <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </JFXTreeTableView>
-      <JFXTextField layoutX="25.6" layoutY="37.0" prefHeight="25.0" prefWidth="399.0" promptText="Buscar taxista" styleClass="text-field-busqueda" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="640.4000000000001" AnchorPane.topAnchor="37.0" />
+      <JFXTextField fx:id="textField_buscar" layoutX="25.6" layoutY="37.0" prefHeight="25.0" prefWidth="399.0" promptText="Buscar taxista" styleClass="text-field-busqueda" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="640.4000000000001" AnchorPane.topAnchor="37.0" />
       <HBox alignment="CENTER" layoutX="674.0" layoutY="12.0" prefHeight="75.0" prefWidth="299.0" spacing="20.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="12.0">
          <children>
             <JFXButton onAction="#btnAdd_OnAction" prefHeight="9.0" prefWidth="72.0" styleClass="boton-toolbar">

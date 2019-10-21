@@ -20,7 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import services.Servicios;
-import services.sql.ConexionEscrituraClientes;
+import services.sql.write.ConexionEscrituraClientes;
 
 /**
  * FXML Controller class

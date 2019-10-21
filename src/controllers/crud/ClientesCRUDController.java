@@ -124,6 +124,7 @@ public class ClientesCRUDController implements Initializable {
     private void tittleBar_Pressed(MouseEvent event) {
         Servicios.tittleBar_Pressed(event);
     }
+    //metodo para limpiar campos
     private void vaciar()
     {
         

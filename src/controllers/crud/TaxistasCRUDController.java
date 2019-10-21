@@ -114,5 +114,9 @@ public class TaxistasCRUDController implements Initializable {
     
         Servicios.tittleBar_Pressed(event);
     }
-    
+    //metodo para limpiar campos
+    public void vaciar()
+    {
+        
+    }
 }

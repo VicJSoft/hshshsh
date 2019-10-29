@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="442.0" prefWidth="290.0" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AcercadeController">
+   <children>
+      <AnchorPane fx:id="ap_tittleBar" layoutX="24.0" layoutY="24.0" onMouseDragged="#window_drag" onMousePressed="#windows_Presed" prefHeight="34.0" prefWidth="266.0" styleClass="tittle-bar" stylesheets="@../Resources/css/normalizacion.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button layoutX="151.0" layoutY="2.0" onAction="#btnCerrar_Click" prefHeight="34.0" prefWidth="43.0" styleClass="boton-cerrar" stylesheets="@../Resources/css/normalizacion.css" text="X" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Gadugi" size="26.0" />
+               </font>
+               <padding>
+                  <Insets bottom="-5.0" left="-10.0" right="-10.0" top="-5.0" />
+               </padding></Button>
+            <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="5.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="41.0" layoutY="7.0" prefHeight="26.0" prefWidth="43.0" styleClass="tittle-bar" stylesheets="@../Resources/css/normalizacion.css" text="VicJsoft" />
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="172.0" fitWidth="180.0" layoutX="65.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="117.0" layoutY="266.0" text="CONTACTO" />
+      <Label layoutX="106.0" layoutY="302.0" text="VicJSoft © 2019" />
+      <Label layoutX="92.0" layoutY="340.0" text="VicJsoft@gmail.com" />
+      <Label layoutX="96.0" layoutY="373.0" text="Creating the future!" />
+   </children>
+   <styleClass>
+      <String fx:value="ventana-blanca" />
+      <String fx:value="ventana" />
+   </styleClass>
+</AnchorPane>

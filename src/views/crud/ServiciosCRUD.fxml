@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="669.0" prefWidth="900.0" styleClass="ventana" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.crud.ServiciosCRUDController">
+   <children>
+      <AnchorPane fx:id="ap_tittleBar" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" onMouseReleased="#tittleBar_Released" prefHeight="34.0" prefWidth="1081.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fx:id="iv_iconBar" fitHeight="24.0" fitWidth="27.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+               <image>
+                  <Image url="@../../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btn_cerrar" layoutX="1024.0" layoutY="1.0" onAction="#btnCerrar_Click" prefHeight="32.0" prefWidth="43.0" styleClass="boton-cerrar" stylesheets="@../../Resources/css/normalizacion.css" text="X" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Gadugi" size="26.0" />
+               </font>
+               <padding>
+                  <Insets bottom="-5.0" left="-10.0" right="-10.0" top="-5.0" />
+               </padding>
+            </Button>
+            <Label fx:id="lbl_tittleBar" layoutX="35.0" layoutY="2.0" prefHeight="30.0" prefWidth="172.0" text="Servicios CRUD" textFill="#828282" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="2.0">
+               <font>
+                  <Font name="Gadugi" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label fx:id="lbl_tittle" layoutX="8.0" layoutY="41.0" styleClass="titulo-CRUD-windows" text="Servicios" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="41.0" />
+      <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos personales" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="100.0" />
+      <Separator layoutX="232.0" layoutY="132.0" prefHeight="3.0" prefWidth="274.0" />
+      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Teléfono">
+         <font>
+            <Font name="Gadugi" size="13.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Nombre" />
+      <Label layoutX="146.0" layoutY="225.0" styleClass="tittle-seccion-CRUD" text="Dirección" AnchorPane.leftAnchor="14.0" />
+      <Separator layoutX="152.0" layoutY="245.0" prefHeight="3.0" prefWidth="353.0" />
+      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Calle" />
+      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Colonia" />
+      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Exterior" />
+      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
+      <Label layoutX="158.0" layoutY="402.0" styleClass="tittle-seccion-CRUD" text="Servicio" AnchorPane.leftAnchor="14.0" />
+      <Separator layoutX="129.0" layoutY="421.0" prefHeight="3.0" prefWidth="371.0" />
+      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="518.0" prefHeight="31.0" prefWidth="404.0" promptText="Notas" />
+      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="38.0" layoutY="462.0" prefHeight="25.0" prefWidth="182.0" promptText="Unidad" />
+      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="569.0" prefHeight="31.0" prefWidth="404.0" promptText="Ovservaciones" />
+      <Button layoutX="889.0" layoutY="601.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
+      <Button layoutX="762.0" layoutY="600.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
+      <Label layoutX="421.0" layoutY="648.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Separator layoutX="548.0" layoutY="112.0" orientation="VERTICAL" prefHeight="447.0" prefWidth="1.0" />
+      <Label layoutX="564.0" layoutY="118.0" styleClass="tittle-seccion-CRUD" text="Tipo de Servicio" />
+      <Separator layoutX="759.0" layoutY="136.0" prefHeight="3.0" prefWidth="245.0" />
+      <VBox layoutX="564.0" layoutY="168.0" prefHeight="49.0" prefWidth="100.0" spacing="30.0">
+         <children>
+            <JFXRadioButton styleClass="customized-jfx-radio-button" text="Regular">
+               <toggleGroup>
+                  <ToggleGroup fx:id="tipoServicio" />
+               </toggleGroup>
+            </JFXRadioButton>
+            <JFXRadioButton styleClass="customized-jfx-radio-button" text="Programado" toggleGroup="$tipoServicio" />
+         </children>
+      </VBox>
+      <HBox layoutX="583.0" layoutY="280.0" prefHeight="24.0" prefWidth="404.0" spacing="100.0">
+         <children>
+            <JFXRadioButton styleClass="customized-jfx-radio-button" text="Personalizado">
+               <toggleGroup>
+                  <ToggleGroup fx:id="toggletipoProgramado" />
+               </toggleGroup>
+            </JFXRadioButton>
+            <JFXRadioButton styleClass="customized-jfx-radio-button" text="Diario" toggleGroup="$toggletipoProgramado" />
+         </children>
+      </HBox>
+      <HBox layoutX="583.0" layoutY="313.0" prefHeight="179.0" prefWidth="418.0" spacing="100.0">
+         <children>
+            <VBox prefHeight="121.0" prefWidth="100.0" spacing="10.0">
+               <children>
+                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Lunes" />
+                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Martes" />
+                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Miércoles" />
+                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Jueves" />
+                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Viernes" />
+                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Sábado" />
+                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Domingo" />
+               </children>
+            </VBox>
+            <VBox prefHeight="179.0" prefWidth="219.0" spacing="30.0">
+               <children>
+                  <JFXTimePicker promptText="00:00" />
+                  <JFXDatePicker promptText="DD/MM/AAAA" />
+                  <JFXTextField focusColor="#5ab444" labelFloat="true" prefHeight="31.0" prefWidth="50.0" promptText="Destino" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="487.0" prefWidth="546.0" styleClass="ventana" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.crud.TaxisCRUDController">
+   <children>
+      <AnchorPane fx:id="ap_tittleBar" layoutX="78.0" layoutY="14.0" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" onMouseReleased="#tittleBar_Released" prefHeight="34.0" prefWidth="500.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fx:id="iv_iconBar" fitHeight="29.0" fitWidth="27.0" layoutX="2.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btn_cerrar" layoutX="1024.0" layoutY="1.0" onAction="#btnCerrar_Click" prefHeight="32.0" prefWidth="43.0" styleClass="boton-cerrar" stylesheets="@../../Resources/css/normalizacion.css" text="X" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Gadugi" size="26.0" />
+               </font>
+               <padding>
+                  <Insets bottom="-5.0" left="-10.0" right="-10.0" top="-5.0" />
+               </padding>
+            </Button>
+            <Label fx:id="lbl_tittleBar" layoutX="35.0" layoutY="2.0" prefHeight="30.0" prefWidth="172.0" text="Taxis " textFill="#828282" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Gadugi" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label fx:id="lbl_tittle" layoutX="32.0" layoutY="65.0" prefHeight="58.0" prefWidth="144.0" styleClass="titulo-CRUD-windows" text="Taxis " AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0" />
+      <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos Vehículo" AnchorPane.leftAnchor="20.0" />
+      <Separator layoutX="232.0" layoutY="132.0" prefHeight="3.0" prefWidth="274.0" />
+      <JFXTextField fx:id="textField_unidad" focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Unidad" />
+      <JFXComboBox fx:id="comboBox_marca" focusColor="#5ab444" labelFloat="true" layoutX="302.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Marca" />
+      <JFXTextField fx:id="textField_placa" focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="248.0" prefHeight="25.0" prefWidth="182.0" promptText="Placa" />
+      <JFXTextField fx:id="textField_modelo" focusColor="#5ab444" labelFloat="true" layoutX="302.0" layoutY="248.0" prefHeight="31.0" prefWidth="182.0" promptText="Modelo" />
+      <JFXComboBox fx:id="comboBox_taxista" focusColor="#5ab444" labelFloat="true" layoutX="64.0" layoutY="346.0" prefHeight="31.0" prefWidth="419.0" promptText="Taxista" />
+      <Button fx:id="btn_Agregar" layoutX="403.0" layoutY="410.0" mnemonicParsing="false" onAction="#btn_Agregar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
+      <Button layoutX="283.0" layoutY="410.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
+      <Label layoutX="440.0" layoutY="474.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

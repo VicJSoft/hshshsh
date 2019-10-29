@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="587.0" prefWidth="530.0" styleClass="ventana" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.crud.ClientesCRUDController">
+   <children>
+      <AnchorPane fx:id="ap_tittleBar" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" onMouseReleased="#tittleBar_Released" prefHeight="34.0" prefWidth="1081.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fx:id="iv_iconBar" fitHeight="24.0" fitWidth="27.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+               <image>
+                  <Image url="@../../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btn_cerrar" layoutX="1024.0" layoutY="1.0" onAction="#btnCerrar_Click" prefHeight="32.0" prefWidth="43.0" styleClass="boton-cerrar" stylesheets="@../../Resources/css/normalizacion.css" text="X" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Gadugi" size="26.0" />
+               </font>
+               <padding>
+                  <Insets bottom="-5.0" left="-10.0" right="-10.0" top="-5.0" />
+               </padding>
+            </Button>
+            <Label fx:id="lbl_tittleBar" layoutX="35.0" layoutY="2.0" prefHeight="30.0" prefWidth="172.0" text="Clientes" textFill="#828282" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="2.0">
+               <font>
+                  <Font name="Gadugi" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label fx:id="lbl_tittle" layoutX="8.0" layoutY="41.0" styleClass="titulo-CRUD-windows" text="Clientes " AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="41.0" />
+      <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos personales" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="100.0" />
+      <Separator layoutX="232.0" layoutY="132.0" prefHeight="3.0" prefWidth="274.0" />
+      <JFXTextField fx:id="textField_telefono" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Teléfono">
+         <font>
+            <Font name="Gadugi" size="13.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="textField_nombre" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Nombre" />
+      <Label layoutX="146.0" layoutY="225.0" styleClass="tittle-seccion-CRUD" text="Dirección" AnchorPane.leftAnchor="14.0" />
+      <Separator layoutX="152.0" layoutY="245.0" prefHeight="3.0" prefWidth="353.0" />
+      <JFXTextField fx:id="textField_calle" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Calle" />
+      <JFXTextField fx:id="textField_colonia" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Colonia" />
+      <JFXTextField fx:id="textField_numExt" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Exterior" />
+      <JFXTextField fx:id="textField_numInt" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
+      <Label layoutX="158.0" layoutY="402.0" styleClass="tittle-seccion-CRUD" text="Extra" AnchorPane.leftAnchor="14.0" />
+      <Separator layoutX="129.0" layoutY="421.0" prefHeight="3.0" prefWidth="371.0" />
+      <JFXTextField fx:id="textField_observ" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="458.0" prefHeight="31.0" prefWidth="224.0" promptText="Observaciones" />
+      <Button layoutX="379.0" layoutY="525.0" mnemonicParsing="false" onAction="#btn_Agregar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
+      <Button layoutX="252.0" layoutY="524.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
+      <Label layoutX="429.0" layoutY="567.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

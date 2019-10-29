@@ -3,6 +3,9 @@
     -boton-color-focused: #5AB44430;
     -borde-text-field: #29156E;
     -borde-text-field-focus: #29156E30;
+    -label-color-1: #707070;
+    -label-color-2: #E3E3E3;
+    -color-blanco :#FFFFFF;
 }
 .ventana-redonda{
     /*Sombra personalizada, para sombra generica sin ver tanto cada parametro
@@ -14,9 +17,13 @@
     -fx-background-radius: 12;
 }
 .ventana{
-     -fx-background-insets: 12;
-     -fx-background-color: #FFF;
-     -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, .32), 10, 0.8, 0.0, 0.0 );
+    -fx-background-insets: 12;
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow( gaussian, rgba(0, 0, 0, .32), 10, 0.8, 0.0, 0.0 );
+    -fx-padding:12;
+}
+.ventana-blanca{
+     -fx-background-color: #FFFFFF;
 }
 
 .ventana-drawer{
@@ -37,6 +44,7 @@
     -fx-background-color: derive(-boton-color,-20%);
 }
 
+.boton-toolbar,
 .boton-cerrar{
     -fx-background-color: transparent;
     -fx-border-radius: 0;
@@ -53,6 +61,14 @@
 }
 
  
+.boton-toolbar:hover{
+    -fx-background-color: derive(-boton-color,30%);
+
+}
+.boton-toolbar:pressed{
+    -fx-background-color: derive(-boton-color,40%);
+
+}
 
 .area-texto{
     
@@ -101,3 +117,193 @@
     -fx-background-color: derive(-boton-color,5%);
     
 }
+.titulo
+{
+    -fx-text-fill: -label-color-1;
+    -fx-font-size: 44pt;
+}
+.titulo-CRUD-windows{
+    -fx-text-fill: -label-color-1;
+    -fx-font-size: 30pt;
+}
+.tittle-seccion-CRUD{
+     -fx-text-fill: -label-color-1;
+    -fx-font-size: 18pt;
+}
+
+
+.text-field-busqueda{
+    -fx-padding: 0.333333em 0 0.333333em 0;
+    -fx-border-color:  derive( -boton-color,10%);
+    -fx-border-style: solid;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 0 0 0 12;
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: #A2A2A2;
+}
+/*Linea inferior sin foco*/
+.text-field-busqueda > .input-line
+{
+    -fx-background-color: -jfx-unfocus-color;
+    -fx-background-color: transparent;
+    -fx-pref-height: 1px;
+    -fx-translate-y: 1px;
+   
+    
+}
+/*Linea inferior al enfocar, 
+que además es independiente a la de sin foco*/
+.text-field-busqueda > .input-focused-line{
+   /* -fx-background-color: -jfx-focus-color;*/
+   -fx-background-color: transparent;
+    -fx-pref-height: 2px;
+    -fx-translate-y: 1px;
+}
+.text-field-busqueda:focused
+{
+    -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT;
+    -fx-prompt-text-fill: #4D4D4D;
+    -fx-focus-color: #FF6634;
+    -fx-text-fill: #2A2A2A;
+ }
+ 
+ 
+ .jfx-text-field, .jfx-password-field{
+     -fx-font-family: gadugi;
+     -fx-font-size: 15px;
+     
+ }
+ 
+/*******************************************************************************
+     *           
+     * I will provide this
+     * Tables                                      *
+     *                                                                             *
+     ******************************************************************************/
+    .table-view, .tree-table-view {
+        /* Constants used throughout the tableview. */
+        -fx-table-header-border-color: -label-color-2;
+        -fx-table-cell-border-color: -label-color-2; /* Horizontal Lines*/
+        -fx-background-color: -label-color-2;
+    }
+
+    /* The column header row is made up of a number of column-header, one for each
+       TableColumn, and a 'filler' area that extends from the right-most column
+       to the edge of the tableview, or up to the 'column control' button. */
+    .table-view .filler,
+    .tree-table-view .filler, 
+    .table-view .column-header,
+    .tree-table-view .column-header {
+        -fx-size: 10;
+        /*-fx-border-style: null;*/
+        -fx-border-color: -label-color-2;
+        -fx-border-width: 0 0.5 0.5 0.5;
+        -fx-background-color: -boton-color ;
+    }
+
+    .table-view .show-hide-columns-button, 
+    .tree-table-view .show-hide-columns-button
+    {
+        -fx-background-color:-label-color-2 ; 
+    }
+    /*.tree-table-view:focused .tree-table-row-cell:selected {
+         -fx-background-color: #FB260A ;
+         -fx-table-cell-border-color: #FB260A  ;
+    }*/
+    .table-view .column-header .label,
+    .table-view .filler .label,
+    .table-view .column-drag-header .label,
+    .tree-table-view .column-header .label,
+    .tree-table-view .filler .label,
+    .tree-table-view .column-drag-header .label
+    {
+        -fx-alignment: CENTER;
+        -fx-text-fill: -color-blanco;
+    }
+
+    .table-view .column-header-background,
+    .tree-table-view .column-header-background
+    {
+        -fx-background-color:-label-color-1;
+    }  
+
+    .table-row-cell, .tree-table-row-cell {
+        -fx-cell-size: 30px; 
+    }
+
+    
+    .table-cell {
+        -fx-border-color: -label-color-1 ; /* Vertical Lines*/
+        -fx-border-width: 1;
+    }
+    /*Vic xd*/
+    .tree-table-cell {
+        -fx-alignment: center ;
+    }
+    .tree-table-cell:hover{
+
+       /*  -fx-background-color: derive(red,50%);*/
+
+    }
+    /* este no da el hover, no sé por que xd, pero el tree-table-row-cell sí.
+    .table-row-cell:hover{
+       -fx-background-color: derive(red,50%);
+
+    }*/
+    .tree-table-row-cell:hover{
+       -fx-background-color: derive(#29156E,99%);
+
+    }
+    
+    .boton-aceptar{
+    
+        -fx-background-color:-boton-color;
+        -fx-font-family: gadugi;
+        -fx-text-fill:-color-blanco;
+        -fx-border-radius:3;
+        -fx-backgorund-radius:3;
+    }
+    .boton-aceptar:hover,
+    .boton-aceptar:focused{
+        -fx-background-color: derive(-boton-color,40%);
+    }
+    .boton-aceptar:pressed{
+        -fx-background-color: derive(-boton-color,10%);
+    }
+    
+    .boton-cancelar{
+        -fx-border-color:-boton-color;
+        -fx-background-color:-color-blanco;
+        -fx-font-family: gadugi;
+        -fx-text-fill:-boton-color;
+        -fx-border-radius:3;
+        -fx-backgorund-radius:3;
+        
+    }
+    .boton-cancelar:hover,
+    .boton-cancelar:focused{
+        -fx-background-color: derive(gray,80%);
+    }
+    .boton-cancelar:pressed{
+        -fx-background-color: derive(gray,50%);
+    }
+    
+    .jfx-combo-box{
+        -fx-font-family: gadugi;
+        -fx-font-size: 15px;
+    }
+    /*radio button*/
+    .customized-jfx-radio-button
+    {
+        /*Advertencia quitada */
+        -fx-text-fill: -borde-text-field;
+        -jfx-selected-color: -boton-color;
+        -jfx-unselected-color: -label-color-1;
+    }
+    /*date and times */
+    .jfx-date-picker,.jfx-time-picker
+    {
+        -jfx-default-color:-boton-color;
+    }
+    

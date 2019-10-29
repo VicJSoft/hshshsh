@@ -1,10 +1,11 @@
 package controllers;
 
 /*** IMPORTS/****************************************************************************************************************************************/
-import services.sql.ConexionLectura;
+import services.sql.read.ConexionLecturaEmpleados;
 import services.sql.ConexionSQL;
 import com.jfoenix.validation.RequiredFieldValidator;
 import Resources.persistencia.SharePreferences;
+import Resources.statics.Statics;
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
@@ -18,15 +19,16 @@ import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import java.util.ResourceBundle;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 import javafx.fxml.FXML;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -54,6 +56,9 @@ public class LoginController implements Initializable {
     private Button btn_login;
     @FXML
     private Button btn_cerrar;
+    ConexionLecturaEmpleados conexionLectura = new ConexionLecturaEmpleados();
+    ConexionSQL conexionSQL = new ConexionSQL();
+    Connection connection = conexionSQL.getConexion();
 /**************************************************************************************************************************************************/
     
 /*** OVERRIDE PUBLIC METHODS/**********************************************************************************************************************/
@@ -89,32 +94,25 @@ public class LoginController implements Initializable {
 
 
     @FXML
-    private void btnLogin_Click(ActionEvent event) 
+    private void btnLogin_Click(ActionEvent event) throws IOException, SQLException 
     {
         
         
-        try {
-            ConexionLectura conexionLectura = new ConexionLectura();
-            ConexionSQL conexionSQL = new ConexionSQL();
+        if(connection!=null)
+        {
+            
             //captura de excepción, para un mejor manejo si hay error de conexion.
-            if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(), conexionSQL.getConexion()))
+            if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(),connection))
             {
                 //conexion a la siguiente pantalla
                 System.out.println("Entre");
-               // Servicios.crearVentana(new Ventana_PrincipalController());
-               /// Servicios.crearVentana("/views/Ventana_PrincipalController.fxml");
-               
-                Parent ventana = FXMLLoader.load(getClass().getResource("/views/Ventana_Principal.fxml"));
-        
-                Stage stage = new Stage();
-                Scene scene = new Scene(ventana);
-                scene.setFill(Color.TRANSPARENT);
-                stage.setScene(scene);
-                stage.initStyle(StageStyle.TRANSPARENT);
-                stage.show();
-                
-                Servicios.cerrarVentana(event);
-               
+                Statics.setConnections(connection);
+                System.out.println(connection);
+                        
+               Servicios.crearVentana(
+               getClass().getResource("/views/Ventana_Principal.fxml"),
+               null);
+              
                 if(cb_recordar.isSelected())
                     setCredenciales();
                 else
@@ -135,19 +133,18 @@ public class LoginController implements Initializable {
                 System.out.println("Error de credenciales");
                 
             }
-            //TODO acomodar la exception.
-        } catch (SQLException| ClassNotFoundException|InstantiationException|IllegalAccessException | IOException ex) {
-            //TODO Generar ventana de error con esta exception.
+        }
+        else
+        {
+        //TODO Generar ventana de error con esta exception.
             //TODO Crear ventana de error.
             Servicios.crearVentanaError(
                     this.btn_login.getScene().getWindow(),
                     "Error SQL", 
                     "Error conexión de base de datos",
-                    ex.getMessage() + "\n\nAsegurese de que el servidor de la base de datos este activo."
+                    "\n\nAsegurese de que el servidor de la base de datos este activo."
                             + "\nSi sigue presentando el problema, contacte al desarrollador.");
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
     }
 
     @FXML

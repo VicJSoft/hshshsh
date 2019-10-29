@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="1065.0" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.secundarios.TaxisController">
+    <children>
+      <JFXTreeTableView fx:id="table_taxis" layoutX="26.5" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="98.0">
+         <columns>
+            <TreeTableColumn fx:id="column_unidad" maxWidth="100.0" minWidth="90.0" prefWidth="90.0" sortable="false" text="Unidad" />
+            <TreeTableColumn fx:id="column_marca" maxWidth="250.0" minWidth="160.0" prefWidth="160.0" text="Marca" />
+            <TreeTableColumn fx:id="column_modelo" maxWidth="260.0" minWidth="250.0" prefWidth="250.0" text="Modelo" />
+            <TreeTableColumn fx:id="column_placa" maxWidth="200.0" minWidth="195.0" prefWidth="195.0" text="Placa" />
+            <TreeTableColumn fx:id="column_taxista" maxWidth="2000.0" minWidth="345.0" prefWidth="345.0" sortable="false" text="Taxista" />
+         </columns>
+         <columnResizePolicy>
+            <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </JFXTreeTableView>
+      <JFXTextField fx:id="textField_buscar" layoutX="25.6" layoutY="37.0" prefHeight="25.0" prefWidth="399.0" promptText="Buscar taxi" styleClass="text-field-busqueda" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="640.4000000000001" AnchorPane.topAnchor="37.0" />
+      <HBox alignment="CENTER" layoutX="674.0" layoutY="12.0" prefHeight="75.0" prefWidth="299.0" spacing="20.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="12.0">
+         <children>
+            <JFXButton fx:id="btnAdd_Taxi" onAction="#btnAdd_OnAction" prefHeight="9.0" prefWidth="72.0" styleClass="boton-toolbar">
+               <graphic>
+                  <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Resources/imagenes/iconos/Taxi/taxi-add.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete_Taxi" disable="true" onAction="#btnDelete_OnAction" prefHeight="0.0" prefWidth="67.0" styleClass="boton-toolbar">
+               <graphic>
+                  <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Resources/imagenes/iconos/Taxi/taxi-delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnEdit_Taxi" disable="true" onAction="#btnEdit_OnAction" prefHeight="0.0" prefWidth="67.0" styleClass="boton-toolbar">
+               <graphic>
+                  <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Resources/imagenes/iconos/Taxi/taxi-refresh.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -191,7 +191,9 @@ que además es independiente a la de sin foco*/
     /* The column header row is made up of a number of column-header, one for each
        TableColumn, and a 'filler' area that extends from the right-most column
        to the edge of the tableview, or up to the 'column control' button. */
-    .table-view .filler, .tree-table-view .filler, .table-view .column-header,
+    .table-view .filler,
+    .tree-table-view .filler, 
+    .table-view .column-header,
     .tree-table-view .column-header {
         -fx-size: 10;
         /*-fx-border-style: null;*/
@@ -200,37 +202,60 @@ que además es independiente a la de sin foco*/
         -fx-background-color: -boton-color ;
     }
 
-    .table-view .show-hide-columns-button, .tree-table-view .show-hide-columns-button
+    .table-view .show-hide-columns-button, 
+    .tree-table-view .show-hide-columns-button
     {
-        -fx-background-color:-label-color-2 ;
+        -fx-background-color:-label-color-2 ; 
     }
     /*.tree-table-view:focused .tree-table-row-cell:selected {
          -fx-background-color: #FB260A ;
          -fx-table-cell-border-color: #FB260A  ;
     }*/
-    .table-view .column-header .label, .table-view .filler .label,
-    .table-view .column-drag-header .label, .tree-table-view .column-header .label,
-    .tree-table-view .filler .label, .tree-table-view .column-drag-header .label
+    .table-view .column-header .label,
+    .table-view .filler .label,
+    .table-view .column-drag-header .label,
+    .tree-table-view .column-header .label,
+    .tree-table-view .filler .label,
+    .tree-table-view .column-drag-header .label
     {
         -fx-alignment: CENTER;
         -fx-text-fill: -color-blanco;
     }
 
-    .table-view .column-header-background, .tree-table-view .column-header-background
+    .table-view .column-header-background,
+    .tree-table-view .column-header-background
     {
         -fx-background-color:-label-color-1;
-    }
+    }  
 
     .table-row-cell, .tree-table-row-cell {
         -fx-cell-size: 30px; 
     }
 
+    
     .table-cell {
         -fx-border-color: -label-color-1 ; /* Vertical Lines*/
         -fx-border-width: 1;
     }
+    /*Vic xd*/
+    .tree-table-cell {
+        -fx-alignment: center ;
+    }
+    .tree-table-cell:hover{
 
+       /*  -fx-background-color: derive(red,50%);*/
 
+    }
+    /* este no da el hover, no sé por que xd, pero el tree-table-row-cell sí.
+    .table-row-cell:hover{
+       -fx-background-color: derive(red,50%);
+
+    }*/
+    .tree-table-row-cell:hover{
+       -fx-background-color: derive(#29156E,99%);
+
+    }
+    
     .boton-aceptar{
     
         -fx-background-color:-boton-color;
@@ -239,7 +264,8 @@ que además es independiente a la de sin foco*/
         -fx-border-radius:3;
         -fx-backgorund-radius:3;
     }
-    .boton-aceptar:hover{
+    .boton-aceptar:hover,
+    .boton-aceptar:focused{
         -fx-background-color: derive(-boton-color,40%);
     }
     .boton-aceptar:pressed{
@@ -255,7 +281,8 @@ que además es independiente a la de sin foco*/
         -fx-backgorund-radius:3;
         
     }
-    .boton-cancelar:hover{
+    .boton-cancelar:hover,
+    .boton-cancelar:focused{
         -fx-background-color: derive(gray,80%);
     }
     .boton-cancelar:pressed{
@@ -269,7 +296,8 @@ que además es independiente a la de sin foco*/
     /*radio button*/
     .customized-jfx-radio-button
     {
-        -fx-text-fill: borde-text-field;
+        /*Advertencia quitada */
+        -fx-text-fill: -borde-text-field;
         -jfx-selected-color: -boton-color;
         -jfx-unselected-color: -label-color-1;
     }
@@ -278,3 +306,4 @@ que además es independiente a la de sin foco*/
     {
         -jfx-default-color:-boton-color;
     }
+    

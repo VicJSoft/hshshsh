@@ -40,12 +40,16 @@
       <Label fx:id="lbl_tittle" layoutX="8.0" layoutY="41.0" styleClass="titulo-CRUD-windows" text="Empleados" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="41.0" />
       <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos personales" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="100.0" />
       <Separator layoutX="232.0" layoutY="132.0" prefHeight="3.0" prefWidth="274.0" />
+      <JFXTextField fx:id="textField_nombre" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="167.0" prefHeight="25.0" prefWidth="182.0" promptText="Nombre" />
       <JFXTextField fx:id="textField_telefono" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="167.0" prefHeight="25.0" prefWidth="182.0" promptText="Teléfono">
          <font>
             <Font name="Gadugi" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="textField_nombre" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="167.0" prefHeight="25.0" prefWidth="182.0" promptText="Nombre" />
+      <JFXPasswordField fx:id="textField_password" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="239.0" prefHeight="31.0" prefWidth="194.0" promptText="Contraseña" />
+      <JFXDatePicker fx:id="datePicker_nacimiento" editable="false" layoutX="262.0" layoutY="239.0" prefHeight="31.0" prefWidth="220.0" promptText="Fecha de Nacimiento" />
+      <JFXComboBox fx:id="comboBox_sexo" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="301.0" prefHeight="25.0" prefWidth="182.0" promptText="Sexo" />
+      <JFXComboBox fx:id="comboBox_tipo_empleado" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="301.0" prefHeight="25.0" prefWidth="182.0" promptText="Tipo de empleado" />
       <Label layoutX="50.0" layoutY="349.0" styleClass="tittle-seccion-CRUD" text="Dirección" AnchorPane.leftAnchor="14.0" />
       <Separator layoutX="152.0" layoutY="369.0" prefHeight="3.0" prefWidth="353.0" />
       <JFXTextField fx:id="textField_calle" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="400.0" prefHeight="25.0" prefWidth="182.0" promptText="Calle" />
@@ -55,16 +59,12 @@
       <Label layoutX="50.0" layoutY="526.0" styleClass="tittle-seccion-CRUD" text="Extra" AnchorPane.leftAnchor="14.0" />
       <Separator layoutX="95.0" layoutY="545.0" prefHeight="3.0" prefWidth="405.0" />
       <JFXTextField fx:id="textField_observ" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="583.0" prefHeight="25.0" prefWidth="182.0" promptText="Observaciones" />
-      <Button layoutX="389.0" layoutY="648.0" mnemonicParsing="false" onAction="#btn_Agregar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
       <Button layoutX="262.0" layoutY="647.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
-      <JFXComboBox fx:id="comboBox_sexo" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="301.0" prefHeight="25.0" prefWidth="182.0" promptText="Sexo" />
-      <JFXDatePicker fx:id="datePicker_nacimiento" layoutX="262.0" layoutY="239.0" prefHeight="31.0" prefWidth="220.0" promptText="Fecha de Nacimiento" />
-      <JFXComboBox fx:id="comboBox_tipo_empleado" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="301.0" prefHeight="25.0" prefWidth="182.0" promptText="Tipo de empleado" />
+      <Button layoutX="389.0" layoutY="648.0" mnemonicParsing="false" onAction="#btn_Agregar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
       <Label layoutX="419.0" layoutY="663.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <JFXPasswordField fx:id="textField_password" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="239.0" prefHeight="31.0" prefWidth="194.0" promptText="Contraseña" />
    </children>
 </AnchorPane>

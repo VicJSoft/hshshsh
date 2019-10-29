@@ -28,17 +28,19 @@ public class ConexionLecturaTaxistas
         ObservableList<String> taxistas =  FXCollections.observableArrayList();
         query="select id_taxista,nombre from taxistas";
         try
-        {
+        {  
+            
             ps = connection.prepareStatement(query);
             rs=ps.executeQuery();
-            if(rs.next())
-            {
+            while(rs.next()){
                 if(rs.getInt(1)!=0)
                 {
                      taxistas.add(rs.getInt(1)+"  "+rs.getString(2));
                 }
             }
             
+        
+                                      
             ps.close();
         }
         catch(SQLException ex)

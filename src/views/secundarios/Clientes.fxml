@@ -27,7 +27,7 @@
       <JFXTextField fx:id="textField_buscar" layoutX="25.6" layoutY="37.0" prefHeight="25.0" prefWidth="385.0" promptText="Buscar clientes" styleClass="text-field-busqueda" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="625.0" AnchorPane.topAnchor="37.0" />
       <HBox alignment="CENTER" layoutX="674.0" layoutY="12.0" prefHeight="75.0" prefWidth="299.0" spacing="20.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="12.0">
          <children>
-            <JFXButton onAction="#btnAdd_OnAction" prefHeight="4.0" prefWidth="72.0" styleClass="boton-toolbar">
+            <JFXButton fx:id="btnAdd_Cliente" onAction="#btnAdd_OnAction" prefHeight="4.0" prefWidth="72.0" styleClass="boton-toolbar">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -36,7 +36,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton prefHeight="0.0" prefWidth="67.0" styleClass="boton-toolbar">
+            <JFXButton fx:id="btnDelete_Cliente" disable="true" onAction="#btnDelete_OnAction" prefHeight="0.0" prefWidth="67.0" styleClass="boton-toolbar">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -45,7 +45,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton prefHeight="32.0" prefWidth="67.0" styleClass="boton-toolbar">
+            <JFXButton fx:id="btnEdit_Cliente" disable="true" onAction="#btnEdit_OnAction" prefHeight="32.0" prefWidth="67.0" styleClass="boton-toolbar">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>

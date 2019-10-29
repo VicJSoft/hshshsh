@@ -58,7 +58,8 @@ public class ConexionLecturaEmpleados
                 }
                
                 
-                empleados.add(new Empleados(String.valueOf(rs.getInt(1)),rs.getString(2).toUpperCase(),rs.getString(3),direccion.toUpperCase(),rs.getString(8).toUpperCase(),String.valueOf(rs.getDate(9))));
+                empleados.add(
+                        new Empleados(String.valueOf(rs.getInt(1)),rs.getString(2).toUpperCase(),rs.getString(3),direccion.toUpperCase(),rs.getString(8).toUpperCase(),String.valueOf(rs.getDate(9))));
               
             }
             

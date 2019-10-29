@@ -30,4 +30,13 @@ public class Statics
     {
        return Statics.connection;
     }
+    
+    public static class textoValidaciones{
+        
+      public static String CAMPO_REQUERIDO  = "Este campo es requerido.";
+        
+      
+        
+    }
+    
 }

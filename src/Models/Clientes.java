@@ -14,6 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class Clientes extends RecursiveTreeObject<Clientes>
 {
+    //campo telefono es el primary key*.
     private SimpleStringProperty   nombre, telefono, direccion, observaciones, fecha_nacimiento;
     public Clientes()
     {}

@@ -5,7 +5,7 @@
  */
 package controllers;
 
-import Resources.interfaces.Cargar_Secundaria;
+import Interfaces.Cargar_Secundaria;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.events.JFXDrawerEvent;
 import java.io.IOException;

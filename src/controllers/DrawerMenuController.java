@@ -5,7 +5,7 @@
  */
 package controllers;
 
-import Resources.interfaces.Cargar_Secundaria;
+import Interfaces.Cargar_Secundaria;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

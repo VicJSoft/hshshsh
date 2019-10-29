@@ -20,23 +20,38 @@
                <padding>
                   <Insets bottom="-5.0" left="-10.0" right="-10.0" top="-5.0" />
                </padding></Button>
-            <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="5.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="26.0" fitWidth="39.0" layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
                </image>
             </ImageView>
-            <Label layoutX="41.0" layoutY="7.0" prefHeight="26.0" prefWidth="43.0" styleClass="tittle-bar" stylesheets="@../Resources/css/normalizacion.css" text="VicJsoft" />
+            <Label layoutX="41.0" layoutY="3.0" prefHeight="30.0" prefWidth="107.0" styleClass="tittle-bar" stylesheets="@../Resources/css/normalizacion.css" text="VicJsoft" textFill="#828282">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="172.0" fitWidth="180.0" layoutX="65.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="172.0" fitWidth="180.0" layoutX="59.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Resources/imagenes/iconos/Diseño%20de%20la%20marca/Logo%20fondo%20transparente.png" />
          </image>
       </ImageView>
-      <Label layoutX="117.0" layoutY="266.0" text="CONTACTO" />
-      <Label layoutX="106.0" layoutY="302.0" text="VicJSoft © 2019" />
-      <Label layoutX="92.0" layoutY="340.0" text="VicJsoft@gmail.com" />
-      <Label layoutX="96.0" layoutY="373.0" text="Creating the future!" />
+      <Label layoutX="106.0" layoutY="221.0" text="CONTACTO" textFill="#828282">
+         <font>
+            <Font name="Gadugi" size="16.0" />
+         </font></Label>
+      <Label layoutX="91.0" layoutY="259.0" text="VicJSoft © 2019" textFill="#828282">
+         <font>
+            <Font name="Gadugi" size="16.0" />
+         </font></Label>
+      <Label layoutX="77.0" layoutY="299.0" text="VicJsoft@gmail.com" textFill="#828282">
+         <font>
+            <Font name="Gadugi" size="16.0" />
+         </font></Label>
+      <Label layoutX="68.0" layoutY="341.0" text="Creating the future!" textFill="#828282">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
    </children>
    <styleClass>
       <String fx:value="ventana-blanca" />

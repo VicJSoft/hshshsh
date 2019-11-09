@@ -59,6 +59,11 @@ public class DrawerMenuController implements Initializable {
     {  
         cargar_Secundaria.ventana("/views/secundarios/Taxis.fxml","Taxis");
     }
+    @FXML
+    private void estadisticas(ActionEvent event)
+    {  
+        cargar_Secundaria.ventana("/views/secundarios/Estadisticas.fxml","Estadísticas");
+    }
     
      @FXML
     private void btnAcercaDe_Click(ActionEvent event) {

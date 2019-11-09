@@ -81,7 +81,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Estadísticas">
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#estadisticas" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Estadísticas">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>

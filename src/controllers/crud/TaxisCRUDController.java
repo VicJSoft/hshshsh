@@ -6,12 +6,14 @@
 package controllers.crud;
 
 
+import Interfaces.Edicion_Registros;
 import Interfaces.IValidateCRUD;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.base.IFXValidatableControl;
 import com.jfoenix.validation.RequiredFieldValidator;
+import controllers.secundarios.TaxisController;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -19,6 +21,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -75,11 +78,16 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+       
+            
+       
         
-        this.listaControles = listControlsRequired();
-        this.setFieldValidations();
-        comboBox_marca.setItems(Statics.marcas);
-        comboBox_taxista.setItems(conexionLecturaTaxistas.getTaxistas_id_name(Statics.getConnections()));
+      
+         this.listaControles = listControlsRequired();
+                this.setFieldValidations();
+                comboBox_marca.setItems(Statics.marcas);
+                comboBox_taxista.setItems(conexionLecturaTaxistas.getTaxistas_id_name(Statics.getConnections()));
+       
         
         
     }    

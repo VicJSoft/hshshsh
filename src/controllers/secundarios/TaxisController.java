@@ -5,6 +5,8 @@
  */
 package controllers.secundarios;
 
+import Interfaces.Cargar_Secundaria;
+import Interfaces.Edicion_Registros;
 import Models.Clientes;
 import Models.Taxis;
 import Resources.statics.Statics;
@@ -25,6 +27,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -41,6 +44,7 @@ import services.sql.read.ConexionLecturaTaxis;
  */
 public class TaxisController implements Initializable {
 
+    private Edicion_Registros edicion_Registros;
     @FXML
     private JFXTreeTableView<Taxis> table_taxis;
 
@@ -120,6 +124,7 @@ public class TaxisController implements Initializable {
                     btnEdit_Taxi.disableProperty().set(false);
                     System.out.println(clickedRow.getPlaca());  
                     //abrirá la ventana para edición TODO.
+                    edicion_Registros.setId(3);
                     btnEdit_Taxi.fire();
                     
                 }else
@@ -142,10 +147,11 @@ public class TaxisController implements Initializable {
     @FXML
     private void btnAdd_OnAction(ActionEvent event) throws IOException 
     {
+        
          Servicios.crearVentana(
                getClass().getResource("/views/crud/TaxisCRUD.fxml"),
                Servicios.getStageFromEvent(event));
-    
+        
     }
     
     public void cargarListaFiltrada(TreeItem<Taxis>  root)
@@ -199,8 +205,22 @@ public class TaxisController implements Initializable {
     }
 
     @FXML
-    private void btnEdit_OnAction(ActionEvent event) {
+    private void btnEdit_OnAction(ActionEvent event) throws IOException 
+    {
+         Servicios.crearVentana(
+               getClass().getResource("/views/crud/TaxisCRUD.fxml"),
+               Servicios.getStageFromEvent(event));
+       
+
+        
+       
+         
+      
     }
+    public void setGuardarIdListener(Edicion_Registros edicion_Registros){
+        this.edicion_Registros = edicion_Registros;
+    }
+
    
        
     

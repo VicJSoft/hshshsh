@@ -112,12 +112,7 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
             }
             if(conexionLecturaUnidades.existeUnidad(Integer.parseInt(textField_unidad.getText())))
            {
-                if(conexionEscrituraTaxis.insertTaxis(Integer.parseInt(textField_unidad.getText()), 
-                                                      comboBox_marca.getSelectionModel().getSelectedItem(), 
-                                                      Integer.parseInt(textField_modelo.getText()),
-                                                      textField_placa.getText().toUpperCase(),
-                                                      Integer.parseInt(val[0]) 
-                                                      ))
+                if(conexionEscrituraTaxis.insertTaxis(this.getTaxiVentana()))
                 {
                           System.out.println("add");
                 }
@@ -131,7 +126,8 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
                Servicios.crearVentanaError( this.btn_Agregar.getScene().getWindow(),                        
                             "Error de registro", 
                             "Esa unidad está registrada",
-                            "Esa unidad ya esta registrada en el sistema.");
+                            "Esa unidad ya esta registrada en el sistema."
+               );
 
 
            }
@@ -303,11 +299,12 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
         Taxis taxi;
         String val[]=comboBox_taxista.getSelectionModel().getSelectedItem().split("  ");
         taxi = new Taxis(
-                textField_unidad.getText(),
+                Integer.parseInt(textField_unidad.getText()),
                 comboBox_marca.getSelectionModel().getSelectedItem(),
-                textField_modelo.getText(),
-                textField_placa.getText().toUpperCase(),
-                val[1]
+                Integer.parseInt(textField_modelo.getText()),
+                textField_placa.getText(),
+                val[1],
+                Integer.parseInt(val[0])
                 
         );
          
@@ -323,8 +320,8 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
      */
     private void setTaxiVentana(Taxis taxiAEditar) {
 
-        this.textField_unidad.setText(taxiAEditar.getId());
-        this.textField_modelo.setText(taxiAEditar.getModelo());
+        this.textField_unidad.setText(taxiAEditar.getId()+"");
+        this.textField_modelo.setText(taxiAEditar.getModelo()+"");
         this.textField_placa.setText(taxiAEditar.getPlaca());
         ObservableList<String> itemsCombroMarca = this.comboBox_marca.getItems();
         ObservableList<String> itemsComboTaxistas = this.comboBox_taxista.getItems();

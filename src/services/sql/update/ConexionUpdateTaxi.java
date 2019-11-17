@@ -35,10 +35,10 @@ public class ConexionUpdateTaxi {
             ps = connection.prepareStatement(query);
   
             ps.setString(1, taxiUpdate.getMarca() );
-            ps.setString(2, taxiUpdate.getModelo());
+            ps.setInt(2, taxiUpdate.getModelo());
             ps.setString(3, taxiUpdate.getPlaca());
             ps.setString(4, taxiUpdate.getTaxista());
-            ps.setString(5, taxiUpdate.getId());
+            ps.setInt(5, taxiUpdate.getId());
             
             ps.executeUpdate();
             key=true;

@@ -33,7 +33,7 @@ public class ConexionEliminacionUnidad {
     
     
     
-    public boolean deleteUnidad(int id_unidad, Connection connection) throws SQLException {
+    public boolean deleteUnidad(int id_unidad) throws SQLException {
         //falso hasta que no se demuestre lo contrario.
         boolean isEliminado = false;
         

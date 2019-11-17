@@ -6,7 +6,6 @@
 package Models;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.property.SimpleStringProperty;
 
 
 /**
@@ -15,35 +14,54 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class Taxis  extends RecursiveTreeObject<Taxis>
 {
-    
-    private SimpleStringProperty  marca, modelo, id,taxista;
+    private int id;
+    private String  marca, taxista;
+    private int modelo,id_taxista;
     private String placa;
+    
     public Taxis() {
     }
 
     
-    public Taxis(String id, String marca, String modelo, String placa,String taxista) {
-        this.id = new SimpleStringProperty(id);
-        this.marca = new SimpleStringProperty(marca);
-        this.modelo = new SimpleStringProperty(modelo);
+    public Taxis(int id, String marca, int modelo, String placa,String taxista,int id_taxista) {
+        this.id =id;
+        this.marca = marca;
+        this.modelo = modelo;
         this.placa = placa;
-        this.taxista = new SimpleStringProperty(taxista);
+        this.taxista = taxista;
+        this.id_taxista = id_taxista;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMarca() {
-        return marca.get();
+        return marca;
     }
 
     public void setMarca(String marca) {
-        this.marca = new SimpleStringProperty(marca);
+        this.marca = marca;
     }
 
-    public String getModelo() {
-        return modelo.get();
+    public int getModelo() {
+        return modelo;
     }
 
-    public void setModelo(String modelo) {
-        this.modelo = new SimpleStringProperty(modelo);
+    public void setModelo(int modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getTaxista() {
+        return taxista;
+    }
+
+    public void setTaxista(String taxista) {
+        this.taxista = taxista;
     }
 
     public String getPlaca() {
@@ -54,23 +72,14 @@ public class Taxis  extends RecursiveTreeObject<Taxis>
         this.placa = placa;
     }
 
-    public String getId() {
-        return id.get();
+    public int getId_taxista() {
+        return id_taxista;
     }
 
-    public void setId(String id) {
-        this.id = new SimpleStringProperty(id);
-    }
-    public String getTaxista() {
-        return taxista.get();
-    }
-
-    public void setTaxista(String taxista) {
-        this.taxista  = new SimpleStringProperty(taxista);
+    public void setId_taxista(int id_taxista) {
+        this.id_taxista = id_taxista;
     }
     
     
-   
 
-   
 }

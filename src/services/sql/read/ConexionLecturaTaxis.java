@@ -37,7 +37,7 @@ public class ConexionLecturaTaxis
     
     public ObservableList<Taxis> getTaxis()
     {
-        query="select id_unidad, marca, modelo,placa,nombre from unidades, taxistas where unidades.id_taxista=taxistas.id_taxista";
+        query="select id_unidad, marca, modelo,placa,taxistas.nombre,taxistas.id_taxista from unidades, taxistas where unidades.id_taxista=taxistas.id_taxista";
 //la misma columna, no hay registro duplicados.        
 //select id_unidad, marca, modelo,placa,nombre,taxistas.id_taxista, unidades.id_taxista from unidades, taxistas where unidades.id_taxista=taxistas.id_taxista
         ObservableList<Taxis> listaTaxis = FXCollections.observableArrayList();
@@ -48,7 +48,15 @@ public class ConexionLecturaTaxis
             while(rs.next())
             {
                 listaTaxis.add(
-                        new Taxis(String.valueOf(rs.getInt(1)),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));     
+                        new Taxis(
+                                rs.getInt(1),
+                                rs.getString(2),
+                                rs.getInt(3),
+                                rs.getString(4),
+                                rs.getString(5),
+                                rs.getInt(1)                        
+                        )
+                );     
             }
             ps.close();
 

@@ -167,11 +167,11 @@ public class TaxisController implements Initializable {
                     table_taxis.setRoot(null);
                     listaTaxisFiltro.clear();
                     
-                    for(int i=0;i<listaTaxisDefault.size();i++)
+                    for(Taxis taxiActual : listaTaxisDefault)
                     {
-                        if(listaTaxisDefault.get(i).getId().contains(newValue))
+                        if(newValue.contains( taxiActual.getId() +"" ) )
                         {
-                            listaTaxisFiltro.add(listaTaxisDefault.get(i));
+                            listaTaxisFiltro.add(taxiActual);
                         }
                     }
                     TreeItem<Taxis> root1 = new RecursiveTreeItem<>(listaTaxisFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
@@ -185,11 +185,11 @@ public class TaxisController implements Initializable {
     @FXML
     private void btnDelete_OnAction(ActionEvent event) {
         
-        int id_unidad =  Integer.parseInt(table_taxis.getSelectionModel().getSelectedItem().getValue().getId());
+        int id_unidad = table_taxis.getSelectionModel().getSelectedItem().getValue().getId();
         System.out.println("Delete");
     
         try {
-            conexionEliminacionUnidad.deleteUnidad(id_unidad, Statics.getConnections() ) ;
+            conexionEliminacionUnidad.deleteUnidad(id_unidad) ;
             listaTaxisDefault.remove(table_taxis.getSelectionModel().getSelectedItem().getValue());
            
         } catch (SQLException ex) {
@@ -220,13 +220,13 @@ public class TaxisController implements Initializable {
                 
                 Taxis taxiModified = (Taxis) taxiModifcado;
                 
-                int idTaxiModificado = Integer.parseInt(taxiModified.getId());
+                int idTaxiModificado = taxiModified.getId();
                 
                 if(conexionUpdateTaxi.update(taxiModified)){
                     
                     for(Taxis taxiActual : listaTaxisDefault){
                    
-                        if(Integer.parseInt(taxiActual.getId())== idTaxiModificado){
+                        if(taxiActual.getId()== idTaxiModificado){
                             taxiActual.setMarca(taxiModified.getMarca());
                             taxiActual.setModelo(taxiModified.getModelo());
                             taxiActual.setPlaca(taxiModified.getPlaca());

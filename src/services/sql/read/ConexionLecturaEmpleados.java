@@ -63,7 +63,7 @@ public class ConexionLecturaEmpleados
                                 rs.getString(2),
                                 rs.getDate(3).toLocalDate(),
                                 rs.getString(4),
-                                rs.getString(5),
+                                !"0".equals(rs.getString(5))?Statics.sexo.get(0):Statics.sexo.get(1),
                                 rs.getString(6),
                                 rs.getString(7),
                                 rs.getString(8),

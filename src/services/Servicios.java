@@ -5,6 +5,7 @@
  */
 package services;
 
+import controllers.LoginController;
 import controllers.Ventana_ErrorController;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -86,24 +87,39 @@ public class Servicios {
      * Crea ventana modal dado un owner, y un URL a partir de getClass().getResources();
      * @param urlXML
      * Recurso a crear ventana.
-     * @param ownerWindowError
+     * @param ownerWindow
      * Si es nulo el owner, sigifica que será una ventana normal
+     * @param aClass
+     * Se necesita para no cargar la interfaz de manera statica, para así obtener el controlador, por medio de una
+     * instancia FXMLLoader (omitiendo FXMLLoader.load(URL)).
+     * @return 
+     * Retorna el controlador correspondiente en forma de Object (para castearlo al que le corresponda, desde donde se llamó el metodo(opcional) ).
      * @throws IOException 
      */
-    public static void crearVentana(URL urlXML,Stage ownerWindowError) throws IOException {
-        
+    public static Object crearVentana(String urlXML,Stage ownerWindow,Class<?> aClass) throws IOException {
+        /*
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(urlXML);
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
+        */
+        FXMLLoader loader = new FXMLLoader (aClass.getResource(urlXML));
+        Parent root = loader.load();
+        Object controladorObject = loader.getController();
+        Stage stage = new Stage();
         
-        if(ownerWindowError!= null){
-            stage.initOwner(ownerWindowError);            
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        
+        if(ownerWindow!= null){
+            stage.initOwner(ownerWindow);            
             stage.initModality(Modality.WINDOW_MODAL);
         }
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
+        return controladorObject;
     }
     /**
      * Cambiar´a el alor de los offsets, para el uso del servicio drag.
@@ -149,6 +165,8 @@ public class Servicios {
         getStageFromEvent(event).setIconified(true);
         
     }
+
+  
 
     
     

@@ -22,10 +22,17 @@ public class ConexionEscrituraEmpleados
 {
     private boolean key;
     private String query;
-    private Connection c;
+    private Connection connection;
     private ResultSet rs;
     private PreparedStatement ps;
-    public boolean insertEmpleados(String nombre, LocalDate fechaN,String telefono,String tipo,String sexo,String calle,String colonia, String numExt,String numInt,String observaciones,String password, Connection connection)
+
+    public ConexionEscrituraEmpleados() {
+        connection = Statics.getConnections();
+    }
+    
+    
+    
+    public boolean insertEmpleados(String nombre, LocalDate fechaN,String telefono,String tipo,String sexo,String calle,String colonia, String numExt,String numInt,String observaciones,String password)
     {
         
         query="insert into empleados values(null,?,?,?,?,?,?,?,?,?,?,?)";

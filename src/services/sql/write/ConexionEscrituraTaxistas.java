@@ -5,6 +5,7 @@
  */
 package services.sql.write;
 
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,10 +21,19 @@ public class ConexionEscrituraTaxistas
     
     private boolean key;
     private String query;
-    private Connection c;
+    private Connection connection;
     private ResultSet rs;
     private PreparedStatement ps;
-    public boolean insertTaxistas(String nombre,String telefono,LocalDate fechaN,String sexo,String calle,String colonia,String numExt,String numInt,String observaciones, Connection connection)
+
+    public ConexionEscrituraTaxistas() {
+    
+        connection = Statics.getConnections();
+        
+    }
+    
+    
+    
+    public boolean insertTaxistas(String nombre,String telefono,LocalDate fechaN,String sexo,String calle,String colonia,String numExt,String numInt,String observaciones)
     {
         
        

@@ -6,74 +6,135 @@
 package Models;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.property.SimpleStringProperty;
+import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
- * @author vicen
+ * @author ESPINO
  */
 public class Empleados extends RecursiveTreeObject<Empleados>
 {
-    
-    private SimpleStringProperty  id_empleado, nombre, telefono, direccion, observacion, fecha_nacimiento;
+    private int id_empleado;
+    private String  nombre,telefono,sexo,tipo_empleado,calle,colonia,num_ext,num_int,observaciones,password;
+    private Date fecha_nacimiento;
     public Empleados()
     {}
 
-    public Empleados(String id_empleado, String nombre, String telefono, String direccion, String observaciones, String fecha_nacimiento) {
-        this.id_empleado = new SimpleStringProperty(id_empleado);
-        this.nombre = new SimpleStringProperty(nombre);
-        this.telefono = new SimpleStringProperty(telefono);
-        this.direccion = new SimpleStringProperty(direccion);
-        this.observacion = new SimpleStringProperty(observaciones);
-        this.fecha_nacimiento = new SimpleStringProperty(fecha_nacimiento);
+    public Empleados(int id_empleado, String nombre,LocalDate fecha_nacimiento, String telefono, String sexo, String tipo_empleado, String calle, String colonia, String num_ext, String num_int, String observaciones, String password) {
+        this.id_empleado = id_empleado;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.sexo = sexo;
+        this.tipo_empleado = tipo_empleado;
+        this.calle = calle;
+        this.colonia = colonia;
+        this.num_ext = num_ext;
+        this.num_int = num_int!=null?num_int:"";
+        this.observaciones = observaciones!=null?observaciones:"";
+        this.password = password;
+        this.fecha_nacimiento = Date.valueOf(fecha_nacimiento);
     }
 
-    public String getId_empleado() {
-        return id_empleado.get();
+    
+    public int getId_empleado() {
+        return id_empleado;
     }
 
-    public void setId_empleado(String id_empleado) {
-        this.id_empleado = new SimpleStringProperty(id_empleado);
+    public void setId_empleado(int id_empleado) {
+        this.id_empleado = id_empleado;
     }
 
     public String getNombre() {
-        return nombre.get();
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = new SimpleStringProperty(nombre);
+        this.nombre = nombre;
     }
 
     public String getTelefono() {
-        return telefono.get();
+        return telefono;
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = new SimpleStringProperty(telefono);
+        this.telefono = telefono;
     }
 
-    public String getDireccion() {
-        return direccion.get();
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion =new SimpleStringProperty(direccion);
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getTipo_empleado() {
+        return tipo_empleado;
+    }
+
+    public void setTipo_empleado(String tipo_empleado) {
+        this.tipo_empleado = tipo_empleado;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getColonia() {
+        return colonia;
+    }
+
+    public void setColonia(String colonia) {
+        this.colonia = colonia;
+    }
+
+    public String getNum_ext() {
+        return num_ext;
+    }
+
+    public void setNum_ext(String num_ext) {
+        this.num_ext = num_ext;
+    }
+
+    public String getNum_int() {
+        return num_int;
+    }
+
+    public void setNum_int(String num_int) {
+        this.num_int = num_int;
     }
 
     public String getObservaciones() {
-        return observacion.get();
+        return observaciones;
     }
 
-    public void setObservaciones(String observacion) {
-        this.observacion = new SimpleStringProperty(observacion);
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
-    public String getFecha_nacimiento() {
-        return fecha_nacimiento.get();
+    public String getPassword() {
+        return password;
     }
 
-    public void setFecha_nacimiento(String fecha_nacimiento) {
-        this.fecha_nacimiento = new SimpleStringProperty(fecha_nacimiento);
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Date getFecha_nacimiento() {
+        return fecha_nacimiento;
+    }
+
+    public void setFecha_nacimiento(Date fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public String getDireccion(){
+        return calle+colonia+num_ext+num_int;
     }
     
 }

@@ -5,7 +5,9 @@
  */
 package controllers.crud;
 
+import Interfaces.IAbrir_Edicion_Registros;
 import Interfaces.IValidateCRUD;
+import Models.Taxistas;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -13,6 +15,8 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.base.IFXValidatableControl;
 import com.jfoenix.validation.RequiredFieldValidator;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -27,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.converter.LocalDateStringConverter;
 import services.Servicios;
 import services.StringLengthValidator;
 import services.sql.write.ConexionEscrituraTaxistas;
@@ -81,6 +86,9 @@ public class TaxistasCRUDController implements Initializable,IValidateCRUD {
     private final ConexionEscrituraTaxistas conexionEscrituraTaxistas = new ConexionEscrituraTaxistas();
     
     ArrayList<IFXValidatableControl> listaControles;    
+    private IAbrir_Edicion_Registros abrir_Edicion_Registros;
+    private boolean isEdicion;
+    private int idTaxistaEdicion = 0;
 
     
     @Override
@@ -93,17 +101,24 @@ public class TaxistasCRUDController implements Initializable,IValidateCRUD {
     @FXML
     void btn_Agregar_Click(ActionEvent event)
     {
-        // obligatorios nombre, telefono, fecha nacimiento, sexo, calle, colonia
-        //telefono maximo 10 digitos  nombre maximo 150 caracteres calle 50 colonia 45 numext 6 numint 5
-        if(conexionEscrituraTaxistas.insertTaxistas(textField_nombre.getText().toUpperCase(),  textField_telefono.getText(),datePicker_nacimiento.getValue() ,comboBox_sexo.getSelectionModel().getSelectedItem(),textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observaciones.getText().toUpperCase(),Statics.getConnections()))
-       {
-                 System.out.println("add");
-       }
-       else
-       {
-              System.out.println("err");
-       }
-
+        if(validarCampos()){
+            
+            if(this.isEdicion && this.abrir_Edicion_Registros !=null){
+                this.abrir_Edicion_Registros.registroEditado(getTaxistaVentana());
+                btn_cerrar.fire();
+                return;
+            }
+            
+            if(conexionEscrituraTaxistas.insertTaxistas(textField_nombre.getText().toUpperCase(),  textField_telefono.getText(),datePicker_nacimiento.getValue() ,comboBox_sexo.getSelectionModel().getSelectedItem(),textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observaciones.getText().toUpperCase()))
+           {
+               btn_cerrar.fire();
+                System.out.println("add");
+           }
+           else
+           {
+                System.out.println("err");
+           }
+        }
     }
     @FXML
     private void btnCerrar_Click(ActionEvent event) 
@@ -241,5 +256,75 @@ public class TaxistasCRUDController implements Initializable,IValidateCRUD {
         }        
         return datosValidos;
         
+    }
+    
+    public void setIAbrirEdicionRegistro(IAbrir_Edicion_Registros abrir_Edicion_Registros,Taxistas taxista){
+        this.abrir_Edicion_Registros = abrir_Edicion_Registros;
+        this.setTaxistaVentana(taxista);
+        this.isEdicion = true;
+        
+    }
+    
+    public void setTaxistaVentana(Taxistas taxistaVentana){
+        this.idTaxistaEdicion = taxistaVentana.getId_taxista();
+        this.textField_nombre.setText(taxistaVentana.getNombre());
+        this.textField_telefono.setText(taxistaVentana.getTelefono());
+        this.comboBox_sexo.valueProperty().set(taxistaVentana.getSexo());
+        this.datePicker_nacimiento.setValue(
+             // LOCAL_DATE(taxistaVentana.getFecha_nacimiento())
+                taxistaVentana.getFecha_nacimiento().toLocalDate()
+        );
+        this.textField_observaciones.setText(taxistaVentana.getObservaciones());
+       
+        
+        this.textField_calle.setText(taxistaVentana.getCalle());
+        this.textField_numInt.setText(taxistaVentana.getNumInt());
+        this.textField_numExt.setText(taxistaVentana.getNumExt());
+        this.textField_colonia.setText(taxistaVentana.getColonia());
+        /*
+//this.datePicker_nacimiento.getValue();
+        //se puede separar por expresión regular también.
+        String[] direccionSplited = taxistaVentana.getDireccion().split(",");
+        
+        //TODO split desde local, para evitar el split, se deberia hacer select desde la DB y pasar esa instancia, pero sin juntar las columnas de direccion en un solo campo.
+        //habrá 3 si no existe numero interior
+        if(direccionSplited.length == 3){
+            this.textField_calle.setText(direccionSplited[0] );
+            this.textField_numExt.setText(direccionSplited[1]);
+            this.textField_colonia.setText(direccionSplited[2]);
+        }
+            //si hay 4, entonces existe numero interior.
+        if(direccionSplited.length == 4){
+            this.textField_calle.setText(direccionSplited[0] );
+            this.textField_numExt.setText(direccionSplited[1]);
+            this.textField_numInt.setText(direccionSplited[2]);
+            this.textField_colonia.setText(direccionSplited[3]);
+        }
+        */
+    }
+    
+    public Taxistas getTaxistaVentana(){
+        Taxistas taxistaVentana = 
+                new Taxistas(
+                        this.idTaxistaEdicion, //ID 0, porque la ventana no es quien decide el ID, la condición 0, 
+                        //se evaluará donde sea llamado este metodo.
+                        textField_nombre.getText(), 
+                        textField_telefono.getText(), 
+                        datePicker_nacimiento.getValue(), 
+                        comboBox_sexo.getSelectionModel().getSelectedItem(),
+                        textField_calle.getText(),//
+                        textField_colonia.getText(),
+                        textField_numExt.getText(),//numExte
+                        textField_numInt.getText(),//numInt
+                        textField_observaciones.getText()//observ
+                );
+        
+        return taxistaVentana;
+    }
+    
+    public static final LocalDate LOCAL_DATE (String dateString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.parse(dateString, formatter);
+        return localDate;
     }
 }

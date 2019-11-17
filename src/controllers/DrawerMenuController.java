@@ -71,7 +71,7 @@ public class DrawerMenuController implements Initializable {
             cargar_Secundaria.ventana(null, null);
 
             Servicios.crearVentana(
-                    getClass().getResource("/views/Acercade.fxml"), Servicios.getStageFromEvent(event));
+                    "/views/Acercade.fxml", Servicios.getStageFromEvent(event),getClass());
             } catch (IOException ex) {
                  Logger.getLogger(DrawerMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,8 +90,8 @@ public class DrawerMenuController implements Initializable {
         stage.show();
          */
         Servicios.crearVentana(
-               getClass().getResource("/views/Login.fxml"),
-               null);
+               "/views/Login.fxml",
+               null,getClass());
         Servicios.cerrarVentana(event);
                
     }

@@ -5,9 +5,7 @@
  */
 package controllers.secundarios;
 
-import Interfaces.Cargar_Secundaria;
-import Interfaces.Edicion_Registros;
-import Models.Clientes;
+import Interfaces.IAbrir_Edicion_Registros;
 import Models.Taxis;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXButton;
@@ -15,6 +13,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
+import controllers.crud.TaxisCRUDController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,7 +26,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -36,6 +34,7 @@ import javafx.scene.input.MouseButton;
 import services.Servicios;
 import services.sql.delete.ConexionEliminacionUnidad;
 import services.sql.read.ConexionLecturaTaxis;
+import services.sql.update.ConexionUpdateTaxi;
 
 /**
  * FXML Controller class
@@ -44,7 +43,7 @@ import services.sql.read.ConexionLecturaTaxis;
  */
 public class TaxisController implements Initializable {
 
-    private Edicion_Registros edicion_Registros;
+
     @FXML
     private JFXTreeTableView<Taxis> table_taxis;
 
@@ -66,6 +65,7 @@ public class TaxisController implements Initializable {
     private ObservableList<Taxis> listaTaxisDefault = FXCollections.observableArrayList();
     private final ConexionEliminacionUnidad conexionEliminacionUnidad = new ConexionEliminacionUnidad();
     private final ConexionLecturaTaxis conexionLecturaTaxis = new ConexionLecturaTaxis();
+    private final ConexionUpdateTaxi conexionUpdateTaxi = new ConexionUpdateTaxi();
     private final ObservableList<Taxis> listaTaxisFiltro = FXCollections.observableArrayList();
     @FXML
     private JFXButton btnAdd_Taxi;
@@ -83,10 +83,10 @@ public class TaxisController implements Initializable {
         column_marca.setCellValueFactory(new TreeItemPropertyValueFactory<>("marca"));
         column_modelo.setCellValueFactory(new TreeItemPropertyValueFactory<>("modelo"));
         column_placa.setCellValueFactory(new TreeItemPropertyValueFactory<>("placa"));
-        column_taxista.setCellValueFactory(new TreeItemPropertyValueFactory<>("id_taxista"));
+        column_taxista.setCellValueFactory(new TreeItemPropertyValueFactory<>("taxista"));
 
 
-        listaTaxisDefault=conexionLecturaTaxis.getTaxis(Statics.getConnections());
+        listaTaxisDefault=conexionLecturaTaxis.getTaxis();
 
         TreeItem<Taxis> root = new RecursiveTreeItem<>(listaTaxisDefault, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
         table_taxis.setRoot(root);
@@ -124,7 +124,7 @@ public class TaxisController implements Initializable {
                     btnEdit_Taxi.disableProperty().set(false);
                     System.out.println(clickedRow.getPlaca());  
                     //abrirá la ventana para edición TODO.
-                    edicion_Registros.setId(3);
+
                     btnEdit_Taxi.fire();
                     
                 }else
@@ -149,8 +149,8 @@ public class TaxisController implements Initializable {
     {
         
          Servicios.crearVentana(
-               getClass().getResource("/views/crud/TaxisCRUD.fxml"),
-               Servicios.getStageFromEvent(event));
+               "/views/crud/TaxisCRUD.fxml",
+               Servicios.getStageFromEvent(event),getClass());
         
     }
     
@@ -207,21 +207,45 @@ public class TaxisController implements Initializable {
     @FXML
     private void btnEdit_OnAction(ActionEvent event) throws IOException 
     {
-         Servicios.crearVentana(
-               getClass().getResource("/views/crud/TaxisCRUD.fxml"),
-               Servicios.getStageFromEvent(event));
-       
-
-        
-       
-         
+       //listaTaxisDefault.get(1).setPlaca("Placa modifed");
       
-    }
-    public void setGuardarIdListener(Edicion_Registros edicion_Registros){
-        this.edicion_Registros = edicion_Registros;
+        
+        TaxisCRUDController taxisCRUDController =(TaxisCRUDController) Servicios.crearVentana(
+              "/views/crud/TaxisCRUD.fxml",
+              Servicios.getStageFromEvent(event),getClass()
+        );
+        taxisCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
+            @Override
+            public void registroEditado(Object taxiModifcado) {
+                
+                Taxis taxiModified = (Taxis) taxiModifcado;
+                
+                int idTaxiModificado = Integer.parseInt(taxiModified.getId());
+                
+                if(conexionUpdateTaxi.update(taxiModified)){
+                    
+                    for(Taxis taxiActual : listaTaxisDefault){
+                   
+                        if(Integer.parseInt(taxiActual.getId())== idTaxiModificado){
+                            taxiActual.setMarca(taxiModified.getMarca());
+                            taxiActual.setModelo(taxiModified.getModelo());
+                            taxiActual.setPlaca(taxiModified.getPlaca());
+                            taxiActual.setTaxista(taxiActual.getTaxista());
+                            table_taxis.refresh();
+                            break;
+                        }
+                    }
+                    
+                }
+                
+
+                
+            }
+        },table_taxis.getSelectionModel().getSelectedItem().getValue());
+  
+        
     }
 
-   
        
     
 }

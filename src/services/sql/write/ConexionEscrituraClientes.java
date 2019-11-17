@@ -1,12 +1,10 @@
 package services.sql.write;
 
-import Models.Empleados;
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  *
@@ -16,10 +14,16 @@ public class ConexionEscrituraClientes
 {
     private boolean key;
     private String query;
-    private Connection c;
+    private Connection connection;
     private ResultSet rs;
     private PreparedStatement ps;
-    public boolean insertClientes(String telefono, String nombre,String calle,String colonia, String numExt,String numInt,String observaciones, Connection connection)
+
+    public ConexionEscrituraClientes() {
+        connection = Statics.getConnections();
+    }
+    
+    
+    public boolean insertClientes(String telefono, String nombre,String calle,String colonia, String numExt,String numInt,String observaciones)
     {
         
         query="insert into clientes values(?,?,?,?,?,?,?)";

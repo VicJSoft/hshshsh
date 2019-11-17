@@ -5,7 +5,9 @@
  */
 package controllers.crud;
 
+import Interfaces.IAbrir_Edicion_Registros;
 import Interfaces.IValidateCRUD;
+import Models.Clientes;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.base.IFXValidatableControl;
@@ -72,7 +74,11 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
      
     private final ConexionEscrituraClientes conexionEscrituraClientes = new ConexionEscrituraClientes();
     
-    ArrayList<IFXValidatableControl> listaControles;    
+    ArrayList<IFXValidatableControl> listaControles;   
+
+    private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
+    private boolean isEdicion;
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -105,7 +111,14 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
        // los datos num int y observaciones son opcionales
        // el telefono debe de tener como maximo 10 caracteres
        if(validarCampos()){
-            if(conexionEscrituraClientes.insertClientes(textField_telefono.getText(), textField_nombre.getText().toUpperCase(), textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observ.getText().toUpperCase(),Statics.getConnections()))
+           
+           if(isEdicion && iAbrir_Edicion_Registros!=null){
+               iAbrir_Edicion_Registros.registroEditado(getClienteVentana());
+               this.btn_cerrar.fire();
+               return;
+           }
+           
+            if(conexionEscrituraClientes.insertClientes(textField_telefono.getText(), textField_nombre.getText().toUpperCase(), textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observ.getText().toUpperCase()))
             {
 
             }
@@ -200,14 +213,13 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
     public void setRequiredValidation() {
 
         for(IFXValidatableControl actual:listaControles){
+            
             if(actual == this.textField_numInt){
                 continue;
             }
             //listener RequiredValidator.
             actual.getValidators().add(new RequiredFieldValidator(Statics.textoValidaciones.CAMPO_REQUERIDO));
-            
-         
-            
+
             //listener de foco
             ((Node)actual).focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
@@ -233,6 +245,40 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
         return datosValidos;
 
     }
+
+
+    public void setiAbrir_Edicion_Registros(IAbrir_Edicion_Registros iAbrir_Edicion_Registros,Clientes clienteAEditar) {
+        this.iAbrir_Edicion_Registros = iAbrir_Edicion_Registros;
+        this.isEdicion = true;
+        this.textField_telefono.editableProperty().set(false);
+        setClienteVentana(clienteAEditar);
+    }
+  
+    private Clientes getClienteVentana(){
+        Clientes clienteVentana = new Clientes(
+                this.textField_telefono.getText(), 
+                this.textField_nombre.getText(), 
+                this.textField_calle.getText(), 
+                this.textField_colonia.getText(),
+                this.textField_numExt.getText(), 
+                this.textField_numInt.getText(), 
+                this.textField_observ.getText()
+        );
+        return clienteVentana;
+    }
+    
+    private void setClienteVentana(Clientes clienteAEditar){
+        
+        this.textField_nombre.setText(clienteAEditar.getNombre());
+        this.textField_telefono.setText(clienteAEditar.getTelefono());
+        this.textField_calle.setText(clienteAEditar.getCalle());
+        this.textField_colonia.setText(clienteAEditar.getColonia());
+        this.textField_numExt.setText(clienteAEditar.getNumeroExt());
+        this.textField_numInt.setText(clienteAEditar.getNumeroInt());
+        this.textField_observ.setText(clienteAEditar.getObservaciones());
+        
+    }
+    
  
 
 }

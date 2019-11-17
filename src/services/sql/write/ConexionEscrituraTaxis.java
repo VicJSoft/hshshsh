@@ -5,6 +5,7 @@
  */
 package services.sql.write;
 
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,10 +16,19 @@ public class ConexionEscrituraTaxis
 {
     private boolean key;
     private String query;
-    private Connection c;
+    private Connection connection;
     private ResultSet rs;
     private PreparedStatement ps;
-    public boolean insertTaxis(int id_unidad, String marca,int modelo,String placa,int id_taxista, Connection connection)
+
+    public ConexionEscrituraTaxis() {
+    
+        connection = Statics.getConnections();
+        
+    }
+    
+    
+    
+    public boolean insertTaxis(int id_unidad, String marca,int modelo,String placa,int id_taxista)
     {
         
         query="insert into unidades values(?,?,?,?,?)";

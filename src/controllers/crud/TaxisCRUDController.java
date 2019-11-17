@@ -5,23 +5,22 @@
  */
 package controllers.crud;
 
-
-import Interfaces.Edicion_Registros;
+import Interfaces.IAbrir_Edicion_Registros;
 import Interfaces.IValidateCRUD;
+import Models.Taxis;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.base.IFXValidatableControl;
 import com.jfoenix.validation.RequiredFieldValidator;
-import controllers.secundarios.TaxisController;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -75,18 +74,18 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
     private final ConexionEscrituraTaxis conexionEscrituraTaxis = new ConexionEscrituraTaxis();
     private final ConexionLecturaTaxistas conexionLecturaTaxistas = new ConexionLecturaTaxistas();
     private final ConexionLecturaUnidades conexionLecturaUnidades = new ConexionLecturaUnidades();
+
+    private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
+    
+    private boolean isEdicion = false;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-       
-            
-       
-        
-      
+
          this.listaControles = listControlsRequired();
                 this.setFieldValidations();
                 comboBox_marca.setItems(Statics.marcas);
-                comboBox_taxista.setItems(conexionLecturaTaxistas.getTaxistas_id_name(Statics.getConnections()));
+                comboBox_taxista.setItems(conexionLecturaTaxistas.getTaxistas_id_name());
        
         
         
@@ -98,20 +97,27 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
     }
     @FXML
     void btn_Agregar_Click(ActionEvent event) {
-          // evaluar si escribio el la unidad marca  placa modelo 
-          // en el modelo debe ser solo numero de 4 valores mayores que 2000 y menores 3000
+        // evaluar si escribio el la unidad marca  placa modelo 
+        // en el modelo debe ser solo numero de 4 valores mayores que 2000 y menores 3000
+      
+         
+          
       if(validarCampos()){
           
             String val[]=comboBox_taxista.getSelectionModel().getSelectedItem().split("  ");
-
+            if(this.isEdicion && iAbrir_Edicion_Registros!=null)  {
+               this.iAbrir_Edicion_Registros.registroEditado(getTaxiVentana());
+               btn_cerrar.fire();
+               return;
+            }
             if(conexionLecturaUnidades.existeUnidad(Integer.parseInt(textField_unidad.getText()), Statics.getConnections()))
            {
                 if(conexionEscrituraTaxis.insertTaxis(Integer.parseInt(textField_unidad.getText()), 
                                                       comboBox_marca.getSelectionModel().getSelectedItem(), 
                                                       Integer.parseInt(textField_modelo.getText()),
                                                       textField_placa.getText().toUpperCase(),
-                                                      Integer.parseInt(val[0]), 
-                                                      Statics.getConnections()))
+                                                      Integer.parseInt(val[0]) 
+                                                      ))
                 {
                           System.out.println("add");
                 }
@@ -243,7 +249,7 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
  
 
     }
-
+    
     @Override
     public void setRequiredValidation() {
 
@@ -273,6 +279,68 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
         }        
         return datosValidos;
     }
-   
-     
+    /**
+     * 
+     * @param abrir_Edicion_Registros
+     * Intermediario que llamará a la ventana 1, desde la ventana 2.
+     * @param taxiAEditar 
+     * Es el objeto que se editará, la ventana 1 lo manda, y se recibe en la ventana 2.
+     */
+    public void setIAbrirEdicionRegistro(IAbrir_Edicion_Registros abrir_Edicion_Registros,Taxis taxiAEditar){
+        this.iAbrir_Edicion_Registros = abrir_Edicion_Registros;
+        this.isEdicion = true;
+        this.textField_unidad.editableProperty().set(false);
+        setTaxiVentana(taxiAEditar);
+    }
+    
+    /**
+     * 
+     * @return 
+     * Retorna una instancia a partir de los datos que se encuentren en la ventana.
+     * Se debe llamar primero al metodo de validación, para que el objeto se encuentre en orden.
+     */
+    public Taxis getTaxiVentana(){
+        Taxis taxi;
+        String val[]=comboBox_taxista.getSelectionModel().getSelectedItem().split("  ");
+        taxi = new Taxis(
+                textField_unidad.getText(),
+                comboBox_marca.getSelectionModel().getSelectedItem(),
+                textField_modelo.getText(),
+                textField_placa.getText().toUpperCase(),
+                val[1]
+                
+        );
+         
+                
+        return taxi;
+    }
+
+    /**
+     * Para cuando se requiera la edición de un objeto Taxi en particular,
+     * este metdodo permitirá reflejar esa instancia en la ventana.
+     * @param taxiAEditar 
+     * La instancia Taxi a editar.
+     */
+    private void setTaxiVentana(Taxis taxiAEditar) {
+
+        this.textField_unidad.setText(taxiAEditar.getId());
+        this.textField_modelo.setText(taxiAEditar.getModelo());
+        this.textField_placa.setText(taxiAEditar.getPlaca());
+        ObservableList<String> itemsCombroMarca = this.comboBox_marca.getItems();
+        ObservableList<String> itemsComboTaxistas = this.comboBox_taxista.getItems();
+
+        String val[];
+        //como el valor de cada llave del combo es compuesta, hay que separarlas primero (
+        for(String TaxistaActual:itemsComboTaxistas){
+            val = TaxistaActual.split("  ");
+            if(val[1].equals(taxiAEditar.getTaxista()))
+                //Este set, solo funciona si el texto es identico, al de un elemento del combobox.
+                this.comboBox_taxista.valueProperty().set(TaxistaActual);
+        }
+        
+        
+        this.comboBox_marca.valueProperty().set(taxiAEditar.getMarca());
+        
+        
+    }
 }

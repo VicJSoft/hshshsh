@@ -5,14 +5,15 @@
  */
 package controllers.secundarios;
 
+import Interfaces.IAbrir_Edicion_Registros;
 import Models.Clientes;
-import Models.Empleados;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
+import controllers.crud.ClientesCRUDController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -33,6 +34,7 @@ import javafx.scene.input.MouseButton;
 import services.Servicios;
 import services.sql.delete.ConexionEliminacionCliente;
 import services.sql.read.ConexionLecturaClientes;
+import services.sql.update.ConexionUpdateCliente;
 
 
 /**
@@ -62,7 +64,8 @@ public class ClientesController implements Initializable {
     private JFXTextField textField_buscar;
     private final ConexionLecturaClientes conexionLecturaClientes= new ConexionLecturaClientes();
     private final ConexionEliminacionCliente conexionEliminacionCliente = new ConexionEliminacionCliente();
-
+    private final ConexionUpdateCliente conexionUpdateCliente = new ConexionUpdateCliente();
+    
     private ObservableList<Clientes> listaClientesDefault = FXCollections.observableArrayList();
     private final ObservableList<Clientes> listaClientesFiltro = FXCollections.observableArrayList();     
     @FXML
@@ -71,6 +74,8 @@ public class ClientesController implements Initializable {
     private JFXButton btnDelete_Cliente;
     @FXML
     private JFXButton btnEdit_Cliente;
+    
+    
     
     
     @Override
@@ -82,7 +87,7 @@ public class ClientesController implements Initializable {
 
 
 
-        listaClientesDefault=conexionLecturaClientes.getClientes(Statics.getConnections());
+        listaClientesDefault=conexionLecturaClientes.getClientes();
         System.out.println(listaClientesDefault.get(0).getObservaciones());
         TreeItem<Clientes> root = new RecursiveTreeItem<>(listaClientesDefault, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
         table_clientes.setRoot(root);
@@ -143,8 +148,9 @@ public class ClientesController implements Initializable {
     @FXML
     private void btnAdd_OnAction(ActionEvent event) throws IOException {
          Servicios.crearVentana(
-               getClass().getResource("/views/crud/ClientesCRUD.fxml"),
-               Servicios.getStageFromEvent(event));
+               "/views/crud/ClientesCRUD.fxml",
+               Servicios.getStageFromEvent(event),
+               getClass());
     }
      private void cargarListaFiltrada(TreeItem<Clientes> root) {
             textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
@@ -193,10 +199,49 @@ public class ClientesController implements Initializable {
             Logger.getLogger(EmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    
     @FXML
-    private void btnEdit_OnAction(ActionEvent event) {
+    private void btnEdit_OnAction(ActionEvent event) throws IOException {
         System.out.println("Edit");
+        ClientesCRUDController clientesCRUDController = (ClientesCRUDController) Servicios.crearVentana(
+                "/views/crud/ClientesCRUD.fxml", 
+                Servicios.getStageFromEvent(event), 
+                getClass()
+        );
+        
+        clientesCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
+            
+                @Override
+                public void registroEditado(Object registroEitado) {
+                    //variable de salida.
+                    Clientes clienteEditado = (Clientes) registroEitado;
+                    String telefonoClienteEditado = clienteEditado.getTelefono();
+                    if(conexionUpdateCliente.update(clienteEditado)){
+                        for(Clientes clienteActual : listaClientesDefault){
+                            if(clienteActual.getTelefono().equals(telefonoClienteEditado)){
+                                //el primary key telefono, nunca cambiará. ya que si el cliente cambia de numero
+                                //se veria obligado el sistema, a cambiar el foreign key que se relaciones con Cliente.
+                                //clienteActual.setTelefono();
+
+                                clienteActual.setNombre(clienteEditado.getNombre());
+                                clienteActual.setCalle(clienteEditado.getCalle());
+                                clienteActual.setNumeroExt(clienteEditado.getNumeroExt());
+                                clienteActual.setNumeroInt(clienteEditado.getNumeroInt());
+                                clienteActual.setColonia(clienteEditado.getColonia());
+                                clienteActual.setObservaciones(clienteEditado.getObservaciones());
+
+
+                                table_clientes.refresh();
+                                break;
+                            }
+                        }
+                    }
+                }
+                //variable de entrada.
+            }, table_clientes.getSelectionModel().getSelectedItem().getValue()
+        );
+        
     }
     
 }

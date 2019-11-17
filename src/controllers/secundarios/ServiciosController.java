@@ -44,8 +44,9 @@ public class ServiciosController implements Initializable {
         stage.show();
 */    
        Servicios.crearVentana(
-               getClass().getResource("/views/crud/ServiciosCRUD.fxml"),
-               Servicios.getStageFromEvent(event));
+               "/views/crud/ServiciosCRUD.fxml",
+               Servicios.getStageFromEvent(event),
+               getClass());
     }
 
     @FXML

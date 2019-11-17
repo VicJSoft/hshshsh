@@ -6,6 +6,7 @@
 package services.sql.read;
 
 import Models.Clientes;
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,13 +22,22 @@ public class ConexionLecturaClientes
 {
     private boolean key;
     private String query;
-    private Connection c;
+    private Connection connection;
     private ResultSet rs;
     private PreparedStatement ps;
-    public ObservableList<Clientes> getClientes(Connection connection)
+
+    public ConexionLecturaClientes() {
+        
+        connection = Statics.getConnections();
+    
+    }
+    
+    
+    
+    public ObservableList<Clientes> getClientes()
     {
         ObservableList<Clientes> clientes =  FXCollections.observableArrayList();
-        query="select telefono,nombre,calle, num_ext,num_int,colonia, observaciones from clientes";
+        query="select * from clientes";
         String direccion;
         try
         {
@@ -35,19 +45,19 @@ public class ConexionLecturaClientes
             rs=ps.executeQuery();
             while(rs.next())
             {
-                direccion=rs.getString(3)+","+rs.getString(4);
-                if(rs.getString(5)!=null)
-                {
-                    direccion+=","+rs.getString(5).toUpperCase();
-                }
-                if(rs.getString(6)!=null)
-                {
-                    direccion+=","+rs.getString(6);
-                }
-               
+          
+                clientes.add(
+                        new Clientes(
+                                rs.getString(1), 
+                                rs.getString(2), 
+                                rs.getString(3), 
+                                rs.getString(4), 
+                                rs.getString(5),                                 
+                                rs.getString(6),                                 
+                                rs.getString(7)
+                        )
+                );
                 
-                clientes.add(new Clientes(rs.getString(1),rs.getString(2).toUpperCase(),direccion,rs.getString(7).toUpperCase()));
-              
             }
             
             ps.close();

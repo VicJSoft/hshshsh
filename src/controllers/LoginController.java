@@ -25,14 +25,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.stage.StageStyle;
 import services.Servicios;
 /**************************************************************************************************************************************************/
 
@@ -56,7 +50,7 @@ public class LoginController implements Initializable {
     private Button btn_login;
     @FXML
     private Button btn_cerrar;
-    ConexionLecturaEmpleados conexionLectura = new ConexionLecturaEmpleados();
+    ConexionLecturaEmpleados conexionLectura;
     ConexionSQL conexionSQL = new ConexionSQL();
     Connection connection = conexionSQL.getConexion();
 /**************************************************************************************************************************************************/
@@ -97,21 +91,22 @@ public class LoginController implements Initializable {
     private void btnLogin_Click(ActionEvent event) throws IOException, SQLException 
     {
         
-        
+       
         if(connection!=null)
         {
-            
+            Statics.setConnections(connection);
+            conexionLectura = new ConexionLecturaEmpleados();
             //captura de excepción, para un mejor manejo si hay error de conexion.
-            if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText(),connection))
+            if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText()))
             {
                 //conexion a la siguiente pantalla
                 System.out.println("Entre");
-                Statics.setConnections(connection);
+                
                 System.out.println(connection);
                         
                Servicios.crearVentana(
-               getClass().getResource("/views/Ventana_Principal.fxml"),
-               null);
+                    "/views/Ventana_Principal.fxml",
+                    null,getClass());
               
                 if(cb_recordar.isSelected())
                     setCredenciales();

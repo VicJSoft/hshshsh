@@ -16,8 +16,8 @@ import javafx.beans.property.SimpleStringProperty;
 public class Taxis  extends RecursiveTreeObject<Taxis>
 {
     
-    private SimpleStringProperty  marca, modelo,placa, id,taxista;
-
+    private SimpleStringProperty  marca, modelo, id,taxista;
+    private String placa;
     public Taxis() {
     }
 
@@ -26,7 +26,7 @@ public class Taxis  extends RecursiveTreeObject<Taxis>
         this.id = new SimpleStringProperty(id);
         this.marca = new SimpleStringProperty(marca);
         this.modelo = new SimpleStringProperty(modelo);
-        this.placa = new SimpleStringProperty(placa);
+        this.placa = placa;
         this.taxista = new SimpleStringProperty(taxista);
     }
 
@@ -47,11 +47,11 @@ public class Taxis  extends RecursiveTreeObject<Taxis>
     }
 
     public String getPlaca() {
-        return placa.get();
+        return placa;
     }
 
     public void setPlaca(String placa) {
-        this.placa = new SimpleStringProperty(placa);
+        this.placa = placa;
     }
 
     public String getId() {
@@ -61,11 +61,11 @@ public class Taxis  extends RecursiveTreeObject<Taxis>
     public void setId(String id) {
         this.id = new SimpleStringProperty(id);
     }
-    public String getId_taxista() {
+    public String getTaxista() {
         return taxista.get();
     }
 
-    public void setId_taxista(String taxista) {
+    public void setTaxista(String taxista) {
         this.taxista  = new SimpleStringProperty(taxista);
     }
     

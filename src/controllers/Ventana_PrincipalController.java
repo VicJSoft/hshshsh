@@ -5,16 +5,10 @@
  */
 package controllers;
 
-import Interfaces.Cargar_Secundaria;
-import Interfaces.Edicion_Registros;
-import Models.Taxis;
 import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.events.JFXDrawerEvent;
-import controllers.secundarios.TaxisController;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;

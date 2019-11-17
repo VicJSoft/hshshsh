@@ -1,6 +1,7 @@
 package services.sql.read;
 
 import Models.Empleados;
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,8 +19,17 @@ public class ConexionLecturaEmpleados
     String query="";
     ResultSet rs;
     boolean key;
+    Connection connection;
+
+    public ConexionLecturaEmpleados() {
     
-    public boolean obtenerEmpleado(String nombre, String password,Connection connection)throws SQLException
+        connection = Statics.getConnections();
+    
+    }
+    
+    
+    
+    public boolean obtenerEmpleado(String nombre, String password)throws SQLException
     {
         query = "select * from empleados where nombre='"+nombre+"' and password='"+password+"'";      
         key=false;
@@ -36,31 +46,36 @@ public class ConexionLecturaEmpleados
         catch(SQLException sql){}
         return key;
     }
-     public ObservableList<Empleados> getEmpleados(Connection connection)
+     public ObservableList<Empleados> getEmpleados()
     {
         ObservableList<Empleados> empleados =  FXCollections.observableArrayList();
-        query="select id_empleado,nombre,telefono,calle, num_ext,num_int,colonia, observaciones, fecha_nacimiento from empleados";
+        query="select * from empleados";
         String direccion;
         try
         {
             ps = connection.prepareStatement(query);
             rs=ps.executeQuery();
             while(rs.next())
-            {
-                direccion=rs.getString(4)+","+rs.getString(5);
-                if(rs.getString(6)!=null)
-                {
-                    direccion+=","+rs.getString(6).toUpperCase();
-                }
-                if(rs.getString(7)!=null)
-                {
-                    direccion+=","+rs.getString(7);
-                }
-               
-                
+            {             
                 empleados.add(
-                        new Empleados(String.valueOf(rs.getInt(1)),rs.getString(2).toUpperCase(),rs.getString(3),direccion.toUpperCase(),rs.getString(8).toUpperCase(),String.valueOf(rs.getDate(9))));
-              
+                        new Empleados(                                
+                                rs.getInt(1),
+                                rs.getString(2),
+                                rs.getDate(3).toLocalDate(),
+                                rs.getString(4),
+                                rs.getString(5),
+                                rs.getString(6),
+                                rs.getString(7),
+                                rs.getString(8),
+                                rs.getString(9),
+                                rs.getString(10),
+                                rs.getString(11),
+                                rs.getString(12)
+                        )
+                
+                );
+
+                        
             }
             
             ps.close();

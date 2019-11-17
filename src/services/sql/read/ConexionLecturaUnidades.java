@@ -5,6 +5,7 @@
  */
 package services.sql.read;
 
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,10 +21,19 @@ public class ConexionLecturaUnidades
 {
     private boolean key;
     private String query;
-    private Connection c;
+    private Connection connection;
     private ResultSet rs;
     private PreparedStatement ps;
-    public boolean existeUnidad(int id_unidad,Connection connection)
+
+    public ConexionLecturaUnidades() {
+    
+        connection = Statics.getConnections();
+        
+    }
+    
+    
+    
+    public boolean existeUnidad(int id_unidad)
     {
         key=false;
         query="select * from unidades where id_unidad='"+id_unidad+"'";

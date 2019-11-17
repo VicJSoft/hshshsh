@@ -5,6 +5,7 @@
  */
 package services.sql.delete;
 
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +21,17 @@ public class ConexionEliminacionUnidad {
     private String query;
     private ResultSet rs;
     private PreparedStatement ps;
+    private final Connection connection;
+
+    public ConexionEliminacionUnidad() {
+    
+        this.connection = Statics.getConnections();
+
+    
+    }
+    
+    
+    
     
     public boolean deleteUnidad(int id_unidad, Connection connection) throws SQLException {
         //falso hasta que no se demuestre lo contrario.

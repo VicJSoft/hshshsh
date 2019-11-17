@@ -86,7 +86,7 @@ public class TaxistasController implements Initializable {
         column_nacimiento.setCellValueFactory(new TreeItemPropertyValueFactory<>("fecha_nacimiento"));
 
 
-        listaTaxistasDefault=conexionLecturaTaxistas.getTaxistas(Statics.getConnections());
+        listaTaxistasDefault=conexionLecturaTaxistas.getTaxistas();
         TreeItem<Taxistas> root = new RecursiveTreeItem<>(listaTaxistasDefault, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
         table_taxistas.setRoot(root);
         table_taxistas.setShowRoot(false);
@@ -186,7 +186,7 @@ public class TaxistasController implements Initializable {
         System.out.println("Delete");
     
         try {
-            conexionEliminacionTaxista.deleteTaxista(telefonoCliente, Statics.getConnections() ) ;
+            conexionEliminacionTaxista.deleteTaxista(telefonoCliente ) ;
             listaTaxistasDefault.remove(table_taxistas.getSelectionModel().getSelectedItem().getValue());
            
         } catch (SQLException ex) {

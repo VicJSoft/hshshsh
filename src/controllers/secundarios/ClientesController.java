@@ -186,7 +186,7 @@ public class ClientesController implements Initializable {
         System.out.println("Delete");
     
         try {
-            conexionEliminacionCliente.deleteCliente(telefonoCliente, Statics.getConnections() ) ;
+            conexionEliminacionCliente.deleteCliente(telefonoCliente ) ;
             listaClientesDefault.remove(table_clientes.getSelectionModel().getSelectedItem().getValue());
            
         } catch (SQLException ex) {

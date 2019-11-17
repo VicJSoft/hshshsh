@@ -61,7 +61,7 @@ public class ConexionLecturaTaxistas
         
         return taxistas;
     }
-    public ObservableList<Taxistas> getTaxistas(Connection connection)
+    public ObservableList<Taxistas> getTaxistas()
     {
         ObservableList<Taxistas> taxistas =  FXCollections.observableArrayList();
         query="select * from taxistas";

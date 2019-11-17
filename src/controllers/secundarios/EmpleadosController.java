@@ -164,7 +164,7 @@ public class EmpleadosController implements Initializable {
         int id = table_empleados.getSelectionModel().getSelectedItem().getValue().getId_empleado();
        
         try {
-            conexionEliminacionEmpleados.deleteEmpleado(id, Statics.getConnections() ) ;
+            conexionEliminacionEmpleados.deleteEmpleado(id ) ;
                 listaEmpleadosDefault.remove(table_empleados.getSelectionModel().getSelectedItem().getValue());
            
         } catch (SQLException ex) {

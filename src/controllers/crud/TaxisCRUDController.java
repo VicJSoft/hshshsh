@@ -110,7 +110,7 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
                btn_cerrar.fire();
                return;
             }
-            if(conexionLecturaUnidades.existeUnidad(Integer.parseInt(textField_unidad.getText()), Statics.getConnections()))
+            if(conexionLecturaUnidades.existeUnidad(Integer.parseInt(textField_unidad.getText())))
            {
                 if(conexionEscrituraTaxis.insertTaxis(Integer.parseInt(textField_unidad.getText()), 
                                                       comboBox_marca.getSelectionModel().getSelectedItem(), 

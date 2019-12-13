@@ -97,37 +97,55 @@ public class LoginController implements Initializable {
             Statics.setConnections(connection);
             conexionLectura = new ConexionLecturaEmpleados();
             //captura de excepción, para un mejor manejo si hay error de conexion.
-            if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText()))
+            if(!txt_contrasena.getText().equals(""))
             {
-                //conexion a la siguiente pantalla
-                System.out.println("Entre");
                 
-                System.out.println(connection);
-                        
-               Servicios.crearVentana(
-                    "/views/Ventana_Principal.fxml",
-                    null,getClass());
-              
-                if(cb_recordar.isSelected())
-                    setCredenciales();
+                if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText()))
+                {
+                    //conexion a la siguiente pantalla
+                    System.out.println("Entre");
+
+                    System.out.println(connection);
+
+                   Servicios.crearVentana(
+                        "/views/Ventana_Principal.fxml",
+                        null,getClass());
+
+                    if(cb_recordar.isSelected())
+                        setCredenciales();
+                    else
+                        SharePreferences.initConfig();
+                     ((Stage)this.btn_login.getScene().getWindow()).close();
+                }
                 else
-                    SharePreferences.initConfig();
-                 ((Stage)this.btn_login.getScene().getWindow()).close();
+                {
+                    //mensaje de no conexion
+                    // TODO generar ventana de error con descricion de credenciales no correctas
+                    Servicios.crearVentanaError(
+                            this.btn_login.getScene().getWindow(),                        
+                            "Error Credenciales", 
+                            "Usuario/Contraseña incorrecto(s)",
+                            "Credenciales incorrectas, si sigue teniendo problemas, contacte al administrador"
+                                    + "del sistema.");
+
+                    System.out.println("Error de credenciales");
+
+                }
             }
             else
-            {
-                //mensaje de no conexion
-                // TODO generar ventana de error con descricion de credenciales no correctas
-                Servicios.crearVentanaError(
-                        this.btn_login.getScene().getWindow(),                        
-                        "Error Credenciales", 
-                        "Usuario/Contraseña incorrecto(s)",
-                        "Credenciales incorrectas, si sigue teniendo problemas, contacte al administrador"
-                                + "del sistema.");
-                
-                System.out.println("Error de credenciales");
-                
-            }
+                {
+                    //mensaje de no conexion
+                    // TODO generar ventana de error con descricion de credenciales no correctas
+                    Servicios.crearVentanaError(
+                            this.btn_login.getScene().getWindow(),                        
+                            "Error Credenciales", 
+                            "Usuario/Contraseña incorrecto(s)",
+                            "Credenciales incorrectas, si sigue teniendo problemas, contacte al administrador"
+                                    + "del sistema.");
+
+                    System.out.println("Error de credenciales");
+
+                }
         }
         else
         {

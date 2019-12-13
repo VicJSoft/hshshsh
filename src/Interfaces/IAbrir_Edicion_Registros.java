@@ -20,5 +20,7 @@ public interface IAbrir_Edicion_Registros
      * 
      */
     public void registroEditado(Object registroEitado);
+   
+    
     
 }

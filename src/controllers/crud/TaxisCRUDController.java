@@ -7,6 +7,7 @@ package controllers.crud;
 
 import Interfaces.IAbrir_Edicion_Registros;
 import Interfaces.IValidateCRUD;
+import Interfaces.NuevoRegistro;
 import Models.Taxis;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXComboBox;
@@ -76,7 +77,7 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
     private final ConexionLecturaUnidades conexionLecturaUnidades = new ConexionLecturaUnidades();
 
     private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
-    
+    private NuevoRegistro nuevoRegistro;
     private boolean isEdicion = false;
     
     @Override
@@ -115,6 +116,9 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
                 if(conexionEscrituraTaxis.insertTaxis(this.getTaxiVentana()))
                 {
                           System.out.println("add");
+                           this.nuevoRegistro.registroNuevo();
+                           btn_cerrar.fire();
+                         
                 }
                 else
                 {
@@ -288,6 +292,10 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
         this.textField_unidad.editableProperty().set(false);
         setTaxiVentana(taxiAEditar);
     }
+     public void setNuevoRegistro(NuevoRegistro nuevoRegistro)
+     {
+         this.nuevoRegistro=nuevoRegistro;
+     }
     
     /**
      * 

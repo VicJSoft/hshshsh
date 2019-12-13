@@ -26,9 +26,10 @@ public class ConexionUpdateTaxi {
    
     public boolean update(Taxis taxiUpdate){
         
-        query = "UPDATE unidades SET unidades.marca = ?, unidades.modelo = ?,unidades.placa = ?, "
-                + "unidades.id_taxista = (SELECT taxistas.id_taxista FROM taxistas WHERE taxistas.nombre = ? )"
+        query = "UPDATE unidades SET unidades.marca = ?, unidades.modelo = ?,unidades.placa = ?, "+
+                "unidades.id_taxista = ?"
                 + " WHERE  id_unidad = ?";
+        //+ "unidades.id_taxista = (SELECT taxistas.id_taxista FROM taxistas WHERE taxistas.nombre = ? )"
     //     query="insert into unidades values(?,?,?,?,?)";
         try
         {
@@ -37,7 +38,7 @@ public class ConexionUpdateTaxi {
             ps.setString(1, taxiUpdate.getMarca() );
             ps.setInt(2, taxiUpdate.getModelo());
             ps.setString(3, taxiUpdate.getPlaca());
-            ps.setString(4, taxiUpdate.getTaxista());
+            ps.setInt(4, taxiUpdate.getId_taxista());
             ps.setInt(5, taxiUpdate.getId());
             
             ps.executeUpdate();

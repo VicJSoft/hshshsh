@@ -6,6 +6,7 @@
 package controllers.secundarios;
 
 import Interfaces.IAbrir_Edicion_Registros;
+import Interfaces.NuevoRegistro;
 import Models.Taxis;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXButton;
@@ -148,9 +149,22 @@ public class TaxisController implements Initializable {
     private void btnAdd_OnAction(ActionEvent event) throws IOException 
     {
         
-         Servicios.crearVentana(
+        TaxisCRUDController taxisCRUDController =(TaxisCRUDController)Servicios.crearVentana(
                "/views/crud/TaxisCRUD.fxml",
                Servicios.getStageFromEvent(event),getClass());
+         taxisCRUDController.setNuevoRegistro(new NuevoRegistro() {
+            @Override
+            public void registroNuevo()
+            {
+                table_taxis.setRoot(null);
+                listaTaxisDefault.removeAll();
+                listaTaxisDefault=conexionLecturaTaxis.getTaxis();
+
+                TreeItem<Taxis> root = new RecursiveTreeItem<>(listaTaxisDefault, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+                table_taxis.setRoot(root);
+                table_taxis.setShowRoot(false);
+            }
+        });
         
     }
     
@@ -238,9 +252,9 @@ public class TaxisController implements Initializable {
                     
                 }
                 
-
-                
             }
+
+            
         },table_taxis.getSelectionModel().getSelectedItem().getValue());
   
         

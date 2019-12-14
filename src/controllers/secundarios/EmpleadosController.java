@@ -153,10 +153,19 @@ public class EmpleadosController implements Initializable {
 
     @FXML
     private void btnAdd_OnAction(ActionEvent event) throws IOException {
-        Servicios.crearVentana(
+        EmpleadosCRUDController empleadosCRUDController=(EmpleadosCRUDController) Servicios.crearVentana(
                "/views/crud/EmpleadosCRUD.fxml",
                Servicios.getStageFromEvent(event),
                getClass());
+        empleadosCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
+            @Override
+            public void registroEditado(Object registroEitado) 
+            {
+                Empleados empleadoEditado = (Empleados) registroEitado;
+                listaEmpleadosDefault.add(empleadoEditado);
+                table_empleados.refresh();   
+            }
+        }, null);
     }
     
     @FXML

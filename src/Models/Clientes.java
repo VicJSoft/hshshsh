@@ -88,7 +88,7 @@ public class Clientes extends RecursiveTreeObject<Clientes>
     }
 
    public String getDireccion(){
-       return calle+numeroExt+numeroInt+colonia;
+       return calle+" "+numeroExt+" "+numeroInt+" "+colonia;
    }
         
 }

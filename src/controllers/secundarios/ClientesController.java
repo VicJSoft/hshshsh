@@ -147,10 +147,22 @@ public class ClientesController implements Initializable {
 
     @FXML
     private void btnAdd_OnAction(ActionEvent event) throws IOException {
-         Servicios.crearVentana(
+         ClientesCRUDController clientesCRUDController = (ClientesCRUDController) Servicios.crearVentana(
                "/views/crud/ClientesCRUD.fxml",
                Servicios.getStageFromEvent(event),
                getClass());
+         clientesCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
+            
+                @Override
+                public void registroEditado(Object registroEitado) {
+                    //variable de salida.
+                    Clientes clienteEditado = (Clientes) registroEitado;
+                    listaClientesDefault.add(clienteEditado);
+                    table_clientes.refresh();
+                     
+                }
+                //variable de entrada.
+            }, null);
     }
      private void cargarListaFiltrada(TreeItem<Clientes> root) {
             textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 

@@ -7,7 +7,6 @@ package controllers.crud;
 
 import Interfaces.IAbrir_Edicion_Registros;
 import Interfaces.IValidateCRUD;
-import Interfaces.NuevoRegistro;
 import Models.Taxis;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXComboBox;
@@ -77,7 +76,6 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
     private final ConexionLecturaUnidades conexionLecturaUnidades = new ConexionLecturaUnidades();
 
     private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
-    private NuevoRegistro nuevoRegistro;
     private boolean isEdicion = false;
     
     @Override
@@ -109,16 +107,19 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
             if(this.isEdicion && iAbrir_Edicion_Registros!=null)  {
                this.iAbrir_Edicion_Registros.registroEditado(getTaxiVentana());
                btn_cerrar.fire();
+               System.out.println("addo");
                return;
             }
             if(conexionLecturaUnidades.existeUnidad(Integer.parseInt(textField_unidad.getText())))
            {
                 if(conexionEscrituraTaxis.insertTaxis(this.getTaxiVentana()))
                 {
-                          System.out.println("add");
-                           this.nuevoRegistro.registroNuevo();
-                           btn_cerrar.fire();
+                    System.out.println("add");
                          
+                    
+                        this.iAbrir_Edicion_Registros.registroEditado(getTaxiVentana());
+                        btn_cerrar.fire();                   
+                    
                 }
                 else
                 {
@@ -288,14 +289,20 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
      */
     public void setIAbrirEdicionRegistro(IAbrir_Edicion_Registros abrir_Edicion_Registros,Taxis taxiAEditar){
         this.iAbrir_Edicion_Registros = abrir_Edicion_Registros;
-        this.isEdicion = true;
-        this.textField_unidad.editableProperty().set(false);
-        setTaxiVentana(taxiAEditar);
+        
+        if(taxiAEditar!=null)
+        {
+            this.isEdicion = true;
+            this.textField_unidad.editableProperty().set(false);
+            setTaxiVentana(taxiAEditar);
+        }
+        else{
+            this.isEdicion = false;
+            this.textField_unidad.editableProperty().set(true);
+            
+        }
     }
-     public void setNuevoRegistro(NuevoRegistro nuevoRegistro)
-     {
-         this.nuevoRegistro=nuevoRegistro;
-     }
+    
     
     /**
      * 
@@ -307,12 +314,12 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
         Taxis taxi;
         String val[]=comboBox_taxista.getSelectionModel().getSelectedItem().split("  ");
         taxi = new Taxis(
-                Integer.parseInt(textField_unidad.getText()),
+                Integer.parseInt(textField_unidad.getText().trim()),
                 comboBox_marca.getSelectionModel().getSelectedItem(),
-                Integer.parseInt(textField_modelo.getText()),
-                textField_placa.getText(),
-                val[1],
-                Integer.parseInt(val[0])
+                Integer.parseInt(textField_modelo.getText().trim()),
+                textField_placa.getText().toUpperCase().trim(),
+                val[1].trim(),
+                Integer.parseInt(val[0].trim())
                 
         );
          

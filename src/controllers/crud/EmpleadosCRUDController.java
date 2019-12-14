@@ -151,6 +151,8 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
                 ))
             {
                 System.out.println("add");
+                this.iAbrir_Edicion_Registros.registroEditado(getEmpleadoVentana());
+                this.btn_cerrar.fire();
             }
             else
             {
@@ -312,9 +314,18 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
 
     public void setiAbrir_Edicion_Registros(IAbrir_Edicion_Registros iAbrir_Edicion_Registros,Empleados empleadoAEditar) {
         this.iAbrir_Edicion_Registros = iAbrir_Edicion_Registros;
-        this.isEdicion = true;
-        this.setEmpleadoVentana(empleadoAEditar);
-        this.idEmpleadoEdicion = empleadoAEditar.getId_empleado();
+        if(empleadoAEditar!=null)
+        {
+            this.isEdicion = true;
+            this.setEmpleadoVentana(empleadoAEditar);
+            this.idEmpleadoEdicion = empleadoAEditar.getId_empleado();
+        }
+        else{
+            this.isEdicion = false;
+            
+            
+        }
+        
     }
 
     private void setEmpleadoVentana(Empleados empleadoVentana) {
@@ -340,16 +351,16 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
         Empleados empleadoVentana = new Empleados(
         
                 this.idEmpleadoEdicion,
-                this.textField_nombre.getText(),
+                this.textField_nombre.getText().toUpperCase().trim(),
                 this.datePicker_nacimiento.getValue(),
-                this.textField_telefono.getText(),
+                this.textField_telefono.getText().trim(),
                 this.comboBox_sexo.getValue(),
-                this.comboBox_tipo_empleado.getValue(),
-                this.textField_calle.getText(),
-                this.textField_colonia.getText(),
-                this.textField_numExt.getText(),
-                this.textField_numInt.getText(),
-                this.textField_observ.getText(),
+                this.comboBox_tipo_empleado.getValue().toUpperCase(),
+                this.textField_calle.getText().toUpperCase().trim(),
+                this.textField_colonia.getText().toUpperCase().trim(),
+                this.textField_numExt.getText().trim(),
+                this.textField_numInt.getText().trim(),
+                this.textField_observ.getText().toUpperCase().trim(),
                 this.textField_password.getText()     
         
         );

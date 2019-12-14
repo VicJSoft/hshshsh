@@ -146,10 +146,19 @@ public class TaxistasController implements Initializable {
 
     @FXML
     private void btnAdd_OnAction(ActionEvent event) throws IOException {
-         Servicios.crearVentana(
+          TaxistasCRUDController taxistasCRUDController = (TaxistasCRUDController) Servicios.crearVentana(
                "/views/crud/TaxistasCRUD.fxml",
                Servicios.getStageFromEvent(event),
                getClass());
+         taxistasCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
+            @Override
+            public void registroEditado(Object registroEitad/*valor entrada*/) {
+
+                Taxistas taxistaEditado = (Taxistas) registroEitad;
+                listaTaxistasDefault.add(taxistaEditado);
+                table_taxistas.refresh(); 
+            }
+        }, null);
     }
 
     private void cargarListaFiltrada(TreeItem<Taxistas> root) {

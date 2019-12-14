@@ -18,6 +18,7 @@ import controllers.crud.TaxisCRUDController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -152,19 +153,22 @@ public class TaxisController implements Initializable {
         TaxisCRUDController taxisCRUDController =(TaxisCRUDController)Servicios.crearVentana(
                "/views/crud/TaxisCRUD.fxml",
                Servicios.getStageFromEvent(event),getClass());
-         taxisCRUDController.setNuevoRegistro(new NuevoRegistro() {
+    
+          taxisCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
             @Override
-            public void registroNuevo()
-            {
-                table_taxis.setRoot(null);
-                listaTaxisDefault.removeAll();
-                listaTaxisDefault=conexionLecturaTaxis.getTaxis();
-
-                TreeItem<Taxis> root = new RecursiveTreeItem<>(listaTaxisDefault, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
-                table_taxis.setRoot(root);
-                table_taxis.setShowRoot(false);
+            public void registroEditado(Object taxiModifcado) {
+                
+                Taxis taxiModified = (Taxis) taxiModifcado;
+                listaTaxisDefault.add(taxiModified);
+                table_taxis.refresh();
+                
+            
+                
+                
             }
-        });
+
+            
+        },null);
         
     }
     

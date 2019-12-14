@@ -66,7 +66,7 @@ public class Taxistas extends RecursiveTreeObject<Taxistas>
     }
 
     public String getDireccion() {
-        return calle + numInt + numExt + colonia;
+        return calle +" "+numInt +" "+ numExt +" "+ colonia;
     }
 
 
@@ -84,7 +84,7 @@ public class Taxistas extends RecursiveTreeObject<Taxistas>
     }
 
     public void setFecha_nacimiento(Date fecha_nacimiento) {
-        this.fecha_nacimiento = this.fecha_nacimiento;
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
     public String getSexo() {

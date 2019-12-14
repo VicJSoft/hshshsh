@@ -134,7 +134,7 @@ public class Empleados extends RecursiveTreeObject<Empleados>
     }
 
     public String getDireccion(){
-        return calle+colonia+num_ext+num_int;
+        return calle+" "+colonia+" "+num_ext+" "+num_int;
     }
     
 }

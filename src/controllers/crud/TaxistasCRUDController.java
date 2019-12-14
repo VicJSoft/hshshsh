@@ -106,18 +106,20 @@ public class TaxistasCRUDController implements Initializable,IValidateCRUD {
             if(this.isEdicion && this.abrir_Edicion_Registros !=null){
                 this.abrir_Edicion_Registros.registroEditado(getTaxistaVentana());
                 btn_cerrar.fire();
+                System.out.println("addo");
                 return;
             }
             
             if(conexionEscrituraTaxistas.insertTaxistas(textField_nombre.getText().toUpperCase(),  textField_telefono.getText(),datePicker_nacimiento.getValue() ,comboBox_sexo.getSelectionModel().getSelectedItem(),textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observaciones.getText().toUpperCase()))
-           {
-               btn_cerrar.fire();
+            {
+                this.abrir_Edicion_Registros.registroEditado(getTaxistaVentana());
+                btn_cerrar.fire();
                 System.out.println("add");
-           }
-           else
-           {
+            }
+            else
+            {
                 System.out.println("err");
-           }
+            }
         }
     }
     @FXML
@@ -260,8 +262,14 @@ public class TaxistasCRUDController implements Initializable,IValidateCRUD {
     
     public void setIAbrirEdicionRegistro(IAbrir_Edicion_Registros abrir_Edicion_Registros,Taxistas taxista){
         this.abrir_Edicion_Registros = abrir_Edicion_Registros;
-        this.setTaxistaVentana(taxista);
-        this.isEdicion = true;
+        if(taxista!=null)
+        {
+            this.isEdicion = true;   
+            this.setTaxistaVentana(taxista);
+        }
+        else{
+            this.isEdicion = false; 
+        }
         
     }
     
@@ -308,15 +316,15 @@ public class TaxistasCRUDController implements Initializable,IValidateCRUD {
                 new Taxistas(
                         this.idTaxistaEdicion, //ID 0, porque la ventana no es quien decide el ID, la condición 0, 
                         //se evaluará donde sea llamado este metodo.
-                        textField_nombre.getText(), 
-                        textField_telefono.getText(), 
+                        textField_nombre.getText().toUpperCase().trim(), 
+                        textField_telefono.getText().trim(), 
                         datePicker_nacimiento.getValue(), 
                         comboBox_sexo.getSelectionModel().getSelectedItem(),
-                        textField_calle.getText(),//
-                        textField_colonia.getText(),
-                        textField_numExt.getText(),//numExte
-                        textField_numInt.getText(),//numInt
-                        textField_observaciones.getText()//observ
+                        textField_calle.getText().toUpperCase().trim(),//
+                        textField_colonia.getText().toUpperCase().trim(),
+                        textField_numExt.getText().trim(),//numExte
+                        textField_numInt.getText().trim(),//numInt
+                        textField_observaciones.getText().toUpperCase().trim()//observ
                 );
         
         return taxistaVentana;

@@ -115,16 +115,19 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
            if(isEdicion && iAbrir_Edicion_Registros!=null){
                iAbrir_Edicion_Registros.registroEditado(getClienteVentana());
                this.btn_cerrar.fire();
+                System.out.println("edit");
                return;
            }
            
             if(conexionEscrituraClientes.insertClientes(textField_telefono.getText(), textField_nombre.getText().toUpperCase(), textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observ.getText().toUpperCase()))
             {
-
+                iAbrir_Edicion_Registros.registroEditado(getClienteVentana());
+                this.btn_cerrar.fire();
+                 System.out.println("add");
             }
             else
             {
-
+                 System.out.println("err");
             }
        }     
                
@@ -249,20 +252,28 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
 
     public void setiAbrir_Edicion_Registros(IAbrir_Edicion_Registros iAbrir_Edicion_Registros,Clientes clienteAEditar) {
         this.iAbrir_Edicion_Registros = iAbrir_Edicion_Registros;
-        this.isEdicion = true;
-        this.textField_telefono.editableProperty().set(false);
-        setClienteVentana(clienteAEditar);
+        if(clienteAEditar!=null)
+        {
+            this.isEdicion = true;
+            this.textField_telefono.editableProperty().set(false);
+            setClienteVentana(clienteAEditar);
+        }
+        else{
+            this.isEdicion = false; 
+            this.textField_telefono.editableProperty().set(true);
+        }
     }
+       
   
     private Clientes getClienteVentana(){
         Clientes clienteVentana = new Clientes(
-                this.textField_telefono.getText(), 
-                this.textField_nombre.getText(), 
-                this.textField_calle.getText(), 
-                this.textField_colonia.getText(),
-                this.textField_numExt.getText(), 
-                this.textField_numInt.getText(), 
-                this.textField_observ.getText()
+                this.textField_telefono.getText().trim(), 
+                this.textField_nombre.getText().toUpperCase().trim(), 
+                this.textField_calle.getText().toUpperCase().trim(), 
+                this.textField_colonia.getText().toUpperCase().trim(),
+                this.textField_numExt.getText().trim(), 
+                this.textField_numInt.getText().trim(), 
+                this.textField_observ.getText().toUpperCase().trim()
         );
         return clienteVentana;
     }

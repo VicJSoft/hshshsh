@@ -6,7 +6,6 @@
 package controllers.secundarios;
 
 import Interfaces.IAbrir_Edicion_Registros;
-import Interfaces.NuevoRegistro;
 import Models.Taxis;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXButton;

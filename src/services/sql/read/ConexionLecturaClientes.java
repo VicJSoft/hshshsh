@@ -32,7 +32,33 @@ public class ConexionLecturaClientes
     
     }
     
-    
+    public ObservableList<String> getClientes_id_name()
+    {
+        ObservableList<String> clientes =  FXCollections.observableArrayList();
+        query="select telefono,nombre from clientes";
+        try
+        {  
+            
+            ps = connection.prepareStatement(query);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                
+                    //lo trae en pascal case.
+                     clientes.add(rs.getString(1)+"  "+rs.getString(2));
+                
+            }
+            
+        
+                                      
+            ps.close();
+        }
+        catch(SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        
+        return clientes;
+    }
     
     public ObservableList<Clientes> getClientes()
     {

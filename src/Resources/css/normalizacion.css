@@ -70,8 +70,12 @@
 
 }
 
-.area-texto{
-    
+.area-texto
+{
+    -fx-border-color: -boton-color;
+    -fx-border-radius: 3px;
+    -fx-font-family: gadugi;
+     -fx-font-size: 15px;
 }
 .area-texto> .input-line{
     -fx-background-color: transparent;

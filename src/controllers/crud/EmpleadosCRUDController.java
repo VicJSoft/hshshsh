@@ -337,7 +337,15 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
         );
         this.textField_telefono.setText(empleadoVentana.getTelefono());
         this.comboBox_sexo.valueProperty().set(empleadoVentana.getSexo());
-        this.comboBox_tipo_empleado.valueProperty().set(empleadoVentana.getTipo_empleado());
+        
+        if(empleadoVentana.getTipo_empleado().equalsIgnoreCase(Statics.tipo_empledo.get(0)))//es un administrador
+        {
+            this.comboBox_tipo_empleado.getSelectionModel().select(0);
+        }
+        else//es un modulador
+        {
+            this.comboBox_tipo_empleado.getSelectionModel().select(1);
+        }
         this.textField_calle.setText(empleadoVentana.getCalle());
         this.textField_colonia.setText(empleadoVentana.getColonia());               
         this.textField_numInt.setText(empleadoVentana.getNum_int());

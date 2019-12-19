@@ -215,7 +215,6 @@ public class EmpleadosController implements Initializable {
                             empleadoActual.setTelefono(empleadoEditado.getTelefono());
                             empleadoActual.setSexo(empleadoEditado.getSexo());
                             empleadoActual.setTipo_empleado(empleadoEditado.getTipo_empleado());
-                            System.out.println(empleadoEditado.getTipo_empleado());
                             empleadoActual.setCalle(empleadoEditado.getCalle());
                             empleadoActual.setColonia(empleadoEditado.getColonia());
                             empleadoActual.setNum_ext(empleadoEditado.getNum_ext());

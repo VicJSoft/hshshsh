@@ -107,7 +107,7 @@ public class EstadisticasController implements Initializable {
         linechart.setCreateSymbols(true);
         linechart.setTitle("Reporte");
         linechart.setAnimated(true);
-        linechart.setLegendSide(Side.TOP);
+        linechart.setLegendSide(Side.BOTTOM);
         linechart.setLegendVisible(true);
         
         

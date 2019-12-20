@@ -43,23 +43,23 @@
       <Label fx:id="lbl_tittle" layoutX="8.0" layoutY="41.0" styleClass="titulo-CRUD-windows" text="Servicios" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="41.0" />
       <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos personales" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="100.0" />
       <Separator layoutX="232.0" layoutY="132.0" prefHeight="3.0" prefWidth="274.0" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Teléfono">
+      <JFXTextField fx:id="textField_telefono" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Teléfono">
          <font>
             <Font name="Gadugi" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Nombre" />
+      <JFXTextField fx:id="textField_nombre" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Nombre" />
       <Label layoutX="146.0" layoutY="225.0" styleClass="tittle-seccion-CRUD" text="Dirección" AnchorPane.leftAnchor="14.0" />
       <Separator layoutX="152.0" layoutY="245.0" prefHeight="3.0" prefWidth="353.0" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Calle" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Colonia" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Exterior" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
+      <JFXTextField fx:id="textField_calle" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Calle" />
+      <JFXTextField fx:id="textField_colonia" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Colonia" />
+      <JFXTextField fx:id="textField_num_ext" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Exterior" />
+      <JFXTextField fx:id="textField_numInt" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
       <Label layoutX="158.0" layoutY="402.0" styleClass="tittle-seccion-CRUD" text="Servicio" AnchorPane.leftAnchor="14.0" />
       <Separator layoutX="129.0" layoutY="421.0" prefHeight="3.0" prefWidth="371.0" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="518.0" prefHeight="31.0" prefWidth="404.0" promptText="Notas" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="38.0" layoutY="462.0" prefHeight="25.0" prefWidth="182.0" promptText="Unidad" />
-      <JFXTextField focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="569.0" prefHeight="31.0" prefWidth="404.0" promptText="Ovservaciones" />
+      <JFXTextField fx:id="textField_notas" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="518.0" prefHeight="31.0" prefWidth="404.0" promptText="Notas" />
+      <JFXTextField fx:id="textField_unidad" focusColor="#5ab444" labelFloat="true" layoutX="38.0" layoutY="462.0" prefHeight="25.0" prefWidth="182.0" promptText="Unidad" />
+      <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="569.0" prefHeight="31.0" prefWidth="404.0" promptText="Ovservaciones" />
       <Button layoutX="889.0" layoutY="601.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
       <Button layoutX="762.0" layoutY="600.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
       <Label layoutX="421.0" layoutY="648.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="15.0">
@@ -112,5 +112,10 @@
             </VBox>
          </children>
       </HBox>
+      <JFXTextField fx:id="textField_telefono_buscar" focusColor="#5ab444" labelFloat="true" layoutX="208.0" layoutY="67.0" onKeyPressed="#buscarTelefono_OnKey" prefHeight="25.0" prefWidth="182.0" promptText="Buscar teléfono">
+         <font>
+            <Font name="Gadugi" size="13.0" />
+         </font>
+      </JFXTextField>
    </children>
 </AnchorPane>

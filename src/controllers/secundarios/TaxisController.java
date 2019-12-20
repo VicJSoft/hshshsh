@@ -30,6 +30,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import services.Servicios;
@@ -112,7 +113,7 @@ public class TaxisController implements Initializable {
         });
         
                 //definir una fila de fabrica.
-        table_taxis.setRowFactory((param) -> {
+        table_taxis.setRowFactory((TreeTableView<Taxis> param) -> {
            // TableRow<Empleados> row = new TableRow<>();
             JFXTreeTableRow<Taxis> row = new JFXTreeTableRow<>();
             

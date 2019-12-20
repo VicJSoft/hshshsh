@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="root" onMouseClicked="#cerrarHamburger" prefHeight="680.0" prefWidth="1090.0" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ventana_PrincipalController">
    <children>
-      <Label fx:id="lbl_title" layoutX="46.0" layoutY="63.0" prefHeight="87.0" prefWidth="352.0" styleClass="titulo" text="titulo" AnchorPane.leftAnchor="46.0" AnchorPane.topAnchor="51.0" />
+      <Label fx:id="lbl_title" layoutX="82.0" layoutY="87.0" prefHeight="87.0" prefWidth="696.0" styleClass="titulo" text="titulo" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="75.0" />
       <AnchorPane fx:id="ap_tittleBar" layoutX="12.0" layoutY="14.0" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" onMouseReleased="#tittleBar_Released" prefHeight="34.0" prefWidth="1081.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fx:id="iv_iconBar" fitHeight="24.0" fitWidth="27.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">

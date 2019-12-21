@@ -123,11 +123,11 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
             {
                 iAbrir_Edicion_Registros.registroEditado(getClienteVentana());
                 this.btn_cerrar.fire();
-                 System.out.println("add");
+                System.out.println("add");
             }
             else
             {
-                 System.out.println("err");
+                System.out.println("err");
             }
        }     
                
@@ -212,6 +212,7 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
         
     }
 
+
     @Override
     public void setRequiredValidation() {
 
@@ -236,6 +237,14 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
 
     }
 
+    /**
+     * Invoca a los validadores de cada control de esta ventana.
+     * @return 
+     * True: 
+     * Sí todos los campos son correctos.
+     * False: 
+     * Cuando todos o algún campo es incorrecto/invalido.
+     */
     @Override
     public boolean validarCampos() {
 
@@ -249,7 +258,22 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
 
     }
 
-
+    /**
+     * Setea el evento para hacer el nuevo registro o edición:/n
+     * 
+     * 
+     * 
+     * @param iAbrir_Edicion_Registros
+     * Objeto interno anonimo, que se llamará como resultado del evento, cuando se clickee en aceptar. Para devolver
+     * el registro nuevo o editado.
+     * 
+     * 
+     * @param clienteAEditar 
+     * En caso de que se requiera la edición de un registro, será este el registro que se editará y devolverá por medio
+     * de la @param iAbrir_Edicion_Registros .
+     * 
+     * 
+     */
     public void setiAbrir_Edicion_Registros(IAbrir_Edicion_Registros iAbrir_Edicion_Registros,Clientes clienteAEditar) {
         this.iAbrir_Edicion_Registros = iAbrir_Edicion_Registros;
         if(clienteAEditar!=null)
@@ -264,7 +288,12 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
         }
     }
        
-  
+    /**
+     * Mapea la ventana clientes, para generar un objeto, con los datos disponibles en la ventana.
+     * Este método debe llamarse despues de validar los campos, para no tenereun campo nulo.
+     * @return 
+     * Retorna objeto cliente, del resultado de la extracción de los datos de la ventana Clientes.
+     */
     private Clientes getClienteVentana(){
         Clientes clienteVentana = new Clientes(
                 this.textField_telefono.getText().trim(), 
@@ -277,7 +306,11 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
         );
         return clienteVentana;
     }
-    
+    /**
+     * Mapea la información de un objeto cliente en la ventana.
+     * @param clienteAEditar 
+     * Objeto a mapear.
+     */
     private void setClienteVentana(Clientes clienteAEditar){
         
         this.textField_nombre.setText(clienteAEditar.getNombre());

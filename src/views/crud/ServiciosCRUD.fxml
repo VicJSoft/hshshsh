@@ -100,7 +100,7 @@
                <children>
                   <JFXCheckBox fx:id="cb_lunes" text="Lunes" />
                   <JFXCheckBox fx:id="cb_martes" text="Martes" />
-                  <JFXCheckBox fx:id="cb_miercoles" text="Miercoles" />
+                  <JFXCheckBox fx:id="cb_miercoles" text="Miércoles" />
                   <JFXCheckBox fx:id="cb_jueves" text="Jueves" />
                   <JFXCheckBox fx:id="cb_viernes" text="Viernes" />
                   <JFXCheckBox fx:id="cb_sabado" text="Sábado" />

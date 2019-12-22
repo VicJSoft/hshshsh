@@ -31,7 +31,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.converter.LocalDateStringConverter;
 import services.Servicios;
 import services.StringLengthValidator;
 import services.sql.write.ConexionEscrituraTaxistas;
@@ -83,7 +82,6 @@ public class TaxistasCRUDController implements Initializable,IValidateCRUD {
     @FXML
     private JFXDatePicker datePicker_nacimiento;
     
-    private final ConexionEscrituraTaxistas conexionEscrituraTaxistas = new ConexionEscrituraTaxistas();
     
     ArrayList<IFXValidatableControl> listaControles;    
     private IAbrir_Edicion_Registros abrir_Edicion_Registros;
@@ -103,16 +101,16 @@ public class TaxistasCRUDController implements Initializable,IValidateCRUD {
     {
         if(validarCampos()){
             
-            if(this.isEdicion && this.abrir_Edicion_Registros !=null){
-                this.abrir_Edicion_Registros.registroEditado(getTaxistaVentana());
+            if(this.abrir_Edicion_Registros !=null){
+                this.abrir_Edicion_Registros.registroEditNuevo(getTaxistaVentana());
                 btn_cerrar.fire();
                 System.out.println("addo");
-                return;
+                //return;
             }
             
-            if(conexionEscrituraTaxistas.insertTaxistas(textField_nombre.getText().toUpperCase(),  textField_telefono.getText(),datePicker_nacimiento.getValue() ,comboBox_sexo.getSelectionModel().getSelectedItem(),textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observaciones.getText().toUpperCase()))
+           /* if(conexionEscrituraTaxistas.insertTaxistas(textField_nombre.getText().toUpperCase(),  textField_telefono.getText(),datePicker_nacimiento.getValue() ,comboBox_sexo.getSelectionModel().getSelectedItem(),textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observaciones.getText().toUpperCase()))
             {
-                this.abrir_Edicion_Registros.registroEditado(getTaxistaVentana());
+                this.abrir_Edicion_Registros.registroEditNuevo(getTaxistaVentana());
                 btn_cerrar.fire();
                 System.out.println("add");
             }
@@ -120,6 +118,7 @@ public class TaxistasCRUDController implements Initializable,IValidateCRUD {
             {
                 System.out.println("err");
             }
+            */
         }
     }
     @FXML

@@ -88,8 +88,7 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
     @FXML
     private JFXPasswordField textField_password;
 
-    private final ConexionEscrituraEmpleados conexionEscrituraEmpleados = new ConexionEscrituraEmpleados();
-    
+     
     ArrayList<IFXValidatableControl> listaControles;
     
     private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
@@ -135,29 +134,31 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
         //y numint la contraseña max 12 caracteres  si es admon puede  llevar password si  es modulador de afuerzas el password    
         if(validarCampos()){
             
-            if(isEdicion && iAbrir_Edicion_Registros!=null){
+            if(iAbrir_Edicion_Registros!=null){
                 
-                this.iAbrir_Edicion_Registros.registroEditado(getEmpleadoVentana());
+                this.iAbrir_Edicion_Registros.registroEditNuevo(getEmpleadoVentana());
                 this.btn_cerrar.fire();
                 return;
             }
-            
+            /*
             if(conexionEscrituraEmpleados.insertEmpleados(
                 textField_nombre.getText().toUpperCase(),  datePicker_nacimiento.getValue(),
                 textField_telefono.getText(),comboBox_sexo.getSelectionModel().getSelectedItem(),
                 comboBox_tipo_empleado.getSelectionModel().getSelectedItem(),textField_calle.getText().toUpperCase(),
                 textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(),
                 textField_numInt.getText().toUpperCase(), textField_observ.getText().toUpperCase(),textField_password.getText()
-                ))
+                )
+                    )
             {
                 System.out.println("add");
-                this.iAbrir_Edicion_Registros.registroEditado(getEmpleadoVentana());
+                this.iAbrir_Edicion_Registros.registroEditNuevo(getEmpleadoVentana());
                 this.btn_cerrar.fire();
             }
             else
             {
                 System.out.println("err");
             }
+            */
         }
             
     }

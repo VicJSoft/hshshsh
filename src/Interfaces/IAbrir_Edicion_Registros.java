@@ -11,16 +11,20 @@ import Models.Taxis;
  * Esta interface es el intermedio para mandar un objeto (editado también) a través de ventanas.
  * @author vic xd
  */
-public interface IAbrir_Edicion_Registros 
+public abstract interface IAbrir_Edicion_Registros 
 {
+
+   
     /**
      * 
-     * @param registroEitado
+     * Metodo que invocará el evento.
+     * 
+     * @param registro 
      * El registro se trata como si fuera object y así hacer casting correspondiente dentro de cada controller.
      * 
+     * @param isEdit
+     * Indica si el registro es para edición o no.
      */
-    public void registroEditado(Object registroEitado);
-   
-    
+    public void registroEditNuevo(Object registro);
     
 }

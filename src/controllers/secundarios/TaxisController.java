@@ -68,6 +68,8 @@ public class TaxisController implements Initializable {
     private final ConexionEliminacionUnidad conexionEliminacionUnidad = new ConexionEliminacionUnidad();
     private final ConexionLecturaTaxis conexionLecturaTaxis = new ConexionLecturaTaxis();
     private final ConexionUpdateTaxi conexionUpdateTaxi = new ConexionUpdateTaxi();
+    
+    
     private final ObservableList<Taxis> listaTaxisFiltro = FXCollections.observableArrayList();
     @FXML
     private JFXButton btnAdd_Taxi;
@@ -156,7 +158,7 @@ public class TaxisController implements Initializable {
     
           taxisCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
             @Override
-            public void registroEditado(Object taxiModifcado) {
+            public void registroEditNuevo(Object taxiModifcado) {
                 
                 Taxis taxiModified = (Taxis) taxiModifcado;
                 listaTaxisDefault.add(taxiModified);
@@ -234,7 +236,7 @@ public class TaxisController implements Initializable {
         );
         taxisCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
             @Override
-            public void registroEditado(Object taxiModifcado) {
+            public void registroEditNuevo(Object taxiModifcado) {
                 
                 Taxis taxiModified = (Taxis) taxiModifcado;
                 

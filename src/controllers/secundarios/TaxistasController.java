@@ -35,6 +35,7 @@ import services.Servicios;
 import services.sql.delete.ConexionEliminacionTaxista;
 import services.sql.read.ConexionLecturaTaxistas;
 import services.sql.update.ConexionUpdateTaxista;
+import services.sql.write.ConexionEscrituraTaxistas;
 
 /**
  * FXML Controller class
@@ -65,6 +66,9 @@ public class TaxistasController implements Initializable {
     private final ConexionLecturaTaxistas conexionLecturaTaxistas= new ConexionLecturaTaxistas();
     private final ConexionEliminacionTaxista conexionEliminacionTaxista = new ConexionEliminacionTaxista();
     private final ConexionUpdateTaxista conexionUpdateTaxista = new ConexionUpdateTaxista();
+    private final ConexionEscrituraTaxistas conexionEscrituraTaxistas = new ConexionEscrituraTaxistas();
+    
+    
     private ObservableList<Taxistas> listaTaxistasDefault = FXCollections.observableArrayList();
     private final ObservableList<Taxistas> listaTaxistasFiltro = FXCollections.observableArrayList();        
     @FXML
@@ -152,11 +156,11 @@ public class TaxistasController implements Initializable {
                getClass());
          taxistasCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
             @Override
-            public void registroEditado(Object registroEitad/*valor entrada*/) {
-
+            public void registroEditNuevo(Object registroEitad/*valor entrada*/) {
                 Taxistas taxistaEditado = (Taxistas) registroEitad;
-                listaTaxistasDefault.add(taxistaEditado);
-                table_taxistas.refresh(); 
+                if(conexionEscrituraTaxistas.insertTaxista(taxistaEditado));
+                    listaTaxistasDefault.add(taxistaEditado);
+                //table_taxistas.refresh(); 
             }
         }, null);
     }
@@ -222,7 +226,7 @@ public class TaxistasController implements Initializable {
         
         taxistasCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
             @Override
-            public void registroEditado(Object registroEitad/*valor entrada*/) {
+            public void registroEditNuevo(Object registroEitad/*valor entrada*/) {
 
                 Taxistas taxistaEditado = (Taxistas) registroEitad;
                 int idTaxistaEditado = taxistaEditado.getId_taxista();

@@ -17,6 +17,7 @@ import controllers.crud.EmpleadosCRUDController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,7 @@ import services.Servicios;
 import services.sql.delete.ConexionEliminacionEmpleado;
 import services.sql.read.ConexionLecturaEmpleados;
 import services.sql.update.ConexionUpdateEmpleado;
+import services.sql.write.ConexionEscrituraEmpleados;
 
 /**
  * FXML Controller class
@@ -65,6 +67,9 @@ public class EmpleadosController implements Initializable {
     private final ConexionLecturaEmpleados conexionLecturaEmpleados= new ConexionLecturaEmpleados();
     private final ConexionEliminacionEmpleado conexionEliminacionEmpleados = new ConexionEliminacionEmpleado();
     private final ConexionUpdateEmpleado conexionUpdateEmpleado = new ConexionUpdateEmpleado();
+    private final ConexionEscrituraEmpleados conexionEscrituraEmpleados = new ConexionEscrituraEmpleados();
+    
+    
     private ObservableList<Empleados> listaEmpleadosDefault = FXCollections.observableArrayList();
     private final ObservableList<Empleados> listaEmpleadosFiltro = FXCollections.observableArrayList();     
     
@@ -159,11 +164,14 @@ public class EmpleadosController implements Initializable {
                getClass());
         empleadosCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
             @Override
-            public void registroEditado(Object registroEitado) 
+            public void registroEditNuevo(Object registroEitadoNuevo) 
             {
-                Empleados empleadoEditado = (Empleados) registroEitado;
-                listaEmpleadosDefault.add(empleadoEditado);
-                table_empleados.refresh();   
+                Empleados empleadoEditadoNuevo = (Empleados) registroEitadoNuevo;
+                if(conexionEscrituraEmpleados.insertEmpleados(empleadoEditadoNuevo)){
+                    listaEmpleadosDefault.add(empleadoEditadoNuevo);
+                    table_empleados.refresh();   
+                }
+                
             }
         }, null);
     }
@@ -200,7 +208,7 @@ public class EmpleadosController implements Initializable {
         
         empleadosCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
             @Override
-            public void registroEditado(Object registroEitado) {
+            public void registroEditNuevo(Object registroEitado) {
 
                 Empleados empleadoEditado = (Empleados) registroEitado;
                 int idEmpleadoEditado = empleadoEditado.getId_empleado();

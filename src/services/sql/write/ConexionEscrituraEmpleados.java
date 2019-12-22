@@ -5,6 +5,7 @@
  */
 package services.sql.write;
 
+import Models.Empleados;
 import Resources.statics.Statics;
 import java.sql.Connection;
 
@@ -30,19 +31,16 @@ public class ConexionEscrituraEmpleados
         connection = Statics.getConnections();
     }
     
-    
-    
-    public boolean insertEmpleados(String nombre, LocalDate fechaN,String telefono,String tipo,String sexo,String calle,String colonia, String numExt,String numInt,String observaciones,String password)
-    {
+    public boolean insertEmpleados(Empleados empleado){
         
         query="insert into empleados values(null,?,?,?,?,?,?,?,?,?,?,?)";
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setString(1,nombre );
-            ps.setDate(2, (java.sql.Date.valueOf(fechaN)));
-            ps.setString(3, telefono);
-            if(sexo.equals("MASCULINO"))
+            ps.setString(1,empleado.getNombre() );
+            ps.setDate(2, empleado.getFecha_nacimiento());
+            ps.setString(3, empleado.getTelefono());
+            if(empleado.getSexo().equals("MASCULINO"))
             {
                 ps.setInt(4, 0);
             }
@@ -50,7 +48,7 @@ public class ConexionEscrituraEmpleados
             {
                  ps.setInt(4, 1);//femenino
             }
-            if(tipo.equals("ADMINISTRATIVO"))
+            if(empleado.getTipo_empleado().equals("ADMINISTRATIVO"))
             {
                 ps.setInt(5, 0);
             }
@@ -58,19 +56,20 @@ public class ConexionEscrituraEmpleados
             {
                  ps.setInt(5, 1);//modulador
             }
-            ps.setString(6, calle);
-            ps.setString(7, colonia);
-            if(numExt.equals(""))
+            ps.setString(6, empleado.getCalle());
+            ps.setString(7, empleado.getColonia());
+            if(empleado.getNum_ext().equals(""))
                 ps.setString(8, null);
             else
-                ps.setString(8, numExt);
-            if(numInt.equals(""))
+                ps.setString(8, empleado.getNum_ext() );
+            
+            if(empleado.getNum_int().equals(""))
                 ps.setString(9, null);
             else
-                ps.setString(9, numInt);
+                ps.setString(9, empleado.getNum_int() );
       
-            ps.setString(10, observaciones);
-            ps.setString(11, password);
+            ps.setString(10, empleado.getObservaciones());
+            ps.setString(11, empleado.getPassword());
             ps.executeUpdate();
             key=true;
             ps.close();
@@ -80,6 +79,8 @@ public class ConexionEscrituraEmpleados
              key=false;
         }
         
-        return key;
+        return key;        
     }
+    
+   
 }

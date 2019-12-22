@@ -107,7 +107,7 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
           
             String val[]=comboBox_taxista.getSelectionModel().getSelectedItem().split("  ");
             if(this.isEdicion && iAbrir_Edicion_Registros!=null)  {
-               this.iAbrir_Edicion_Registros.registroEditado(getTaxiVentana());
+               this.iAbrir_Edicion_Registros.registroEditNuevo(getTaxiVentana());
                btn_cerrar.fire();
                System.out.println("addo");
                return;
@@ -119,7 +119,7 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
                     System.out.println("add");
                          
                     
-                        this.iAbrir_Edicion_Registros.registroEditado(getTaxiVentana());
+                        this.iAbrir_Edicion_Registros.registroEditNuevo(getTaxiVentana());
                         btn_cerrar.fire();                   
                     
                 }

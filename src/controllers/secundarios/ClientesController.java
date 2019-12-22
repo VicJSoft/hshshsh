@@ -35,6 +35,7 @@ import services.Servicios;
 import services.sql.delete.ConexionEliminacionCliente;
 import services.sql.read.ConexionLecturaClientes;
 import services.sql.update.ConexionUpdateCliente;
+import services.sql.write.ConexionEscrituraClientes;
 
 
 /**
@@ -65,6 +66,8 @@ public class ClientesController implements Initializable {
     private final ConexionLecturaClientes conexionLecturaClientes= new ConexionLecturaClientes();
     private final ConexionEliminacionCliente conexionEliminacionCliente = new ConexionEliminacionCliente();
     private final ConexionUpdateCliente conexionUpdateCliente = new ConexionUpdateCliente();
+    private final ConexionEscrituraClientes conexionEscrituraClientes = new ConexionEscrituraClientes();
+    
     
     private ObservableList<Clientes> listaClientesDefault = FXCollections.observableArrayList();
     private final ObservableList<Clientes> listaClientesFiltro = FXCollections.observableArrayList();     
@@ -151,46 +154,69 @@ public class ClientesController implements Initializable {
                "/views/crud/ClientesCRUD.fxml",
                Servicios.getStageFromEvent(event),
                getClass());
+         //aquí el evento entra como inserción. Así no requiere un campo de validación extra.
          clientesCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
             
                 @Override
-                public void registroEditado(Object registroEitado) {
+                public void registroEditNuevo(Object registroEditNuevo) {
                     //variable de salida.
-                    Clientes clienteEditado = (Clientes) registroEitado;
-                    listaClientesDefault.add(clienteEditado);
-                    table_clientes.refresh();
+                    Clientes clienteEditNuevo = (Clientes) registroEditNuevo;
+                    if(conexionEscrituraClientes.insertClientes(clienteEditNuevo)){
+                        listaClientesDefault.add(clienteEditNuevo);
+                        //table_clientes.refresh();
+                        
+                    }
                      
                 }
                 //variable de entrada.
             }, null);
     }
-     private void cargarListaFiltrada(TreeItem<Clientes> root) {
-            textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
-            {
-                table_clientes.setRoot(null);
-                if (newValue.equals("")) 
-                {
-                     table_clientes.setRoot(root); 
-                } else 
-                {
-                    table_clientes.setRoot(null);
-                    listaClientesFiltro.clear();
-                    
-                    for(int i=0;i<listaClientesDefault.size();i++)
-                    {
-                        if(listaClientesDefault.get(i).getNombre().contains(newValue.toUpperCase()))
-                        {
-                            listaClientesFiltro.add(listaClientesDefault.get(i));
+    
+    @FXML
+    private void btnEdit_OnAction(ActionEvent event) throws IOException {
+        System.out.println("Edit");
+        ClientesCRUDController clientesCRUDController = (ClientesCRUDController) Servicios.crearVentana(
+                "/views/crud/ClientesCRUD.fxml", 
+                Servicios.getStageFromEvent(event), 
+                getClass()
+        );
+        //aquí el evento entra como edición.
+        clientesCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
+            
+                @Override
+                public void registroEditNuevo(Object registroEditNuevo) {
+                    //variable de salida.
+                    Clientes clienteEditNuevo = (Clientes) registroEditNuevo;
+                    String telefonoClienteEditado = clienteEditNuevo.getTelefono();
+
+                    //updatea el registro segun el telefono (primary key).
+                    if( conexionUpdateCliente.update(clienteEditNuevo)){
+                        for(Clientes clienteActual : listaClientesDefault){
+                            if(clienteActual.getTelefono().equals(telefonoClienteEditado)){
+                                //el primary key telefono, nunca cambiará. ya que si el cliente cambia de numero
+                                //se veria obligado el sistema, a cambiar el foreign key que se relaciones con Cliente.
+                                //clienteActual.setTelefono();
+
+                                clienteActual.setNombre(clienteEditNuevo.getNombre());
+                                clienteActual.setCalle(clienteEditNuevo.getCalle());
+                                clienteActual.setNumeroExt(clienteEditNuevo.getNumeroExt());
+                                clienteActual.setNumeroInt(clienteEditNuevo.getNumeroInt());
+                                clienteActual.setColonia(clienteEditNuevo.getColonia());
+                                clienteActual.setObservaciones(clienteEditNuevo.getObservaciones());
+
+
+                                table_clientes.refresh();
+                                break;
+                            }
                         }
                     }
-                    TreeItem<Clientes> root1 = new RecursiveTreeItem<>(listaClientesFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
-                    table_clientes.setRoot(root1);
-                    table_clientes.setShowRoot(false);
                 }
-            
-             });
+                //variable de entrada.
+            }, table_clientes.getSelectionModel().getSelectedItem().getValue()
+        );
+        
     }
-
+    
     @FXML
     private void btnDelete_OnAction(ActionEvent event) {
         
@@ -212,48 +238,31 @@ public class ClientesController implements Initializable {
         }
     }
     
-    
-    @FXML
-    private void btnEdit_OnAction(ActionEvent event) throws IOException {
-        System.out.println("Edit");
-        ClientesCRUDController clientesCRUDController = (ClientesCRUDController) Servicios.crearVentana(
-                "/views/crud/ClientesCRUD.fxml", 
-                Servicios.getStageFromEvent(event), 
-                getClass()
-        );
         
-        clientesCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
-            
-                @Override
-                public void registroEditado(Object registroEitado) {
-                    //variable de salida.
-                    Clientes clienteEditado = (Clientes) registroEitado;
-                    String telefonoClienteEditado = clienteEditado.getTelefono();
-                    if(conexionUpdateCliente.update(clienteEditado)){
-                        for(Clientes clienteActual : listaClientesDefault){
-                            if(clienteActual.getTelefono().equals(telefonoClienteEditado)){
-                                //el primary key telefono, nunca cambiará. ya que si el cliente cambia de numero
-                                //se veria obligado el sistema, a cambiar el foreign key que se relaciones con Cliente.
-                                //clienteActual.setTelefono();
+    private void cargarListaFiltrada(TreeItem<Clientes> root) {
+        textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
+        {
+            table_clientes.setRoot(null);
+            if (newValue.equals("")) 
+            {
+                 table_clientes.setRoot(root); 
+            } else 
+            {
+                table_clientes.setRoot(null);
+                listaClientesFiltro.clear();
 
-                                clienteActual.setNombre(clienteEditado.getNombre());
-                                clienteActual.setCalle(clienteEditado.getCalle());
-                                clienteActual.setNumeroExt(clienteEditado.getNumeroExt());
-                                clienteActual.setNumeroInt(clienteEditado.getNumeroInt());
-                                clienteActual.setColonia(clienteEditado.getColonia());
-                                clienteActual.setObservaciones(clienteEditado.getObservaciones());
-
-
-                                table_clientes.refresh();
-                                break;
-                            }
-                        }
+                for(int i=0;i<listaClientesDefault.size();i++)
+                {
+                    if(listaClientesDefault.get(i).getNombre().contains(newValue.toUpperCase()))
+                    {
+                        listaClientesFiltro.add(listaClientesDefault.get(i));
                     }
                 }
-                //variable de entrada.
-            }, table_clientes.getSelectionModel().getSelectedItem().getValue()
-        );
-        
-    }
-    
+                TreeItem<Clientes> root1 = new RecursiveTreeItem<>(listaClientesFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+                table_clientes.setRoot(root1);
+                table_clientes.setShowRoot(false);
+            }
+
+         });
+   }
 }

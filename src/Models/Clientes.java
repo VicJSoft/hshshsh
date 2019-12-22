@@ -18,7 +18,9 @@ public class Clientes extends RecursiveTreeObject<Clientes>
     //campo telefono es el primary key*.
     private String nombre, telefono, calle,numeroExt,numeroInt,colonia, observaciones;
     public Clientes()
-    {}
+    {
+    
+    }
 
     public Clientes(String telefono , String nombre, String calle, String colonia, String numeroExt, String numeroInt, String observaciones) {
         this.nombre = nombre;

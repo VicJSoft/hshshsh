@@ -72,7 +72,6 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
     @FXML
     private JFXTextField textField_observ;
      
-    private final ConexionEscrituraClientes conexionEscrituraClientes = new ConexionEscrituraClientes();
     
     ArrayList<IFXValidatableControl> listaControles;   
 
@@ -112,23 +111,11 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
        // el telefono debe de tener como maximo 10 caracteres
        if(validarCampos()){
            
-           if(isEdicion && iAbrir_Edicion_Registros!=null){
-               iAbrir_Edicion_Registros.registroEditado(getClienteVentana());
+           if(iAbrir_Edicion_Registros!=null){
+               iAbrir_Edicion_Registros.registroEditNuevo(getClienteVentana());
                this.btn_cerrar.fire();
                 System.out.println("edit");
-               return;
            }
-           
-            if(conexionEscrituraClientes.insertClientes(textField_telefono.getText(), textField_nombre.getText().toUpperCase(), textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observ.getText().toUpperCase()))
-            {
-                iAbrir_Edicion_Registros.registroEditado(getClienteVentana());
-                this.btn_cerrar.fire();
-                System.out.println("add");
-            }
-            else
-            {
-                System.out.println("err");
-            }
        }     
                
     }
@@ -149,6 +136,7 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
     public ArrayList<IFXValidatableControl> listControlsRequired() {
 
         ArrayList<IFXValidatableControl> lista = new ArrayList<>();
+        
         lista.add(this.textField_telefono);
         lista.add(this.textField_nombre);
         lista.add(this.textField_calle);
@@ -239,11 +227,14 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
 
     /**
      * Invoca a los validadores de cada control de esta ventana.
+     * 
      * @return 
      * True: 
      * Sí todos los campos son correctos.
+     * 
      * False: 
      * Cuando todos o algún campo es incorrecto/invalido.
+     * 
      */
     @Override
     public boolean validarCampos() {

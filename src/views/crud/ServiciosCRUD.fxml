@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -40,6 +41,11 @@
             </Label>
          </children>
       </AnchorPane>
+      <JFXTextField fx:id="textField_telefono_buscar" focusColor="#5ab444" labelFloat="true" layoutX="208.0" layoutY="67.0" onKeyPressed="#txtBuscarTelefono_OnKeyPressed" prefHeight="25.0" prefWidth="182.0" promptText="Buscar teléfono">
+         <font>
+            <Font name="Gadugi" size="13.0" />
+         </font>
+      </JFXTextField>
       <Label fx:id="lbl_tittle" layoutX="8.0" layoutY="41.0" styleClass="titulo-CRUD-windows" text="Servicios" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="41.0" />
       <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos personales" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="100.0" />
       <Separator layoutX="232.0" layoutY="132.0" prefHeight="3.0" prefWidth="274.0" />
@@ -57,11 +63,9 @@
       <JFXTextField fx:id="textField_numInt" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
       <Label layoutX="158.0" layoutY="402.0" styleClass="tittle-seccion-CRUD" text="Servicio" AnchorPane.leftAnchor="14.0" />
       <Separator layoutX="129.0" layoutY="421.0" prefHeight="3.0" prefWidth="371.0" />
-      <JFXTextField fx:id="textField_notas" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="518.0" prefHeight="31.0" prefWidth="404.0" promptText="Notas" />
       <JFXTextField fx:id="textField_unidad" focusColor="#5ab444" labelFloat="true" layoutX="38.0" layoutY="462.0" prefHeight="25.0" prefWidth="182.0" promptText="Unidad" />
+      <JFXTextField fx:id="textField_notas" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="518.0" prefHeight="31.0" prefWidth="404.0" promptText="Notas" />
       <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="569.0" prefHeight="31.0" prefWidth="404.0" promptText="Ovservaciones" />
-      <Button layoutX="889.0" layoutY="601.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
-      <Button layoutX="762.0" layoutY="600.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
       <Label layoutX="421.0" layoutY="648.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="10.0" />
@@ -72,50 +76,50 @@
       <Separator layoutX="759.0" layoutY="136.0" prefHeight="3.0" prefWidth="245.0" />
       <VBox layoutX="564.0" layoutY="168.0" prefHeight="49.0" prefWidth="100.0" spacing="30.0">
          <children>
-            <JFXRadioButton styleClass="customized-jfx-radio-button" text="Regular">
+            <JFXRadioButton fx:id="rb_Regular" styleClass="customized-jfx-radio-button" text="Regular">
                <toggleGroup>
                   <ToggleGroup fx:id="tipoServicio" />
                </toggleGroup>
             </JFXRadioButton>
-            <JFXRadioButton styleClass="customized-jfx-radio-button" text="Programado" toggleGroup="$tipoServicio" />
+            <JFXRadioButton fx:id="rb_programado" styleClass="customized-jfx-radio-button" text="Programado" toggleGroup="$tipoServicio" />
          </children>
       </VBox>
       <HBox layoutX="583.0" layoutY="280.0" prefHeight="24.0" prefWidth="404.0" spacing="100.0">
          <children>
-            <JFXRadioButton styleClass="customized-jfx-radio-button" text="Personalizado">
+            <JFXRadioButton fx:id="rb_personalizado" styleClass="customized-jfx-radio-button" text="Personalizado">
                <toggleGroup>
                   <ToggleGroup fx:id="toggletipoProgramado" />
                </toggleGroup>
             </JFXRadioButton>
-            <JFXRadioButton styleClass="customized-jfx-radio-button" text="Diario" toggleGroup="$toggletipoProgramado" />
+            <JFXRadioButton fx:id="rb_diario" styleClass="customized-jfx-radio-button" text="Diario" toggleGroup="$toggletipoProgramado" />
          </children>
       </HBox>
       <HBox layoutX="583.0" layoutY="313.0" prefHeight="179.0" prefWidth="418.0" spacing="100.0">
          <children>
             <VBox prefHeight="121.0" prefWidth="100.0" spacing="10.0">
                <children>
-                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Lunes" />
-                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Martes" />
-                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Miércoles" />
-                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Jueves" />
-                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Viernes" />
-                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Sábado" />
-                  <JFXRadioButton styleClass="customized-jfx-radio-button" text="Domingo" />
+                  <JFXCheckBox fx:id="cb_lunes" text="Lunes" />
+                  <JFXCheckBox fx:id="cb_martes" text="Martes" />
+                  <JFXCheckBox fx:id="cb_miercoles" text="Miercoles" />
+                  <JFXCheckBox fx:id="cb_jueves" text="Jueves" />
+                  <JFXCheckBox fx:id="cb_viernes" text="Viernes" />
+                  <JFXCheckBox fx:id="cb_sabado" text="Sábado" />
+                  <JFXCheckBox fx:id="cb_domingo" text="Domingo" />
                </children>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
             </VBox>
             <VBox prefHeight="179.0" prefWidth="219.0" spacing="30.0">
                <children>
-                  <JFXTimePicker promptText="00:00" />
-                  <JFXDatePicker promptText="DD/MM/AAAA" />
-                  <JFXTextField focusColor="#5ab444" labelFloat="true" prefHeight="31.0" prefWidth="50.0" promptText="Destino" />
+                  <JFXTimePicker fx:id="timePicker_horaServicio" promptText="00:00" />
+                  <JFXDatePicker fx:id="datePicker_dia" promptText="DD/MM/AAAA" />
+                  <JFXTextField fx:id="txt_destino" focusColor="#5ab444" labelFloat="true" prefHeight="31.0" prefWidth="50.0" promptText="Destino" />
                </children>
             </VBox>
          </children>
       </HBox>
-      <JFXTextField fx:id="textField_telefono_buscar" focusColor="#5ab444" labelFloat="true" layoutX="208.0" layoutY="67.0" onKeyPressed="#buscarTelefono_OnKey" prefHeight="25.0" prefWidth="182.0" promptText="Buscar teléfono">
-         <font>
-            <Font name="Gadugi" size="13.0" />
-         </font>
-      </JFXTextField>
+      <Button fx:id="btn_aceptar" layoutX="889.0" layoutY="601.0" mnemonicParsing="false" onAction="#btnAceptar_OnAction" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
+      <Button fx:id="btn_cancelar" layoutX="762.0" layoutY="600.0" mnemonicParsing="false" onAction="#btnCancelar_OnAction" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
    </children>
 </AnchorPane>

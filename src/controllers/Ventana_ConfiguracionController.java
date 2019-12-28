@@ -6,6 +6,7 @@
 package controllers;
 
 import Interfaces.IValidateCRUD;
+import Resources.persistencia.SharePreferencesDB;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.base.IFXValidatableControl;
@@ -69,6 +70,7 @@ public class Ventana_ConfiguracionController implements Initializable,IValidateC
 
 
     private boolean conexionSatisfactoria = false;
+    private SharePreferencesDB configuracion;
     
     
     /**
@@ -77,9 +79,14 @@ public class Ventana_ConfiguracionController implements Initializable,IValidateC
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-        //Recupera información de conexion del JSON para la DB.
+        //Recupera información de conexion para la DB.
+        this.configuracion = SharePreferencesDB.getConfiguracion();
         this.setRequiredValidation();
+        
+        this.txt_IP.setText(configuracion.getIp());
+        this.txt_Puerto.setText(configuracion.getPuerto());
+        this.txt_Usuario.setText(configuracion.getUser());
+        this.txt_Contrasena.setText(configuracion.getPass());
     }    
 
 
@@ -113,6 +120,8 @@ public class Ventana_ConfiguracionController implements Initializable,IValidateC
         if(this.conexionSatisfactoria){
             
             //guardar configuracion en un json
+            SharePreferencesDB.setConfiguracion(this.getVentanaConfiguracion());
+            this.btn_cerrar.fire();
         }
         
     }
@@ -189,6 +198,14 @@ public class Ventana_ConfiguracionController implements Initializable,IValidateC
         
         return valido;
         
+    }
+
+    private SharePreferencesDB getVentanaConfiguracion() {
+
+        return new SharePreferencesDB(this.txt_IP.getText(), this.txt_Puerto.getText(), 
+                this.txt_Usuario.getText(), this.txt_Contrasena.getText()
+        );
+
     }
     
 }

@@ -83,10 +83,10 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-         this.listaControles = listControlsRequired();
-                this.setFieldValidations();
-                comboBox_marca.setItems(Statics.marcas);
-                comboBox_taxista.setItems(conexionLecturaTaxistas.getTaxistas_id_name());
+        this.listaControles = listControlsRequired();
+        this.setFieldValidations();
+        comboBox_marca.setItems(Statics.marcas);
+        comboBox_taxista.setItems(conexionLecturaTaxistas.getTaxistas_id_name());
        
         
         

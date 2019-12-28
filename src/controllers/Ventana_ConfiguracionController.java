@@ -5,17 +5,35 @@
  */
 package controllers;
 
+import Interfaces.IValidateCRUD;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.base.IFXValidatableControl;
+import com.jfoenix.validation.IntegerValidator;
+import com.jfoenix.validation.RequiredFieldValidator;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Paint;
 import services.Servicios;
 
 /**
@@ -23,7 +41,7 @@ import services.Servicios;
  *
  * @author ESPINO
  */
-public class Ventana_ConfiguracionController implements Initializable {
+public class Ventana_ConfiguracionController implements Initializable,IValidateCRUD {
 
     @FXML
     private AnchorPane ap_tittleBar;
@@ -39,13 +57,29 @@ public class Ventana_ConfiguracionController implements Initializable {
     private JFXTextField txt_Puerto;
     @FXML
     private Button btn_Probar;
+    @FXML
+    private Button btnAceptar;
+    @FXML
+    private Button btnCancelar;
+    @FXML
+    private JFXTextField txt_Usuario;
+    @FXML
+    private JFXPasswordField txt_Contrasena;
+    
 
+
+    private boolean conexionSatisfactoria = false;
+    
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        //Recupera información de conexion del JSON para la DB.
+        this.setRequiredValidation();
     }    
 
 
@@ -75,10 +109,86 @@ public class Ventana_ConfiguracionController implements Initializable {
 
     @FXML
     private void btn_Aceptar_Click(ActionEvent event) {
+        
+        if(this.conexionSatisfactoria){
+            
+            //guardar configuracion en un json
+        }
+        
     }
 
     @FXML
     private void btn_Probar_Click(ActionEvent event) {
+        if(validarCampos()){
+            
+            String path = "jdbc:mysql://";
+            path = path + this.txt_IP.getText() + ":" + this.txt_Puerto.getText() + "/sitio_taxi";
+            String user = this.txt_Usuario.getText();
+            String pass = this.txt_Contrasena.getText();
+ 
+            Connection connection;
+            try {
+               Class.forName("com.mysql.jdbc.Driver").newInstance();
+               connection = DriverManager.getConnection(path,user,pass);
+               this.conexionSatisfactoria = true;
+            } 
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) 
+            {
+                Servicios.crearVentanaError(this.btnAceptar.getScene().getWindow(), 
+                        "Error de conexión de Base de Datos",
+                        "No fue posible conectar a la base de datos", 
+                        ex.getMessage()
+                );
+                ex.getMessage(); 
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+
+            
+        }
+    }
+
+    @Override
+    public ArrayList<IFXValidatableControl> listControlsRequired() {
+        return null;
+    }
+
+    @Override
+    public void setFieldValidations() {
+    }
+
+    @Override
+    public void setLengthValidation() {
+    }
+
+    @Override
+    public void setRequiredValidation() {
+        this.txt_IP.getValidators().add(new RequiredFieldValidator("Campo requerido."));
+        this.txt_Puerto.getValidators().add(new RequiredFieldValidator("Campo requerido."));
+        this.txt_Usuario.getValidators().add(new RequiredFieldValidator("Campo requerido."));
+     //   this.txt_Contrasena.getValidators().add(new RequiredFieldValidator("Campo requerido."));
+        
+        this.txt_Puerto.getValidators().add(new IntegerValidator("Ingrese solo números."));
+        
+        
+    }
+
+    @Override
+    public boolean validarCampos() {
+        boolean valido = true;
+        
+        this.txt_IP.validate();
+        this.txt_Puerto.validate();
+        this.txt_Usuario.validate();
+        this.txt_Contrasena.validate();
+        
+        valido = valido &&  
+                this.txt_IP.validate() &&
+                this.txt_Puerto.validate() &&
+                this.txt_Usuario.validate() &&
+                this.txt_Contrasena.validate();
+        
+        return valido;
+        
     }
     
 }

@@ -149,6 +149,7 @@ public class Ventana_ConfiguracionController implements Initializable,IValidateC
                         ex.getMessage()
                 );
                 ex.getMessage(); 
+                this.conexionSatisfactoria = false;
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             } 
 

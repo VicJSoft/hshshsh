@@ -5,6 +5,7 @@
  */
 package services.sql.delete;
 
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,8 +21,17 @@ public class ConexionEliminacionCliente {
     private String query;
     private ResultSet rs;
     private PreparedStatement ps;
+    Connection connection;
+
+    public ConexionEliminacionCliente() {
     
-    public boolean deleteCliente(String telefono, Connection connection) throws SQLException {
+        this.connection = Statics.getConnections();
+    
+    }
+    
+    
+    
+    public boolean deleteCliente(String telefono) throws SQLException {
         //falso hasta que no se demuestre lo contrario.
         boolean isEliminado = false;
         

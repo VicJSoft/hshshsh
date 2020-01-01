@@ -5,6 +5,7 @@
  */
 package controllers.secundarios;
 
+import Interfaces.IAbrir_Edicion_Registros;
 import Models.Empleados;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXButton;
@@ -12,9 +13,11 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
+import controllers.crud.EmpleadosCRUDController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,23 +26,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableRow;
-import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.SwipeEvent;
-import javafx.util.Callback;
 import services.Servicios;
 import services.sql.delete.ConexionEliminacionEmpleado;
 import services.sql.read.ConexionLecturaEmpleados;
+import services.sql.update.ConexionUpdateEmpleado;
+import services.sql.write.ConexionEscrituraEmpleados;
 
 /**
  * FXML Controller class
@@ -69,6 +66,10 @@ public class EmpleadosController implements Initializable {
     private JFXTextField textField_buscar;
     private final ConexionLecturaEmpleados conexionLecturaEmpleados= new ConexionLecturaEmpleados();
     private final ConexionEliminacionEmpleado conexionEliminacionEmpleados = new ConexionEliminacionEmpleado();
+    private final ConexionUpdateEmpleado conexionUpdateEmpleado = new ConexionUpdateEmpleado();
+    private final ConexionEscrituraEmpleados conexionEscrituraEmpleados = new ConexionEscrituraEmpleados();
+    
+    
     private ObservableList<Empleados> listaEmpleadosDefault = FXCollections.observableArrayList();
     private final ObservableList<Empleados> listaEmpleadosFiltro = FXCollections.observableArrayList();     
     
@@ -88,7 +89,7 @@ public class EmpleadosController implements Initializable {
         column_nacimiento.setCellValueFactory(new TreeItemPropertyValueFactory<>("fecha_nacimiento"));
 
 
-        listaEmpleadosDefault=conexionLecturaEmpleados.getEmpleados(Statics.getConnections());
+        listaEmpleadosDefault=conexionLecturaEmpleados.getEmpleados();
 
         TreeItem<Empleados> root = new RecursiveTreeItem<>(listaEmpleadosDefault, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
         table_empleados.setRoot(root);
@@ -157,18 +158,30 @@ public class EmpleadosController implements Initializable {
 
     @FXML
     private void btnAdd_OnAction(ActionEvent event) throws IOException {
-        Servicios.crearVentana(
-               getClass().getResource("/views/crud/EmpleadosCRUD.fxml"),
-               Servicios.getStageFromEvent(event));
+        EmpleadosCRUDController empleadosCRUDController=(EmpleadosCRUDController) Servicios.crearVentana(
+               "/views/crud/EmpleadosCRUD.fxml",
+               Servicios.getStageFromEvent(event),
+               getClass());
+        empleadosCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
+            @Override
+            public void registroEditNuevo(Object registroEitadoNuevo) 
+            {
+                Empleados empleadoEditadoNuevo = (Empleados) registroEitadoNuevo;
+                if(conexionEscrituraEmpleados.insertEmpleados(empleadoEditadoNuevo)){
+                    listaEmpleadosDefault.add(empleadoEditadoNuevo);
+                    table_empleados.refresh();   
+                }
+                
+            }
+        }, null);
     }
     
     @FXML
     private void btnDelete_OnAction(ActionEvent event) {
-        int id = Integer.parseInt( table_empleados.getSelectionModel().getSelectedItem().getValue().getId_empleado());
-        System.out.println("Delete");
-    
+        int id = table_empleados.getSelectionModel().getSelectedItem().getValue().getId_empleado();
+       
         try {
-            conexionEliminacionEmpleados.deleteEmpleado(id, Statics.getConnections() ) ;
+            conexionEliminacionEmpleados.deleteEmpleado(id ) ;
                 listaEmpleadosDefault.remove(table_empleados.getSelectionModel().getSelectedItem().getValue());
            
         } catch (SQLException ex) {
@@ -184,9 +197,50 @@ public class EmpleadosController implements Initializable {
     }
     
     @FXML
-    private void btnEdit_OnAction(ActionEvent event) {
+    private void btnEdit_OnAction(ActionEvent event) throws IOException {
         
         System.out.println("Edit");
+        EmpleadosCRUDController  empleadosCRUDController = (EmpleadosCRUDController) Servicios.crearVentana(
+                "/views/crud/EmpleadosCRUD.fxml", 
+                Servicios.getStageFromEvent(event),
+                getClass()
+        );
+        
+        empleadosCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
+            @Override
+            public void registroEditNuevo(Object registroEitado) {
+
+                Empleados empleadoEditado = (Empleados) registroEitado;
+                int idEmpleadoEditado = empleadoEditado.getId_empleado();
+                if(conexionUpdateEmpleado.update(empleadoEditado)){
+                    
+                    for(Empleados empleadoActual : listaEmpleadosDefault){
+
+                        if(idEmpleadoEditado == empleadoActual.getId_empleado()){
+
+                            empleadoActual.setNombre(empleadoEditado.getNombre());
+                            empleadoActual.setFecha_nacimiento(empleadoEditado.getFecha_nacimiento());
+                            empleadoActual.setTelefono(empleadoEditado.getTelefono());
+                            empleadoActual.setSexo(empleadoEditado.getSexo());
+                            empleadoActual.setTipo_empleado(empleadoEditado.getTipo_empleado());
+                            empleadoActual.setCalle(empleadoEditado.getCalle());
+                            empleadoActual.setColonia(empleadoEditado.getColonia());
+                            empleadoActual.setNum_ext(empleadoEditado.getNum_ext());
+                            empleadoActual.setNum_int(empleadoEditado.getNum_int());
+                            empleadoActual.setObservaciones(empleadoEditado.getObservaciones());
+                            empleadoActual.setPassword(empleadoEditado.getPassword());
+
+
+                            table_empleados.refresh();
+                            break;
+                        }
+
+                    }
+                }
+                
+            }
+        }, table_empleados.getSelectionModel().getSelectedItem().getValue());
+        
     
     }
     

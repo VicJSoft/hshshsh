@@ -6,6 +6,7 @@
 package services.sql.read;
 
 import Models.Taxis;
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,11 +24,22 @@ public class ConexionLecturaTaxis
     String query="",auxiliar="";
     ResultSet rs;
     boolean key;
+    Connection connection;
+
+    public ConexionLecturaTaxis() {
     
-    public ObservableList<Taxis> getTaxis(Connection connection)
+        connection = Statics.getConnections();
+    
+    }
+    
+    
+    
+    
+    public ObservableList<Taxis> getTaxis()
     {
-        query="select id_unidad, marca, modelo,placa,nombre from unidades, taxistas where unidades.id_taxista=taxistas.id_taxista";
-        
+        query="select id_unidad, marca, modelo,placa,taxistas.nombre,taxistas.id_taxista from unidades, taxistas where unidades.id_taxista=taxistas.id_taxista order by id_unidad asc";
+//la misma columna, no hay registro duplicados.        
+//select id_unidad, marca, modelo,placa,nombre,taxistas.id_taxista, unidades.id_taxista from unidades, taxistas where unidades.id_taxista=taxistas.id_taxista
         ObservableList<Taxis> listaTaxis = FXCollections.observableArrayList();
         try
         {
@@ -35,7 +47,16 @@ public class ConexionLecturaTaxis
             rs= ps.executeQuery();
             while(rs.next())
             {
-                listaTaxis.add(new Taxis(String.valueOf(rs.getInt(1)),rs.getString(2).toUpperCase(),rs.getString(3),rs.getString(4).toUpperCase(),rs.getString(5).toUpperCase()));     
+                listaTaxis.add(
+                        new Taxis(
+                                rs.getInt(1),
+                                rs.getString(2),
+                                rs.getInt(3),
+                                rs.getString(4),
+                                rs.getString(5),
+                                rs.getInt(1)                        
+                        )
+                );     
             }
             ps.close();
 

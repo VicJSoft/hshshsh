@@ -6,6 +6,7 @@
 package Models;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import java.sql.Date;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -15,55 +16,81 @@ import javafx.beans.property.SimpleStringProperty;
 public class Clientes extends RecursiveTreeObject<Clientes>
 {
     //campo telefono es el primary key*.
-    private SimpleStringProperty   nombre, telefono, direccion, observaciones, fecha_nacimiento;
+    private String nombre, telefono, calle,numeroExt,numeroInt,colonia, observaciones;
     public Clientes()
-    {}
-
-    public Clientes( String telefono,String nombre, String direccion, String observaciones) {
+    {
     
-        this.nombre = new SimpleStringProperty(nombre);
-        this.telefono = new SimpleStringProperty(telefono);
-        this.direccion = new SimpleStringProperty(direccion);
-        this.observaciones = new SimpleStringProperty(observaciones);
     }
 
-  
-    public String getTelefono() {
-        return telefono.get();
+    public Clientes(String telefono , String nombre, String calle, String colonia, String numeroExt, String numeroInt, String observaciones) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.calle = calle;
+        this.numeroExt = numeroExt;
+        this.numeroInt = numeroInt!=null?numeroInt:"";//
+        this.colonia = colonia;
+        this.observaciones = observaciones!=null?observaciones:"";//
     }
+    
 
-    public void setTelefono(String telefono) {
-        this.telefono = new SimpleStringProperty(telefono);
-    }
     public String getNombre() {
-        return nombre.get();
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = new SimpleStringProperty(nombre);
+        this.nombre = nombre;
     }
 
-    public String getDireccion() {
-        return direccion.get();
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion =new SimpleStringProperty(direccion);
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNumeroExt() {
+        return numeroExt;
+    }
+
+    public void setNumeroExt(String numeroExt) {
+        this.numeroExt = numeroExt;
+    }
+
+    public String getNumeroInt() {
+        return numeroInt;
+    }
+
+    public void setNumeroInt(String numeroInt) {
+        this.numeroInt = numeroInt;
+    }
+
+    public String getColonia() {
+        return colonia;
+    }
+
+    public void setColonia(String colonia) {
+        this.colonia = colonia;
     }
 
     public String getObservaciones() {
-        return observaciones.get();
+        return observaciones;
     }
 
     public void setObservaciones(String observaciones) {
-        this.observaciones = new SimpleStringProperty(observaciones);
+        this.observaciones = observaciones;
     }
 
-    public String getFecha_nacimiento() {
-        return fecha_nacimiento.get();
-    }
-
-    public void setFecha_nacimiento(String fecha_nacimiento) {
-        this.fecha_nacimiento = new SimpleStringProperty(fecha_nacimiento);
-    }
+   public String getDireccion(){
+       return calle+" "+numeroExt+" "+numeroInt+" "+colonia;
+   }
+        
 }

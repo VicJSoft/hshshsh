@@ -6,6 +6,8 @@
 package Models;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import java.sql.Date;
+import java.time.LocalDate;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -14,25 +16,37 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class Taxistas extends RecursiveTreeObject<Taxistas>
 {
-    private SimpleStringProperty  id_taxista, nombre, telefono, direccion, observaciones, fecha_nacimiento;
+    private SimpleStringProperty nombre, telefono;
+    private String sexo;
+    private int id_taxista;
+    private String calle,numInt,numExt,colonia;
+    private Date fecha_nacimiento;
+    private String observaciones;
+    
     public Taxistas()
     {}
 
-    public Taxistas(String id_taxista, String nombre, String telefono, String direccion, String observaciones, String fecha_nacimiento) {
-        this.id_taxista = new SimpleStringProperty(id_taxista);
+    public Taxistas(int id_taxista, String nombre, String telefono, LocalDate fecha_nacimiento, String sexo,String calle,String colonia,String numExt,String numInt, String observaciones ) {
+        this.id_taxista = id_taxista;
         this.nombre = new SimpleStringProperty(nombre);
         this.telefono = new SimpleStringProperty(telefono);
-        this.direccion = new SimpleStringProperty(direccion);
-        this.observaciones = new SimpleStringProperty(observaciones);
-        this.fecha_nacimiento = new SimpleStringProperty(fecha_nacimiento);
+      //  this.direccion = new SimpleStringProperty(direccion);
+        this.calle = calle;
+        this.numInt = numInt!=null?numInt:"";
+        this.numExt = numExt;
+        this.colonia = colonia;
+        this.observaciones =observaciones!=null?observaciones:"";
+        //this.fecha_nacimiento = fecha_nacimiento.;
+        this.fecha_nacimiento = Date.valueOf(fecha_nacimiento);
+        this.sexo = sexo;
     }
 
-    public String getId_taxista() {
-        return id_taxista.get();
+    public int getId_taxista() {
+        return id_taxista;
     }
 
-    public void setId_taxista(String id_taxista) {
-        this.id_taxista = new SimpleStringProperty(id_taxista);
+    public void setId_taxista(int id_taxista) {
+        this.id_taxista = id_taxista;
     }
 
     public String getNombre() {
@@ -52,28 +66,68 @@ public class Taxistas extends RecursiveTreeObject<Taxistas>
     }
 
     public String getDireccion() {
-        return direccion.get();
+        return calle +" "+numInt +" "+ numExt +" "+ colonia;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion =new SimpleStringProperty(direccion);
-    }
+
 
     public String getObservaciones() {
-        return observaciones.get();
+        return observaciones;
     }
 
     public void setObservaciones(String observaciones) {
-        this.observaciones = new SimpleStringProperty(observaciones);
+        this.observaciones =observaciones;
     }
 
-    public String getFecha_nacimiento() {
-        return fecha_nacimiento.get();
+    public Date getFecha_nacimiento() {
+        return this.fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(String fecha_nacimiento) {
-        this.fecha_nacimiento = new SimpleStringProperty(fecha_nacimiento);
+    public void setFecha_nacimiento(Date fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
     }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNumInt() {
+        return numInt;
+    }
+
+    public void setNumInt(String numInt) {
+        this.numInt = numInt;
+    }
+
+    public String getNumExt() {
+        return numExt;
+    }
+
+    public void setNumExt(String numExt) {
+        this.numExt = numExt;
+    }
+
+    public String getColonia() {
+        return colonia;
+    }
+
+    public void setColonia(String colonia) {
+        this.colonia = colonia;
+    }
+    
+    
     
     
     

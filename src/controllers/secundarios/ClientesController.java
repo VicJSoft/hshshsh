@@ -5,14 +5,15 @@
  */
 package controllers.secundarios;
 
+import Interfaces.IAbrir_Edicion_Registros;
 import Models.Clientes;
-import Models.Empleados;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
+import controllers.crud.ClientesCRUDController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -33,6 +34,8 @@ import javafx.scene.input.MouseButton;
 import services.Servicios;
 import services.sql.delete.ConexionEliminacionCliente;
 import services.sql.read.ConexionLecturaClientes;
+import services.sql.update.ConexionUpdateCliente;
+import services.sql.write.ConexionEscrituraClientes;
 
 
 /**
@@ -62,7 +65,10 @@ public class ClientesController implements Initializable {
     private JFXTextField textField_buscar;
     private final ConexionLecturaClientes conexionLecturaClientes= new ConexionLecturaClientes();
     private final ConexionEliminacionCliente conexionEliminacionCliente = new ConexionEliminacionCliente();
-
+    private final ConexionUpdateCliente conexionUpdateCliente = new ConexionUpdateCliente();
+    private final ConexionEscrituraClientes conexionEscrituraClientes = new ConexionEscrituraClientes();
+    
+    
     private ObservableList<Clientes> listaClientesDefault = FXCollections.observableArrayList();
     private final ObservableList<Clientes> listaClientesFiltro = FXCollections.observableArrayList();     
     @FXML
@@ -71,6 +77,8 @@ public class ClientesController implements Initializable {
     private JFXButton btnDelete_Cliente;
     @FXML
     private JFXButton btnEdit_Cliente;
+    
+    
     
     
     @Override
@@ -82,7 +90,7 @@ public class ClientesController implements Initializable {
 
 
 
-        listaClientesDefault=conexionLecturaClientes.getClientes(Statics.getConnections());
+        listaClientesDefault=conexionLecturaClientes.getClientes();
         System.out.println(listaClientesDefault.get(0).getObservaciones());
         TreeItem<Clientes> root = new RecursiveTreeItem<>(listaClientesDefault, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
         table_clientes.setRoot(root);
@@ -142,37 +150,73 @@ public class ClientesController implements Initializable {
 
     @FXML
     private void btnAdd_OnAction(ActionEvent event) throws IOException {
-         Servicios.crearVentana(
-               getClass().getResource("/views/crud/ClientesCRUD.fxml"),
-               Servicios.getStageFromEvent(event));
+         ClientesCRUDController clientesCRUDController = (ClientesCRUDController) Servicios.crearVentana(
+               "/views/crud/ClientesCRUD.fxml",
+               Servicios.getStageFromEvent(event),
+               getClass());
+         //aquí el evento entra como inserción. Así no requiere un campo de validación extra.
+         clientesCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
+            
+                @Override
+                public void registroEditNuevo(Object registroEditNuevo) {
+                    //variable de salida.
+                    Clientes clienteEditNuevo = (Clientes) registroEditNuevo;
+                    if(conexionEscrituraClientes.insertClientes(clienteEditNuevo)){
+                        listaClientesDefault.add(clienteEditNuevo);
+                        //table_clientes.refresh();
+                        
+                    }
+                     
+                }
+                //variable de entrada.
+            }, null);
     }
-     private void cargarListaFiltrada(TreeItem<Clientes> root) {
-            textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
-            {
-                table_clientes.setRoot(null);
-                if (newValue.equals("")) 
-                {
-                     table_clientes.setRoot(root); 
-                } else 
-                {
-                    table_clientes.setRoot(null);
-                    listaClientesFiltro.clear();
-                    
-                    for(int i=0;i<listaClientesDefault.size();i++)
-                    {
-                        if(listaClientesDefault.get(i).getNombre().contains(newValue.toUpperCase()))
-                        {
-                            listaClientesFiltro.add(listaClientesDefault.get(i));
+    
+    @FXML
+    private void btnEdit_OnAction(ActionEvent event) throws IOException {
+        System.out.println("Edit");
+        ClientesCRUDController clientesCRUDController = (ClientesCRUDController) Servicios.crearVentana(
+                "/views/crud/ClientesCRUD.fxml", 
+                Servicios.getStageFromEvent(event), 
+                getClass()
+        );
+        //aquí el evento entra como edición.
+        clientesCRUDController.setiAbrir_Edicion_Registros(new IAbrir_Edicion_Registros() {
+            
+                @Override
+                public void registroEditNuevo(Object registroEditNuevo) {
+                    //variable de salida.
+                    Clientes clienteEditNuevo = (Clientes) registroEditNuevo;
+                    String telefonoClienteEditado = clienteEditNuevo.getTelefono();
+
+                    //updatea el registro segun el telefono (primary key).
+                    if( conexionUpdateCliente.update(clienteEditNuevo)){
+                        for(Clientes clienteActual : listaClientesDefault){
+                            if(clienteActual.getTelefono().equals(telefonoClienteEditado)){
+                                //el primary key telefono, nunca cambiará. ya que si el cliente cambia de numero
+                                //se veria obligado el sistema, a cambiar el foreign key que se relaciones con Cliente.
+                                //clienteActual.setTelefono();
+
+                                clienteActual.setNombre(clienteEditNuevo.getNombre());
+                                clienteActual.setCalle(clienteEditNuevo.getCalle());
+                                clienteActual.setNumeroExt(clienteEditNuevo.getNumeroExt());
+                                clienteActual.setNumeroInt(clienteEditNuevo.getNumeroInt());
+                                clienteActual.setColonia(clienteEditNuevo.getColonia());
+                                clienteActual.setObservaciones(clienteEditNuevo.getObservaciones());
+
+
+                                table_clientes.refresh();
+                                break;
+                            }
                         }
                     }
-                    TreeItem<Clientes> root1 = new RecursiveTreeItem<>(listaClientesFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
-                    table_clientes.setRoot(root1);
-                    table_clientes.setShowRoot(false);
                 }
-            
-             });
+                //variable de entrada.
+            }, table_clientes.getSelectionModel().getSelectedItem().getValue()
+        );
+        
     }
-
+    
     @FXML
     private void btnDelete_OnAction(ActionEvent event) {
         
@@ -180,7 +224,7 @@ public class ClientesController implements Initializable {
         System.out.println("Delete");
     
         try {
-            conexionEliminacionCliente.deleteCliente(telefonoCliente, Statics.getConnections() ) ;
+            conexionEliminacionCliente.deleteCliente(telefonoCliente ) ;
             listaClientesDefault.remove(table_clientes.getSelectionModel().getSelectedItem().getValue());
            
         } catch (SQLException ex) {
@@ -193,10 +237,32 @@ public class ClientesController implements Initializable {
             Logger.getLogger(EmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    @FXML
-    private void btnEdit_OnAction(ActionEvent event) {
-        System.out.println("Edit");
-    }
     
+        
+    private void cargarListaFiltrada(TreeItem<Clientes> root) {
+        textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
+        {
+            table_clientes.setRoot(null);
+            if (newValue.equals("")) 
+            {
+                 table_clientes.setRoot(root); 
+            } else 
+            {
+                table_clientes.setRoot(null);
+                listaClientesFiltro.clear();
+
+                for(int i=0;i<listaClientesDefault.size();i++)
+                {
+                    if(listaClientesDefault.get(i).getNombre().contains(newValue.toUpperCase()))
+                    {
+                        listaClientesFiltro.add(listaClientesDefault.get(i));
+                    }
+                }
+                TreeItem<Clientes> root1 = new RecursiveTreeItem<>(listaClientesFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+                table_clientes.setRoot(root1);
+                table_clientes.setShowRoot(false);
+            }
+
+         });
+   }
 }

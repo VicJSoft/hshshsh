@@ -8,7 +8,6 @@ package Resources.statics;
 import java.sql.Connection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import services.sql.ConexionSQL;
 
 /**
  *
@@ -16,10 +15,11 @@ import services.sql.ConexionSQL;
  */
 public class Statics 
 {
-    public static ObservableList<String> sexo = FXCollections.observableArrayList("Masculino","Femenino");
+    public static ObservableList<String> sexo = FXCollections.observableArrayList("MASCULINO","FEMENINO");
     public static ObservableList<String> tipo_empledo = FXCollections.observableArrayList("Administrativo","Modulador");
     public static ObservableList<String> marcas = FXCollections.observableArrayList("APRIO","ATOS","ATTITUDE","AVEO","BEAT","CRUZE","FIESTA","i10",
             "MARCH","MATIZ","POINTER","SENTRA","SPARK","TIIDA","TSURU","VERSA");
+    public static ObservableList<String> reportes=FXCollections.observableArrayList("Servicios por Unidad Específica","Servicios por Cliente","Servicios Programados","Servicios Foráneos","Servicios por Modulador");
     
     private static Connection connection;
     public static void setConnections(Connection connection)
@@ -34,9 +34,7 @@ public class Statics
     public static class textoValidaciones{
         
       public static String CAMPO_REQUERIDO  = "Este campo es requerido.";
-        
-      
-        
+  
     }
     
 }

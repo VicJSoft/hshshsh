@@ -5,6 +5,7 @@
  */
 package main;
 
+import Resources.persistencia.SharePreferencesDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,6 +35,7 @@ public class main extends Application {
         
         primaryStage.show();
 
+        SharePreferencesDB.getConfiguracion();
         
     }
     

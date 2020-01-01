@@ -5,15 +5,15 @@
  */
 package controllers.crud;
 
+import Interfaces.IAbrir_Edicion_Registros;
 import Interfaces.IValidateCRUD;
+import Models.Empleados;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.base.IFXLabelFloatControl;
 import com.jfoenix.controls.base.IFXValidatableControl;
-import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
 import java.net.URL;
 import java.util.ArrayList;
@@ -88,9 +88,12 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
     @FXML
     private JFXPasswordField textField_password;
 
-    private final ConexionEscrituraEmpleados conexionEscrituraEmpleados = new ConexionEscrituraEmpleados();
-    
+     
     ArrayList<IFXValidatableControl> listaControles;
+    
+    private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
+    private boolean isEdicion;
+    private int idEmpleadoEdicion;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -130,20 +133,32 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
         //todos los datos son requeridos menos observaciones 
         //y numint la contraseña max 12 caracteres  si es admon puede  llevar password si  es modulador de afuerzas el password    
         if(validarCampos()){
+            
+            if(iAbrir_Edicion_Registros!=null){
+                
+                this.iAbrir_Edicion_Registros.registroEditNuevo(getEmpleadoVentana());
+                this.btn_cerrar.fire();
+                return;
+            }
+            /*
             if(conexionEscrituraEmpleados.insertEmpleados(
                 textField_nombre.getText().toUpperCase(),  datePicker_nacimiento.getValue(),
                 textField_telefono.getText(),comboBox_sexo.getSelectionModel().getSelectedItem(),
                 comboBox_tipo_empleado.getSelectionModel().getSelectedItem(),textField_calle.getText().toUpperCase(),
                 textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(),
-                textField_numInt.getText().toUpperCase(), textField_observ.getText().toUpperCase(),textField_password.getText(),
-                Statics.getConnections()))
+                textField_numInt.getText().toUpperCase(), textField_observ.getText().toUpperCase(),textField_password.getText()
+                )
+                    )
             {
                 System.out.println("add");
+                this.iAbrir_Edicion_Registros.registroEditNuevo(getEmpleadoVentana());
+                this.btn_cerrar.fire();
             }
             else
             {
                 System.out.println("err");
             }
+            */
         }
             
     }
@@ -296,6 +311,70 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
         }        
         return datosValidos;
 
+    }
+
+    public void setiAbrir_Edicion_Registros(IAbrir_Edicion_Registros iAbrir_Edicion_Registros,Empleados empleadoAEditar) {
+        this.iAbrir_Edicion_Registros = iAbrir_Edicion_Registros;
+        if(empleadoAEditar!=null)
+        {
+            this.isEdicion = true;
+            this.setEmpleadoVentana(empleadoAEditar);
+            this.idEmpleadoEdicion = empleadoAEditar.getId_empleado();
+        }
+        else{
+            this.isEdicion = false;
+            
+            
+        }
+        
+    }
+
+    private void setEmpleadoVentana(Empleados empleadoVentana) {
+
+        this.idEmpleadoEdicion = empleadoVentana.getId_empleado();
+        this.textField_nombre.setText(empleadoVentana.getNombre());
+        this.datePicker_nacimiento.setValue(
+                empleadoVentana.getFecha_nacimiento().toLocalDate()
+        );
+        this.textField_telefono.setText(empleadoVentana.getTelefono());
+        this.comboBox_sexo.valueProperty().set(empleadoVentana.getSexo());
+        
+        if(empleadoVentana.getTipo_empleado().equalsIgnoreCase(Statics.tipo_empledo.get(0)))//es un administrador
+        {
+            this.comboBox_tipo_empleado.getSelectionModel().select(0);
+        }
+        else//es un modulador
+        {
+            this.comboBox_tipo_empleado.getSelectionModel().select(1);
+        }
+        this.textField_calle.setText(empleadoVentana.getCalle());
+        this.textField_colonia.setText(empleadoVentana.getColonia());               
+        this.textField_numInt.setText(empleadoVentana.getNum_int());
+        this.textField_numExt.setText(empleadoVentana.getNum_ext());
+        this.textField_observ.setText(empleadoVentana.getObservaciones());
+        this.textField_password.setText(empleadoVentana.getPassword());
+    }
+    
+    private Empleados getEmpleadoVentana(){
+        
+        Empleados empleadoVentana = new Empleados(
+        
+                this.idEmpleadoEdicion,
+                this.textField_nombre.getText().toUpperCase().trim(),
+                this.datePicker_nacimiento.getValue(),
+                this.textField_telefono.getText().trim(),
+                this.comboBox_sexo.getValue(),
+                this.comboBox_tipo_empleado.getValue().toUpperCase(),
+                this.textField_calle.getText().toUpperCase().trim(),
+                this.textField_colonia.getText().toUpperCase().trim(),
+                this.textField_numExt.getText().trim(),
+                this.textField_numInt.getText().trim(),
+                this.textField_observ.getText().toUpperCase().trim(),
+                this.textField_password.getText()     
+        
+        );
+        
+        return empleadoVentana;
     }
     
 }

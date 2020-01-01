@@ -5,6 +5,8 @@
  */
 package services.sql.write;
 
+import Models.Taxis;
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,21 +17,30 @@ public class ConexionEscrituraTaxis
 {
     private boolean key;
     private String query;
-    private Connection c;
+    private Connection connection;
     private ResultSet rs;
     private PreparedStatement ps;
-    public boolean insertTaxis(int id_unidad, String marca,int modelo,String placa,int id_taxista, Connection connection)
+
+    public ConexionEscrituraTaxis() {
+    
+        connection = Statics.getConnections();
+        
+    }
+    
+    
+    
+    public boolean insertTaxis(Taxis taxiInsertar)
     {
         
         query="insert into unidades values(?,?,?,?,?)";
         try
         {
             ps = connection.prepareStatement(query);
-            ps.setInt(1,id_unidad );
-            ps.setString(2, marca );
-            ps.setInt(3, modelo );
-            ps.setString(4, placa);
-            ps.setInt(5, id_taxista);
+            ps.setInt(1,taxiInsertar.getId() );
+            ps.setString(2, taxiInsertar.getMarca() );
+            ps.setInt(3, taxiInsertar.getModelo() );
+            ps.setString(4, taxiInsertar.getPlaca());
+            ps.setInt(5, taxiInsertar.getId_taxista());
             ps.executeUpdate();
             key=true;
             ps.close();

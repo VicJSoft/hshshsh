@@ -55,7 +55,7 @@
       <JFXTextField fx:id="textField_numInt" focusColor="#5ab444" labelFloat="true" layoutX="265.0" layoutY="459.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
       <Label layoutX="27.0" layoutY="502.0" styleClass="tittle-seccion-CRUD" text="Extra" AnchorPane.leftAnchor="27.0" />
       <Separator layoutX="96.0" layoutY="521.0" prefHeight="3.0" prefWidth="405.0" />
-      <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="43.0" layoutY="559.0" prefHeight="31.0" prefWidth="466.0" promptText="Observaciones" />
+      <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="43.0" layoutY="559.0" prefHeight="31.0" prefWidth="451.0" promptText="Observaciones" />
       <Button layoutX="395.0" layoutY="608.0" mnemonicParsing="false" onAction="#btn_Agregar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
       <Button layoutX="268.0" layoutY="607.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
       <Label layoutX="800.0" layoutY="579.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="15.0">

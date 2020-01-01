@@ -89,3 +89,17 @@ que además es independiente a la de sin foco*/
 .button-cerrar-login:pressed{
     -fx-background-color: derive(red,90%);
 }
+
+.button-config-login{
+    -fx-background-color: transparent;
+    -fx-border-radius: 12 0 0 0;
+    -fx-background-radius: 12 0 0 0 ;
+}
+.button-config-login:hover{
+    -fx-background-color: #7EAECD;
+}
+
+.button-config-login:pressed{
+    -fx-background-color: derive(#7EAECD,75%);
+}
+ 

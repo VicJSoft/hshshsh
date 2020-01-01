@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package services.sql.read;
 
 import Models.Empleados;
@@ -13,7 +18,7 @@ import javafx.collections.ObservableList;
  *
  * @author vicen
  */
-public class ConexionLecturaEmpleados 
+public class ConexionLecturaEstadisticas 
 {
     PreparedStatement ps;
     String query="";
@@ -21,45 +26,19 @@ public class ConexionLecturaEmpleados
     boolean key;
     Connection connection;
 
-    public ConexionLecturaEmpleados() {
-    
-        connection = Statics.getConnections();
-    
-    }
-    
-    public ObservableList<String> getModulador_id_name()
+    public ConexionLecturaEstadisticas()
     {
-        ObservableList<String> empleados =  FXCollections.observableArrayList();
-        query="select id_empleado,nombre from empleados";
-        try
-        {  
-            
-            ps = connection.prepareStatement(query);
-            rs=ps.executeQuery();
-            while(rs.next()){
-                
-                    //lo trae en pascal case.
-                     empleados.add(rs.getString(1)+"  "+rs.getString(2));
-                
-            }
-            
-        
-                                      
-            ps.close();
-        }
-        catch(SQLException ex)
-        {
-            ex.printStackTrace();
-        }
-        
-        return empleados;
+        connection = Statics.getConnections();
     }
+    
+    
     
     public boolean obtenerEmpleado(String nombre, String password)throws SQLException
     {
         query = "select * from empleados where nombre='"+nombre+"' and password='"+password+"'";      
         key=false;
-
+        try
+        {
             ps = connection.prepareStatement(query);
             rs= ps.executeQuery();
             if(rs.first())
@@ -67,8 +46,8 @@ public class ConexionLecturaEmpleados
                 key=true;
             }
             ps.close();
-        
-        
+        }
+        catch(SQLException sql){}
         return key;
     }
      public ObservableList<Empleados> getEmpleados()

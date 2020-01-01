@@ -9,7 +9,8 @@ import com.jfoenix.controls.base.IFXValidatableControl;
 import java.util.ArrayList;
 
 /**
- *
+ * Esta interface solo es un recordatorio que permitirá decir que se necesita 
+ * validar campo en cada ventan que lo implemente.
  * @author Vic Espino
  */
 public interface IValidateCRUD {

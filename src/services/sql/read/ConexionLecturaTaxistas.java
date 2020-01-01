@@ -5,6 +5,7 @@
  */
 package services.sql.read;
 import Models.Taxistas;
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,12 +19,21 @@ import javafx.collections.ObservableList;
  */
 public class ConexionLecturaTaxistas 
 {
-     private boolean key;
+    private boolean key;
     private String query;
-    private Connection c;
+    private Connection connection;
     private ResultSet rs;
     private PreparedStatement ps;
-    public ObservableList<String> getTaxistas_id_name(Connection connection)
+
+    public ConexionLecturaTaxistas() {
+    
+        connection = Statics.getConnections();
+        
+    }
+    
+    
+    
+    public ObservableList<String> getTaxistas_id_name()
     {
         ObservableList<String> taxistas =  FXCollections.observableArrayList();
         query="select id_taxista,nombre from taxistas";
@@ -35,6 +45,7 @@ public class ConexionLecturaTaxistas
             while(rs.next()){
                 if(rs.getInt(1)!=0)
                 {
+                    //lo trae en pascal case.
                      taxistas.add(rs.getInt(1)+"  "+rs.getString(2));
                 }
             }
@@ -50,29 +61,58 @@ public class ConexionLecturaTaxistas
         
         return taxistas;
     }
-    public ObservableList<Taxistas> getTaxistas(Connection connection)
+    public ObservableList<Taxistas> getTaxistas()
     {
         ObservableList<Taxistas> taxistas =  FXCollections.observableArrayList();
-        query="select id_taxista,nombre,telefono,calle, num_ext,num_int,colonia, observaciones, fecha_nacimiento from taxistas";
-        String direccion;
+        query="select * from taxistas";
+       // String direccion;
         try
         {
             ps = connection.prepareStatement(query);
             rs=ps.executeQuery();
             while(rs.next())
             {
+                /*
                 direccion=rs.getString(4)+","+rs.getString(5);
                 if(rs.getString(6)!=null)
                 {
-                    direccion+=","+rs.getString(6).toUpperCase();
+                    //direc+= Numero interior
+                    direccion+=","+rs.getString(6);
                 }
                 if(rs.getString(7)!=null)
                 {
+                    //direc+= Colonia
                     direccion+=","+rs.getString(7);
                 }
-               
+               */
+                taxistas.add(
+                        new Taxistas(
+                                rs.getInt(1),//id
+                                rs.getString(2), //nombre
+                                rs.getString(3),
+                                rs.getDate(4).toLocalDate(), 
+                                "0".equals(rs.getString(5))?Statics.sexo.get(0):Statics.sexo.get(1), /*sexo 0 1*/
+                                rs.getString(6),//calle
+                                rs.getString(7),
+                                rs.getString(8),//numInt
+                                rs.getString(9),//NumExt
+                                rs.getString(10)
+                        )
+                        
                 
-                taxistas.add(new Taxistas(String.valueOf(rs.getInt(1)),rs.getString(2).toUpperCase(),rs.getString(3),direccion.toUpperCase(),rs.getString(8).toUpperCase(),String.valueOf(rs.getDate(9))));
+                );
+                
+                /*taxistas.add(
+                        new Taxistas(
+                                rs.getInt(1),
+                                rs.getString(2),//nombre
+                                rs.getString(3),//telefono
+                                
+                                direccion,//observaciones
+                                rs.getString(8),
+                                String.valueOf(rs.getDate(9)),
+                                "0".equals(rs.getString(10))?Statics.sexo.get(0):Statics.sexo.get(1))
+                );*/
               
             }
             

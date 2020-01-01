@@ -5,8 +5,7 @@
  */
 package controllers.secundarios;
 
-import Models.Clientes;
-import Models.Taxis;
+import Interfaces.IAbrir_Edicion_Registros;
 import Models.Taxistas;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXButton;
@@ -14,6 +13,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
+import controllers.crud.TaxistasCRUDController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -34,6 +34,8 @@ import javafx.scene.input.MouseButton;
 import services.Servicios;
 import services.sql.delete.ConexionEliminacionTaxista;
 import services.sql.read.ConexionLecturaTaxistas;
+import services.sql.update.ConexionUpdateTaxista;
+import services.sql.write.ConexionEscrituraTaxistas;
 
 /**
  * FXML Controller class
@@ -63,6 +65,10 @@ public class TaxistasController implements Initializable {
     private JFXTextField textField_buscar;
     private final ConexionLecturaTaxistas conexionLecturaTaxistas= new ConexionLecturaTaxistas();
     private final ConexionEliminacionTaxista conexionEliminacionTaxista = new ConexionEliminacionTaxista();
+    private final ConexionUpdateTaxista conexionUpdateTaxista = new ConexionUpdateTaxista();
+    private final ConexionEscrituraTaxistas conexionEscrituraTaxistas = new ConexionEscrituraTaxistas();
+    
+    
     private ObservableList<Taxistas> listaTaxistasDefault = FXCollections.observableArrayList();
     private final ObservableList<Taxistas> listaTaxistasFiltro = FXCollections.observableArrayList();        
     @FXML
@@ -71,6 +77,9 @@ public class TaxistasController implements Initializable {
     private JFXButton btnDelete_Taxista;
     @FXML
     private JFXButton btnEdit_Taxista;
+    
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
   
@@ -81,7 +90,7 @@ public class TaxistasController implements Initializable {
         column_nacimiento.setCellValueFactory(new TreeItemPropertyValueFactory<>("fecha_nacimiento"));
 
 
-        listaTaxistasDefault=conexionLecturaTaxistas.getTaxistas(Statics.getConnections());
+        listaTaxistasDefault=conexionLecturaTaxistas.getTaxistas();
         TreeItem<Taxistas> root = new RecursiveTreeItem<>(listaTaxistasDefault, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
         table_taxistas.setRoot(root);
         table_taxistas.setShowRoot(false);
@@ -119,6 +128,7 @@ public class TaxistasController implements Initializable {
                     btnEdit_Taxista.disableProperty().set(false);
                     System.out.println(clickedRow.getNombre());  
                     //abrirá la ventana para edición TODO.
+                    //Sí dieron doble clic, significa una selección valida, por lo tanto, se puede llamar desde el boton edit.
                     btnEdit_Taxista.fire();
                     
                 }else
@@ -140,9 +150,19 @@ public class TaxistasController implements Initializable {
 
     @FXML
     private void btnAdd_OnAction(ActionEvent event) throws IOException {
-         Servicios.crearVentana(
-               getClass().getResource("/views/crud/TaxistasCRUD.fxml"),
-               Servicios.getStageFromEvent(event));
+          TaxistasCRUDController taxistasCRUDController = (TaxistasCRUDController) Servicios.crearVentana(
+               "/views/crud/TaxistasCRUD.fxml",
+               Servicios.getStageFromEvent(event),
+               getClass());
+         taxistasCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
+            @Override
+            public void registroEditNuevo(Object registroEitad/*valor entrada*/) {
+                Taxistas taxistaEditado = (Taxistas) registroEitad;
+                if(conexionEscrituraTaxistas.insertTaxista(taxistaEditado));
+                    listaTaxistasDefault.add(taxistaEditado);
+                //table_taxistas.refresh(); 
+            }
+        }, null);
     }
 
     private void cargarListaFiltrada(TreeItem<Taxistas> root) {
@@ -175,11 +195,11 @@ public class TaxistasController implements Initializable {
     @FXML
     private void btnDelete_OnAction(ActionEvent event) {
         
-        int telefonoCliente = Integer.parseInt(table_taxistas.getSelectionModel().getSelectedItem().getValue().getId_taxista());
+        int telefonoCliente = table_taxistas.getSelectionModel().getSelectedItem().getValue().getId_taxista();
         System.out.println("Delete");
     
         try {
-            conexionEliminacionTaxista.deleteTaxista(telefonoCliente, Statics.getConnections() ) ;
+            conexionEliminacionTaxista.deleteTaxista(telefonoCliente ) ;
             listaTaxistasDefault.remove(table_taxistas.getSelectionModel().getSelectedItem().getValue());
            
         } catch (SQLException ex) {
@@ -195,8 +215,49 @@ public class TaxistasController implements Initializable {
     }
 
     @FXML
-    private void btnEdit_OnAction(ActionEvent event) {
+    private void btnEdit_OnAction(ActionEvent event) throws IOException {
         System.out.println("Edit");
+        
+        TaxistasCRUDController taxistasCRUDController = (TaxistasCRUDController) Servicios.crearVentana(
+                "/views/crud/TaxistasCRUD.fxml", 
+                Servicios.getStageFromEvent(event), 
+                getClass()
+        );
+        
+        taxistasCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
+            @Override
+            public void registroEditNuevo(Object registroEitad/*valor entrada*/) {
+
+                Taxistas taxistaEditado = (Taxistas) registroEitad;
+                int idTaxistaEditado = taxistaEditado.getId_taxista();
+                if(conexionUpdateTaxista.update(taxistaEditado)){
+                    for(Taxistas taxistaActual : listaTaxistasDefault){
+                        
+                        if(taxistaActual.getId_taxista()==idTaxistaEditado){
+                            
+                            //Me veré muy mamón si uso sobrecarga de operadores?  para hacer esto xdxd.
+                            taxistaActual.setNombre(taxistaEditado.getNombre());
+                            taxistaActual.setTelefono(taxistaEditado.getTelefono());
+                            taxistaActual.setFecha_nacimiento(taxistaEditado.getFecha_nacimiento());
+                            taxistaActual.setSexo(taxistaEditado.getSexo());
+                            taxistaActual.setCalle(taxistaEditado.getCalle());
+                            taxistaActual.setColonia(taxistaEditado.getColonia());
+                            
+                            taxistaActual.setNumExt(taxistaEditado.getNumExt());
+                            taxistaActual.setNumInt(taxistaEditado.getNumInt());
+                            taxistaActual.setObservaciones(taxistaEditado.getObservaciones());
+                            
+                            table_taxistas.refresh();
+                            break;
+                        }
+                        
+                    }
+                }
+                
+            }
+        }, /*valor salida*/table_taxistas.getSelectionModel().getSelectedItem().getValue());
+        
+        
     }
     
 }

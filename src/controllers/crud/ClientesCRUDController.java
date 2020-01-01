@@ -5,7 +5,9 @@
  */
 package controllers.crud;
 
+import Interfaces.IAbrir_Edicion_Registros;
 import Interfaces.IValidateCRUD;
+import Models.Clientes;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.base.IFXValidatableControl;
@@ -70,9 +72,12 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
     @FXML
     private JFXTextField textField_observ;
      
-    private final ConexionEscrituraClientes conexionEscrituraClientes = new ConexionEscrituraClientes();
     
-    ArrayList<IFXValidatableControl> listaControles;    
+    ArrayList<IFXValidatableControl> listaControles;   
+
+    private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
+    private boolean isEdicion;
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -105,14 +110,12 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
        // los datos num int y observaciones son opcionales
        // el telefono debe de tener como maximo 10 caracteres
        if(validarCampos()){
-            if(conexionEscrituraClientes.insertClientes(textField_telefono.getText(), textField_nombre.getText().toUpperCase(), textField_calle.getText().toUpperCase(), textField_colonia.getText().toUpperCase(), textField_numExt.getText().toUpperCase(), textField_numInt.getText().toUpperCase(), textField_observ.getText().toUpperCase(),Statics.getConnections()))
-            {
-
-            }
-            else
-            {
-
-            }
+           
+           if(iAbrir_Edicion_Registros!=null){
+               iAbrir_Edicion_Registros.registroEditNuevo(getClienteVentana());
+               this.btn_cerrar.fire();
+                System.out.println("edit");
+           }
        }     
                
     }
@@ -133,6 +136,7 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
     public ArrayList<IFXValidatableControl> listControlsRequired() {
 
         ArrayList<IFXValidatableControl> lista = new ArrayList<>();
+        
         lista.add(this.textField_telefono);
         lista.add(this.textField_nombre);
         lista.add(this.textField_calle);
@@ -196,18 +200,18 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
         
     }
 
+
     @Override
     public void setRequiredValidation() {
 
         for(IFXValidatableControl actual:listaControles){
+            
             if(actual == this.textField_numInt){
                 continue;
             }
             //listener RequiredValidator.
             actual.getValidators().add(new RequiredFieldValidator(Statics.textoValidaciones.CAMPO_REQUERIDO));
-            
-         
-            
+
             //listener de foco
             ((Node)actual).focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
@@ -221,6 +225,17 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
 
     }
 
+    /**
+     * Invoca a los validadores de cada control de esta ventana.
+     * 
+     * @return 
+     * True: 
+     * Sí todos los campos son correctos.
+     * 
+     * False: 
+     * Cuando todos o algún campo es incorrecto/invalido.
+     * 
+     */
     @Override
     public boolean validarCampos() {
 
@@ -233,6 +248,72 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
         return datosValidos;
 
     }
+
+    /**
+     * Setea el evento para hacer el nuevo registro o edición:/n
+     * 
+     * 
+     * 
+     * @param iAbrir_Edicion_Registros
+     * Objeto interno anonimo, que se llamará como resultado del evento, cuando se clickee en aceptar. Para devolver
+     * el registro nuevo o editado.
+     * 
+     * 
+     * @param clienteAEditar 
+     * En caso de que se requiera la edición de un registro, será este el registro que se editará y devolverá por medio
+     * de la @param iAbrir_Edicion_Registros .
+     * 
+     * 
+     */
+    public void setiAbrir_Edicion_Registros(IAbrir_Edicion_Registros iAbrir_Edicion_Registros,Clientes clienteAEditar) {
+        this.iAbrir_Edicion_Registros = iAbrir_Edicion_Registros;
+        if(clienteAEditar!=null)
+        {
+            this.isEdicion = true;
+            this.textField_telefono.editableProperty().set(false);
+            setClienteVentana(clienteAEditar);
+        }
+        else{
+            this.isEdicion = false; 
+            this.textField_telefono.editableProperty().set(true);
+        }
+    }
+       
+    /**
+     * Mapea la ventana clientes, para generar un objeto, con los datos disponibles en la ventana.
+     * Este método debe llamarse despues de validar los campos, para no tenereun campo nulo.
+     * @return 
+     * Retorna objeto cliente, del resultado de la extracción de los datos de la ventana Clientes.
+     */
+    private Clientes getClienteVentana(){
+        Clientes clienteVentana = new Clientes(
+                this.textField_telefono.getText().trim(), 
+                this.textField_nombre.getText().toUpperCase().trim(), 
+                this.textField_calle.getText().toUpperCase().trim(), 
+                this.textField_colonia.getText().toUpperCase().trim(),
+                this.textField_numExt.getText().trim(), 
+                this.textField_numInt.getText().trim(), 
+                this.textField_observ.getText().toUpperCase().trim()
+        );
+        return clienteVentana;
+    }
+    /**
+     * Mapea la información de un objeto cliente en la ventana.
+     * @param clienteAEditar 
+     * Objeto a mapear.
+     */
+    private void setClienteVentana(Clientes clienteAEditar){
+        
+        this.textField_nombre.setText(clienteAEditar.getNombre());
+        this.textField_telefono.setText(clienteAEditar.getTelefono());
+        this.textField_calle.setText(clienteAEditar.getCalle());
+        this.textField_colonia.setText(clienteAEditar.getColonia());
+        this.textField_numExt.setText(clienteAEditar.getNumeroExt());
+        this.textField_numInt.setText(clienteAEditar.getNumeroInt());
+        this.textField_observ.setText(clienteAEditar.getObservaciones());
+        
+    }
+    
  
 
 }

@@ -5,12 +5,10 @@
  */
 package controllers;
 
-import Interfaces.Cargar_Secundaria;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.events.JFXDrawerEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,38 +89,37 @@ public class Ventana_PrincipalController implements Initializable {
             //Controlador propio de la vista.
             //TODO setear eventos con interfaces a cada boton.
             DrawerMenuController drawerController = drawerLoader.getController();
-            drawerController.setGuardarEnviarListener(
-                    new Cargar_Secundaria() {
-                @Override
-                public void ventana(String routeFXML,String tittleWindow) {
-                    if(routeFXML==null&&tittleWindow==null){
-                        drawer_Menu.close();
-                        return;
-                    }
-                    try {
-                        FXMLLoader loaderVentanaInterna = new FXMLLoader(getClass().getResource(routeFXML));
-                        AnchorPane ventanaInterna = loaderVentanaInterna.load();
-                        container.getChildren().clear();
-                        container.getChildren().addAll(ventanaInterna.getChildren());
-                        
-                        lbl_tittleBar.setText(tittleWindow);
-                        lbl_title.setText(tittleWindow);
-                        
-                        drawer_Menu.close();
-                        
-                    } catch (IOException ex) {
-                        Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                    
+            drawerController.setGuardarEnviarListener((String routeFXML, String tittleWindow) -> {
+                if(routeFXML==null&&tittleWindow==null){
+                    drawer_Menu.close();
+                    return;
                 }
-            }
-            );
+                try {
+                    FXMLLoader loaderVentanaInterna = new FXMLLoader(getClass().getResource(routeFXML));
+                    AnchorPane ventanaInterna = loaderVentanaInterna.load();
+                    container.getChildren().clear();
+                    container.getChildren().addAll(ventanaInterna.getChildren());
+                    
+                    lbl_tittleBar.setText(tittleWindow);
+                    lbl_title.setText(tittleWindow);
+                    
+                    drawer_Menu.close();
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
             
             drawer_Menu.setSidePane(menu);
+            
         } catch (IOException ex) {
             Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+            
+        
+       
+        
         
     }
 

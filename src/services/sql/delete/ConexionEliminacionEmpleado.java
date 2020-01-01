@@ -5,6 +5,7 @@
  */
 package services.sql.delete;
 
+import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +23,19 @@ public class ConexionEliminacionEmpleado {
     private String query;
     private ResultSet rs;
     private PreparedStatement ps;
+    private final Connection connection;
+
+    public ConexionEliminacionEmpleado() {
     
-    public boolean deleteEmpleado(int id_empleado, Connection connection) throws SQLException {
+        this.connection = Statics.getConnections();
+
+    
+    }
+    
+    
+    
+    
+    public boolean deleteEmpleado(int id_empleado) throws SQLException {
         //falso hasta que no se demuestre lo contrario.
         boolean isEliminado = false;
         

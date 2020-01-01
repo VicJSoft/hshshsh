@@ -61,7 +61,7 @@ public class SharePreferencesDB
     
     
     
-    public static void initConfig()
+    public static SharePreferencesDB initConfig()
     {
         Writer writer =null;
         SharePreferencesDB sharePreferencesDB = new SharePreferencesDB("localhost","3306","root","");
@@ -88,7 +88,7 @@ public class SharePreferencesDB
             }
         }
         //HACER que las preferencias sean estaticas para desde aquí devolver la instancia sharepreferences por defecto.
-        
+        return sharePreferencesDB;
     }
   
     public static SharePreferencesDB getConfiguracion()
@@ -101,7 +101,7 @@ public class SharePreferencesDB
         } 
         catch (FileNotFoundException ex) 
         {//si no encuentra el archivo, genera las configuraciones por defecto.
-            initConfig();// genera el archivo por defecto .json donde se almacenarán las credenciales para el inicio de decisión
+            sharedPreferences = initConfig();// genera el archivo por defecto .json donde se almacenarán las credenciales para el inicio de decisión
             Logger.getLogger(SharePreferencesDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return sharedPreferences;

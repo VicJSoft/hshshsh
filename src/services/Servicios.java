@@ -19,6 +19,8 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 /**
@@ -96,29 +98,27 @@ public class Servicios {
      * Retorna el controlador correspondiente en forma de Object (para castearlo al que le corresponda, desde donde se llamó el metodo(opcional) ).
      * @throws IOException 
      */
-    public static Object crearVentana(String urlXML,Stage ownerWindow,Class<?> aClass) throws IOException {
-        /*
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(urlXML);
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        */
-        FXMLLoader loader = new FXMLLoader (aClass.getResource(urlXML));
-        Parent root = loader.load();
-        Object controladorObject = loader.getController();
-        Stage stage = new Stage();
-        
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        
-        if(ownerWindow!= null){
-            stage.initOwner(ownerWindow);            
-            stage.initModality(Modality.WINDOW_MODAL);
+    public static Object crearVentana(String urlXML,Stage ownerWindow,Class<?> aClass)  {
+            FXMLLoader loader = new FXMLLoader (aClass.getResource(urlXML));
+            Object controladorObject = loader.getController();
+        try {
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            
+            Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setScene(scene);
+            
+            if(ownerWindow!= null){
+                stage.initOwner(ownerWindow);
+                stage.initModality(Modality.WINDOW_MODAL);
+            }
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.show();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Servicios.class.getName()).log(Level.SEVERE, null, ex);
         }
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.show();
         return controladorObject;
     }
     /**

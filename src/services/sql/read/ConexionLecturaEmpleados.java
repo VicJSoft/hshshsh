@@ -59,8 +59,7 @@ public class ConexionLecturaEmpleados
     {
         query = "select * from empleados where nombre='"+nombre+"' and password='"+password+"'";      
         key=false;
-        try
-        {
+
             ps = connection.prepareStatement(query);
             rs= ps.executeQuery();
             if(rs.first())
@@ -68,8 +67,8 @@ public class ConexionLecturaEmpleados
                 key=true;
             }
             ps.close();
-        }
-        catch(SQLException sql){}
+        
+        
         return key;
     }
      public ObservableList<Empleados> getEmpleados()

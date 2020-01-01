@@ -97,6 +97,18 @@
       </VBox>
       <VBox accessibleRole="NODE" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="230.0" stylesheets="@../Resources/css/normalizacion.css" AnchorPane.bottomAnchor="0.0">
          <children>
+            <Button fx:id="btn_configuracion" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#btnConfiguracion_OnAction" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Configuración">
+               <font>
+                  <Font name="Century Gothic" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Resources/imagenes/settingn_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#btnAcercaDe_Click" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Acerca de...">
                <font>
                   <Font name="Century Gothic" size="17.0" />

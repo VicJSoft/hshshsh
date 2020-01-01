@@ -1,6 +1,5 @@
 package controllers;
 
-/*** IMPORTS/****************************************************************************************************************************************/
 import services.sql.read.ConexionLecturaEmpleados;
 import services.sql.ConexionSQL;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -28,14 +27,9 @@ import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import services.Servicios;
-/**************************************************************************************************************************************************/
-
-/*** CLASS/****************************************************************************************************************************************/
-
 
 public class LoginController implements Initializable {
 
-/*** VARIABLES OR INSTANCES GLOBALS****************************************************************************************************************/
     @FXML
     private JFXPasswordField txt_contrasena;
     @FXML
@@ -52,10 +46,10 @@ public class LoginController implements Initializable {
     private Button btn_cerrar;
     ConexionLecturaEmpleados conexionLectura;
     ConexionSQL conexionSQL = new ConexionSQL();
-    Connection connection = conexionSQL.getConexion();
-/**************************************************************************************************************************************************/
-    
-/*** OVERRIDE PUBLIC METHODS/**********************************************************************************************************************/
+    Connection connection ;
+    @FXML
+    private Button btn_config;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) 
     {
@@ -74,8 +68,7 @@ public class LoginController implements Initializable {
 
         }   
     }
-/**************************************************************************************************************************************************/
-/*** FXML METHODS/*********************************************************************************************************************************/
+
     @FXML
     private void window_Drag(MouseEvent event) {
 
@@ -88,76 +81,64 @@ public class LoginController implements Initializable {
 
 
     @FXML
-    private void btnLogin_Click(ActionEvent event) throws IOException, SQLException 
+    private void btnLogin_Click(ActionEvent event) 
     {
-        
-       
+        if(connection == null)
+            try {
+                connection =  conexionSQL.getConexion();
+            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                Servicios.crearVentanaError(Servicios.getStageFromEvent(event), "Error de conexión", "No fue posible conectar base de datos", ex.getMessage());
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+ 
+        boolean obtencionEmpleado = false;
         if(connection!=null)
         {
             Statics.setConnections(connection);
             conexionLectura = new ConexionLecturaEmpleados();
-            //captura de excepción, para un mejor manejo si hay error de conexion.
-            if(!txt_contrasena.getText().equals(""))
-            {
+
                 
-                if(conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText()))
+            try {
+                obtencionEmpleado = conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText());
+
+            } 
+            catch (SQLException ex) {
+                Servicios.crearVentanaError(Servicios.getStageFromEvent(event), "Error de conexión", "No fue posible conectar base de datos", ex.getMessage());
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                return;//si tira exception, saldrá del metodo
+            }
+                if(obtencionEmpleado)
                 {
                     //conexion a la siguiente pantalla
                     System.out.println("Entre");
 
                     System.out.println(connection);
-
-                   Servicios.crearVentana(
-                        "/views/Ventana_Principal.fxml",
-                        null,getClass());
-
+                    
+                    Servicios.crearVentana(
+                            "/views/Ventana_Principal.fxml",
+                            null,getClass());
+                    
                     if(cb_recordar.isSelected())
                         setCredenciales();
                     else
                         SharePreferences.initConfig();
-                     ((Stage)this.btn_login.getScene().getWindow()).close();
-                }
+                    ((Stage)this.btn_login.getScene().getWindow()).close();
+                } 
                 else
                 {
-                    //mensaje de no conexion
-                    // TODO generar ventana de error con descricion de credenciales no correctas
+                  
                     Servicios.crearVentanaError(
-                            this.btn_login.getScene().getWindow(),                        
+                            this.btn_login.getScene().getWindow(),
                             "Error Credenciales", 
                             "Usuario/Contraseña incorrecto(s)",
-                            "Credenciales incorrectas, si sigue teniendo problemas, contacte al administrador"
-                                    + "del sistema.");
+                            "Credenciales incorrectas, si sigue teniendo problemas, contacte al administrador del sistema.");
 
                     System.out.println("Error de credenciales");
 
                 }
-            }
-            else
-                {
-                    //mensaje de no conexion
-                    // TODO generar ventana de error con descricion de credenciales no correctas
-                    Servicios.crearVentanaError(
-                            this.btn_login.getScene().getWindow(),                        
-                            "Error Credenciales", 
-                            "Usuario/Contraseña incorrecto(s)",
-                            "Credenciales incorrectas, si sigue teniendo problemas, contacte al administrador"
-                                    + "del sistema.");
-
-                    System.out.println("Error de credenciales");
-
-                }
+          
         }
-        else
-        {
-        //TODO Generar ventana de error con esta exception.
-            //TODO Crear ventana de error.
-            Servicios.crearVentanaError(
-                    this.btn_login.getScene().getWindow(),
-                    "Error SQL", 
-                    "Error conexión de base de datos",
-                    "\n\nAsegurese de que el servidor de la base de datos este activo."
-                            + "\nSi sigue presentando el problema, contacte al desarrollador.");
-        }
+
     }
 
     @FXML
@@ -180,11 +161,8 @@ public class LoginController implements Initializable {
             txt_usuario.requestFocus();
         }
     }
-    /**************/
-    
-/**************************************************************************************************************************************************/
-/***CUZTOMIZED PUBLIC METHODS/*********************************************************************************************************************************/
-    private void setValidatorsRequired(){
+     
+      private void setValidatorsRequired(){
         txt_usuario.getValidators().add(new RequiredFieldValidator("Este campo no debe estar vacío..."));
         txt_usuario.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -221,7 +199,12 @@ public class LoginController implements Initializable {
         SharePreferences.setCredenciales(sharePreferences);
     }
 
+    @FXML
+    private void btnConfig_OnAction(ActionEvent event) throws IOException {
+        
+        Servicios.crearVentana("/views/Ventana_Configuracion.fxml", Servicios.getStageFromEvent(event),getClass() );
+        
+    }
 
-    /**************************************************************************************************************************************************/
+
 }
-/******************************************************************************************************************************************************/

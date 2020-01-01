@@ -13,14 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import services.Servicios;
 
 /**
@@ -33,6 +28,13 @@ public class DrawerMenuController implements Initializable {
     private Cargar_Secundaria cargar_Secundaria;
     @FXML
     private AnchorPane menu;
+    @FXML
+    private Button btn_configuracion;
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    } 
     
     @FXML
     private void empleados(ActionEvent event)
@@ -67,40 +69,30 @@ public class DrawerMenuController implements Initializable {
     
      @FXML
     private void btnAcercaDe_Click(ActionEvent event) {
-        try {
             cargar_Secundaria.ventana(null, null);
-
             Servicios.crearVentana(
-                    "/views/Acercade.fxml", Servicios.getStageFromEvent(event),getClass());
-            } catch (IOException ex) {
-                 Logger.getLogger(DrawerMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+                    "/views/Acercade.fxml", Servicios.getStageFromEvent(event),getClass());        
     }
     
     @FXML 
     private void cerrarSesion(ActionEvent event) throws IOException
     {
-       /* Parent ventana = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(ventana);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.show();
-         */
         Servicios.crearVentana(
                "/views/Login.fxml",
                null,getClass());
         Servicios.cerrarVentana(event);
                
     }
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    } 
+
     public void setGuardarEnviarListener(Cargar_Secundaria cargar_Secundaria){
         this.cargar_Secundaria = cargar_Secundaria;
+    }
+
+    @FXML
+    private void btnConfiguracion_OnAction(ActionEvent event) throws IOException {
+        
+        Servicios.crearVentana("/views/Ventana_Configuracion.fxml", Servicios.getStageFromEvent(event),getClass() );
+        
     }
 
    

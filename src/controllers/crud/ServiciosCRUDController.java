@@ -5,7 +5,9 @@
  */
 package controllers.crud;
 
+import Interfaces.IAbrir_Edicion_Registros;
 import Interfaces.IValidateCRUD;
+import Models.Servicio;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -14,10 +16,13 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.base.IFXValidatableControl;
 import com.jfoenix.validation.RequiredFieldValidator;
+import com.sun.webkit.dom.KeyboardEventImpl;
+import java.awt.RenderingHints.Key;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -29,6 +34,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
@@ -122,9 +128,12 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     private Button btn_aceptar;
     @FXML
     private Button btn_cancelar;
+    @FXML
+    private Label lbl_errorConfigTipoServicio;
     
     private ArrayList<IFXValidatableControl> listControlsRequired = new ArrayList();
     private ArrayList<JFXCheckBox> listaCheckBox = new ArrayList();
+    private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
 
     /**
      * Initializes the controller class.
@@ -155,14 +164,21 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
             //toogleCheckBoxDias();
             setChecksDays(true);
             rb_programado.selectedProperty().set(true);
-            datePicker_dia.setValue(null);
-            timePicker_horaServicio.setValue(null);
+            datePicker_dia.setValue(LocalDate.now());
+            timePicker_horaServicio.setValue(LocalTime.now());
         });
         
         this.rb_personalizado.setOnAction((ActionEvent event) -> {
             rb_programado.selectedProperty().set(true);
+            
+            
             datePicker_dia.setValue(null);
             timePicker_horaServicio.setValue(null);
+          //  datePicker_dia.setValue(LocalDate.now());
+          //  timePicker_horaServicio.setValue(LocalTime.now());
+            //porque va de 0 a 6 
+            //listaCheckBox.get(LocalDate.now().getDayOfWeek().getValue()-1).selectedProperty().set(true);
+            
         });
       
        this.listControlsRequired = listControlsRequired();
@@ -188,6 +204,12 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         //llamar a los validate
         if(this.validarCampos()){
             //regresar instancia tipo servicios.
+            if(this.iAbrir_Edicion_Registros!=null){
+                
+                this.iAbrir_Edicion_Registros.registroEditNuevo(getVentanaServicio());
+                this.btn_cerrar.fire();
+                
+            }
         }
     }
 
@@ -242,7 +264,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
 
                     rb_programado.selectedProperty().set(true);
                     rb_personalizado.selectedProperty().set(true);
-
+                    calcularFechaInicioServicioProgramado();
                 }
             }
             );
@@ -264,6 +286,8 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         lista.add(this.textField_colonia);
         lista.add(this.textField_num_ext);
         lista.add(this.textField_unidad);
+        lista.add(this.datePicker_dia);
+        lista.add(this.timePicker_horaServicio);
         
         return lista;
     }
@@ -309,12 +333,12 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
             {
                 if(newValue.charAt(newValue.length()-1)<48 ||  newValue.charAt(newValue.length()-1)>57)
                 {
-                    textField_telefono.setText(oldValue);
+                    textField_unidad.setText(oldValue);
                 }
             }
             else
             {
-                textField_telefono.setText("");
+                textField_unidad.setText("");
             }
         });        
 
@@ -332,12 +356,27 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
 
     @Override
     public void setRequiredValidation() {
+       /* 
         this.textField_telefono.getValidators().add(new RequiredFieldValidator("Este campo es requerido."));
         this.textField_nombre.getValidators().add(new RequiredFieldValidator("Este campo es requerido."));
         this.textField_calle.getValidators().add(new RequiredFieldValidator("Este campo es requerido."));
         this.textField_colonia.getValidators().add(new RequiredFieldValidator("Este campo es requerido."));
         this.textField_num_ext.getValidators().add(new RequiredFieldValidator("Este campo es requerido."));
         this.textField_unidad.getValidators().add(new RequiredFieldValidator("Este campo es requerido."));
+        this.datePicker_dia.getValidators().add(new RequiredFieldValidator("Este campo es requerido."));
+        */
+        for(IFXValidatableControl controlActual:listControlsRequired){
+            controlActual.getValidators().add(new RequiredFieldValidator("Este campo es requerido."));
+            
+            ((Node)controlActual).focusedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    if(!newValue){
+                        controlActual.validate();
+                    }
+                }
+            });  
+        }
 
     }
 
@@ -345,18 +384,144 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     public boolean validarCampos() {
 
         boolean datosValidos = true;
-        
+
         for(IFXValidatableControl actual:listControlsRequired){
             actual.validate();
             datosValidos = datosValidos && actual.validate();
         }        
-        return datosValidos;
+        
+        boolean checkBoxes = true;
+        
+        if(rb_programado.isSelected()){
+            if(rb_personalizado.isSelected()){
+                boolean checkingBoxes = 
+                        cb_lunes.isSelected() || cb_martes.isSelected()||cb_miercoles.isSelected()
+                        || cb_jueves.isSelected() || cb_viernes.isSelected()||cb_sabado.isSelected()
+                        || cb_domingo.isSelected()                        
+                        ;
+                
+                checkBoxes = checkBoxes && checkingBoxes;
+            }
+        }
+        if(!(datosValidos && checkBoxes)){
+            this.lbl_errorConfigTipoServicio.setVisible(true);
+        }else{
+            this.lbl_errorConfigTipoServicio.setVisible(false);
+        }
+        return datosValidos && checkBoxes;
 
     }
+    /**
+     * 
+     */
+    public void calcularFechaInicioServicioProgramado(){
+        int dia = LocalDate.now().getDayOfWeek().getValue();
+        int year = LocalDate.now().getYear();
+        int dayOfYear = LocalDate.now().getDayOfYear();
 
- 
+        LocalDate fechaASetear = null;
+        
+        
+        ArrayList<Integer> diasSeleccionados = diasSeleccionados();
+        int dayOfYearMenor = diasSeleccionados.isEmpty()?0:fechaDiaDado(2020, dayOfYear, diasSeleccionados.get(0)).getDayOfYear();
+        //if(dayOfYearMenor != 0)
+        //si no es empty, entrará
+            for(int diaActualCiclo:diasSeleccionados){
+                LocalDate localDate = fechaDiaDado(2020, dayOfYear, diaActualCiclo);
+               // dayOfYearMenor = localDate.getDayOfYear();
+                                            //==
+                if(localDate.getDayOfYear()>= dayOfYear && localDate.getDayOfYear()<= dayOfYearMenor){
+                    dayOfYearMenor = localDate.getDayOfYear();
+                    fechaASetear = LocalDate.ofYearDay(2020, dayOfYearMenor);
+                }
+            }
+            
+        datePicker_dia.setValue(fechaASetear);
+        
+    }    
 
+    private ArrayList<Integer> diasSeleccionados(){
+        
+        ArrayList<Integer> seleccion = new ArrayList<>();
+        
+        for(int i = 0; i<7;i++){
+            //la lista esta ordenada empezando en lunes, por lo tanto si uno está seleccionado
+            //se almacenará el numero de i + 1
+            int diaSeleccionadoActual = listaCheckBox.get(i).isSelected()?i+1:-1;
+            if(diaSeleccionadoActual!=-1){
+                seleccion.add(diaSeleccionadoActual);
+               // break;
+            }
+            
+        }
+        
+        return seleccion;
+    }
+
+    private String diasSeleccionadosCadena(){
+        String diasSeleccionados = "";
+                
+        for(int i = 0; i<7;i++){
+
+            int diaSeleccionadoActual = listaCheckBox.get(i).isSelected()?1:0;
+                diasSeleccionados += diaSeleccionadoActual;
+            
+            
+        }
+        return diasSeleccionados;
+    }
     
+    /**
+     * busca la fecha más proxima para el diaBuscar dado, Busca X dia, apartir de hoy, incluyendo hoy.
+     * @param year
+     * Año en el cual se buscará (siempre será el actual).
+     * @param dayOfYear
+     * Es el dia actual del 1 al 365 (366).
+     * @param diaBuscar
+     * Numero del 0 al 7, que representa Lunes ... Domingo. que se buscará.
+     * @return 
+     * La fecha más proxima del dia dado.
+    */
+    private LocalDate fechaDiaDado(int year, int dayOfYear, int diaBuscar){
+        
+        LocalDate fechaABuscar = null;
+        //PARA UN MAXIMO DE 7 ITERACIONES
+        for(int i = 0; i<7 ;i++){
+            
+            fechaABuscar = LocalDate.ofYearDay(year, dayOfYear);
+            //si el dia de fechaBuscar es igual al dia a buscar, retornará esa fecha
+            if(fechaABuscar.getDayOfWeek().getValue() == diaBuscar)
+                break;
+            
+            //para que genere la siguiente fecha y comparar si ya es el dia que se busca.
+            dayOfYear++;
+        }
+        
+        return fechaABuscar;
+    }
+    
+    private void setVentanaServicio(Servicio servicio){
+        //un servicio es editable?, yo digo que nel,
+        //tampoco debería ser borrable, para que no se modifiquen intencionalmente las  estadisticas.
+        //por lo tanto no se ocuparia este metodo
+    }
+    private Servicio getVentanaServicio(){
+        Servicio servicio = new Servicio(
+                0, this.textField_telefono.getText(), this.textField_nombre.getText(),
+                this.textField_calle.getText(), this.textField_colonia.getText(), this.textField_num_ext.getText(), this.textField_numInt.getText(), 
+                this.textField_observaciones.getText(), this.textField_notas.getText(),
+                Integer.parseInt(this.textField_unidad.getText()),/*id empleado*/ 0,
+                this.datePicker_dia.getValue(), this.txt_destino.getText(), this.datePicker_dia.getValue(), timePicker_horaServicio.getValue(),
+                this.rb_diario.isSelected(), diasSeleccionadosCadena(), this.rb_programado.isSelected());
+                
+        return servicio;
+    }
+    
+    public void setIAbrirEdicionRegistros(IAbrir_Edicion_Registros iAbrir_Edicion_Registros){
+        this.iAbrir_Edicion_Registros = iAbrir_Edicion_Registros;
+    }
+    
+        
 class buscadorTelefono implements Runnable
 {
    
@@ -422,4 +587,6 @@ class buscadorTelefono implements Runnable
     }
     
 }
+
+
 }

@@ -100,9 +100,10 @@ public class Servicios {
      */
     public static Object crearVentana(String urlXML,Stage ownerWindow,Class<?> aClass)  {
             FXMLLoader loader = new FXMLLoader (aClass.getResource(urlXML));
-            Object controladorObject = loader.getController();
+            Object controladorObject =null;
         try {
             Parent root = loader.load();
+            controladorObject = loader.getController();
             Stage stage = new Stage();
             
             Scene scene = new Scene(root);

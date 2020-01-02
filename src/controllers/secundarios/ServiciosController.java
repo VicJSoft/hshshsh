@@ -6,6 +6,7 @@
 package controllers.secundarios;
 
 import Interfaces.IAbrir_Edicion_Registros;
+import Models.Servicio;
 import Models.Taxis;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -40,26 +41,26 @@ import services.sql.read.ConexionLecturaServicios;
  */
 public class ServiciosController implements Initializable {
 
-     @FXML
-    private JFXTreeTableView<Models.Servicios> table_servicios;
+    @FXML
+    private JFXTreeTableView<Models.Servicio> table_servicios;
 
     @FXML
-    private TreeTableColumn<Models.Servicios, String> nombre;
+    private TreeTableColumn<Models.Servicio, String> nombre;
 
     @FXML
-    private TreeTableColumn<Models.Servicios, String> telefono;
+    private TreeTableColumn<Models.Servicio, String> telefono;
 
     @FXML
-    private TreeTableColumn<Models.Servicios, String> direccion;
+    private TreeTableColumn<Models.Servicio, String> direccion;
 
     @FXML
-    private TreeTableColumn<Models.Servicios, String> observaciones;
+    private TreeTableColumn<Models.Servicio, String> observaciones;
 
     @FXML
-    private TreeTableColumn<Models.Servicios, String> notas;
+    private TreeTableColumn<Models.Servicio, String> notas;
 
     @FXML
-    private TreeTableColumn<Models.Servicios, String> unidad;
+    private TreeTableColumn<Models.Servicio, String> unidad;
 
     @FXML
     private JFXTextField  textField_buscar;
@@ -73,8 +74,8 @@ public class ServiciosController implements Initializable {
     private JFXButton btnEdit_Servicios;
 
     private final ConexionLecturaServicios conexionLecturaServicios = new ConexionLecturaServicios();
-    private  ObservableList<Models.Servicios> listaServicios = FXCollections.observableArrayList();
-    private  ObservableList<Models.Servicios> listaServiciosFiltro = FXCollections.observableArrayList();
+    private  ObservableList<Models.Servicio> listaServicios = FXCollections.observableArrayList();
+    private  ObservableList<Models.Servicio> listaServiciosFiltro = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -84,10 +85,10 @@ public class ServiciosController implements Initializable {
        direccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("direccion"));
        observaciones.setCellValueFactory(new TreeItemPropertyValueFactory<>("observaciones"));
        notas.setCellValueFactory(new TreeItemPropertyValueFactory<>("notas"));
-       unidad.setCellValueFactory(new TreeItemPropertyValueFactory<>("unidad"));
+       unidad.setCellValueFactory(new TreeItemPropertyValueFactory<>("idUnidad"));
        
        listaServicios= conexionLecturaServicios.getServicios();
-       TreeItem<Models.Servicios> root = new RecursiveTreeItem<>(listaServicios, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+       TreeItem<Models.Servicio> root = new RecursiveTreeItem<>(listaServicios, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
        table_servicios.setRoot(root);
        table_servicios.setShowRoot(false);
        cargarListaFiltrada(root);//filtra la lista que se carga por defecto y el filtro lo tranfiera al observable secundario
@@ -110,15 +111,15 @@ public class ServiciosController implements Initializable {
             }
         });
                //definir una fila de fabrica.
-        table_servicios.setRowFactory((TreeTableView<Models.Servicios> param) -> {
+        table_servicios.setRowFactory((TreeTableView<Models.Servicio> param) -> {
            // TableRow<Empleados> row = new TableRow<>();
-            JFXTreeTableRow<Models.Servicios> row = new JFXTreeTableRow<>();
+            JFXTreeTableRow<Models.Servicio> row = new JFXTreeTableRow<>();
             
             row.setOnMouseClicked((MouseEvent event)->{
             
                 //si un registro es seleccionado con 1 o 2 clic
                 if(! row.isEmpty() && event.getButton()==MouseButton.PRIMARY && event.getClickCount() == 2){
-                    Models.Servicios clickedRow = row.getItem();
+                    Models.Servicio clickedRow = row.getItem();
                     btnDelete_Servicios.disableProperty().set(false);
                     btnEdit_Servicios.disableProperty().set(false);
                     System.out.println(clickedRow.getIdEmpleado());  
@@ -142,7 +143,7 @@ public class ServiciosController implements Initializable {
         });   
 
     }   
-    public void cargarListaFiltrada(TreeItem<Models.Servicios>  root)
+    public void cargarListaFiltrada(TreeItem<Models.Servicio>  root)
     {
              textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
             {
@@ -155,14 +156,14 @@ public class ServiciosController implements Initializable {
                     table_servicios.setRoot(null);
                     listaServiciosFiltro.clear();
                     
-                    for(Models.Servicios servicioActual : listaServicios)
+                    for(Models.Servicio servicioActual : listaServicios)
                     {
-                        if(newValue.contains( servicioActual.getIdServicio()+"" ) )
+                        if(newValue.contains( servicioActual.getId_servicio()+"" ) )
                         {
                             listaServiciosFiltro.add(servicioActual);
                         }
                     }
-                    TreeItem<Models.Servicios> root1 = new RecursiveTreeItem<>(listaServiciosFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+                    TreeItem<Models.Servicio> root1 = new RecursiveTreeItem<>(listaServiciosFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
                     table_servicios.setRoot(root1);
                     table_servicios.setShowRoot(false);
                 }
@@ -178,21 +179,16 @@ public class ServiciosController implements Initializable {
                "/views/crud/ServiciosCRUD.fxml",
                Servicios.getStageFromEvent(event),
                getClass());
-        /*serviciosCRUDController.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
+        serviciosCRUDController.setIAbrirEdicionRegistros(new IAbrir_Edicion_Registros() {
             @Override
-            public void registroEditado(Object taxiModifcado) {
+            public void registroEditNuevo(Object registro) {
                 
-                Taxis taxiModified = (Taxis) taxiModifcado;
-                listaTaxisDefault.add(taxiModified);
-                table_taxis.refresh();
+                Servicio servicio = (Servicio) registro;
+                listaServicios .add(servicio);
                 
-            
-                
-                
-            }
 
-            
-        },null);*/
+            }
+        });
     }
 
     @FXML

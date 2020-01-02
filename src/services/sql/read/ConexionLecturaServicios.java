@@ -5,7 +5,7 @@
  */
 package services.sql.read;
 
-import Models.Servicios;
+import Models.Servicio;
 import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,9 +61,9 @@ public class ConexionLecturaServicios
     }
     
     
-     public ObservableList<Servicios> getServicios()
+     public ObservableList<Servicio> getServicios()
     {
-        ObservableList<Servicios> servicios =  FXCollections.observableArrayList();
+        ObservableList<Servicio> servicios =  FXCollections.observableArrayList();
         query="select * from servicios";
         
         try
@@ -72,29 +72,37 @@ public class ConexionLecturaServicios
             rs=ps.executeQuery();
             while(rs.next())
             {             
-                servicios.add(
-                        new Servicios(                                
-                                String.valueOf(rs.getInt(1)),
+                //String calle,colonia,numExt,numInt;
+               // String[] split = rs.getString(4).split("|");
+               /* calle = split[0];
+                colonia = split[1];
+                numExt = split[2];
+                split.length[]*/
+                
+                    Servicio nuevoServicio = new Servicio(                                
+                                rs.getInt(1),
                                 rs.getString(2),
                                 rs.getString(3),
-                                rs.getString(4),
+                                rs.getString(4),//direccion split
+                                rs.getString(4),//direccion split
+                                rs.getString(4),//direccion split
+                                rs.getString(4),//direccion split
                                 rs.getString(5),
                                 rs.getString(6),
-                                String.valueOf(rs.getInt(7)),
-                                String.valueOf(rs.getInt(8)),
-                                rs.getDate(9).toLocalDate().toString(),
+                                rs.getInt(7),
+                                rs.getInt(8),
+                                rs.getDate(9).toLocalDate(),
                                 rs.getString(10),
-                                rs.getDate(11).toLocalDate().toString(),
-                                rs.getTime(12).toLocalTime().toString(),
-                                String.valueOf(rs.getInt(13)),
+                                rs.getDate(11).toLocalDate(),
+                                rs.getTime(12).toLocalTime(),
+                                rs.getBoolean(13),
                                 rs.getString(14),
-                                String.valueOf(rs.getInt(15))
-                                
-                        )
-                
-                );
-
-                        
+                                rs.getBoolean(15)                                                                
+                        );
+                    //formatea la direccion, adecuadamente al model
+                    nuevoServicio.setDireccion(rs.getString(4));
+                servicios.add(nuevoServicio);
+       
             }
             
             ps.close();

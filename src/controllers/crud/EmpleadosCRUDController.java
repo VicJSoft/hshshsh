@@ -133,13 +133,10 @@ public class EmpleadosCRUDController implements Initializable,IValidateCRUD {
         //todos los datos son requeridos menos observaciones 
         //y numint la contraseña max 12 caracteres  si es admon puede  llevar password si  es modulador de afuerzas el password    
         if(validarCampos()){
-            
-            if(iAbrir_Edicion_Registros!=null){
-                
+                            
                 this.iAbrir_Edicion_Registros.registroEditNuevo(getEmpleadoVentana());
                 this.btn_cerrar.fire();
-                return;
-            }
+            
             /*
             if(conexionEscrituraEmpleados.insertEmpleados(
                 textField_nombre.getText().toUpperCase(),  datePicker_nacimiento.getValue(),

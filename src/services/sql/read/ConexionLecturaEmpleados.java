@@ -64,6 +64,7 @@ public class ConexionLecturaEmpleados
             rs= ps.executeQuery();
             if(rs.first())
             {
+                Statics.ID_EMPLEADO_SESION_ACTUAL = rs.getInt(1);//id_empleado
                 key=true;
             }
             ps.close();

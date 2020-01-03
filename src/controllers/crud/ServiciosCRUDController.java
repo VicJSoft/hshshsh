@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.controls.base.IFXValidatableControl;
 import com.jfoenix.validation.RequiredFieldValidator;
 import com.sun.webkit.dom.KeyboardEventImpl;
@@ -130,6 +131,8 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     private Button btn_cancelar;
     @FXML
     private Label lbl_errorConfigTipoServicio;
+    @FXML
+    private JFXToggleButton togglebtn_ServiciosPendientes;
     
     private ArrayList<IFXValidatableControl> listControlsRequired = new ArrayList();
     private ArrayList<JFXCheckBox> listaCheckBox = new ArrayList();
@@ -507,11 +510,11 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     }
     private Servicio getVentanaServicio(){
         Servicio servicio = new Servicio(
-                0, this.textField_telefono.getText(), this.textField_nombre.getText(),
+                0/*no nescesario*/, this.textField_telefono.getText(), this.textField_nombre.getText(),
                 this.textField_calle.getText(), this.textField_colonia.getText(), this.textField_num_ext.getText(), this.textField_numInt.getText(), 
                 this.textField_observaciones.getText(), this.textField_notas.getText(),
-                Integer.parseInt(this.textField_unidad.getText()),/*id empleado*/ 0,
-                this.datePicker_dia.getValue(), this.txt_destino.getText(), this.datePicker_dia.getValue(), timePicker_horaServicio.getValue(),
+                Integer.parseInt(this.textField_unidad.getText()),/*id empleado*/ 1,
+                true, this.txt_destino.getText(), this.datePicker_dia.getValue(), timePicker_horaServicio.getValue(),
                 this.rb_diario.isSelected(), diasSeleccionadosCadena(), this.rb_programado.isSelected());
                 
         return servicio;

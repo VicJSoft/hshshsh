@@ -32,6 +32,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import services.Servicios;
 import services.sql.read.ConexionLecturaServicios;
+import services.sql.write.ConexionEscrituraServicios;
 
 
 /**
@@ -74,6 +75,7 @@ public class ServiciosController implements Initializable {
     private JFXButton btnEdit_Servicios;
 
     private final ConexionLecturaServicios conexionLecturaServicios = new ConexionLecturaServicios();
+    private final ConexionEscrituraServicios conexionEscrituraServicios = new ConexionEscrituraServicios();
     private  ObservableList<Models.Servicio> listaServicios = FXCollections.observableArrayList();
     private  ObservableList<Models.Servicio> listaServiciosFiltro = FXCollections.observableArrayList();
 
@@ -158,7 +160,8 @@ public class ServiciosController implements Initializable {
                     
                     for(Models.Servicio servicioActual : listaServicios)
                     {
-                        if(newValue.contains( servicioActual.getId_servicio()+"" ) )
+                        //if(newValue.contains( servicioActual.getId_servicio()+"" ) )
+                        if(servicioActual.getTelefono().contains(newValue))
                         {
                             listaServiciosFiltro.add(servicioActual);
                         }
@@ -184,8 +187,11 @@ public class ServiciosController implements Initializable {
             public void registroEditNuevo(Object registro) {
                 
                 Servicio servicio = (Servicio) registro;
-                listaServicios .add(servicio);
                 
+                
+                if(conexionEscrituraServicios.insertServicio(servicio)){
+                    listaServicios .add(servicio);
+                }
 
             }
         });

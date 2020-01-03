@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,9 +27,15 @@ public class ConexionEscrituraClientes
     
     
     public boolean  insertClientes(Clientes cliente){
+        //si el cliente ya existe no hay necesidad de hacer algo, solo retornar true
+        //para que continue el flujo donde se llamó a este metodo.-
+        if(clienteExist(cliente.getTelefono())){
+           return true;
+        }
         query="insert into clientes values(?,?,?,?,?,?,?)";
         try
         {
+            ps =null;
             ps = connection.prepareStatement(query);
             ps.setString(1,cliente.getTelefono() );
             ps.setString(2, cliente.getNombre() );
@@ -54,6 +62,33 @@ public class ConexionEscrituraClientes
         }
         
         return key;
+    }
+    
+    /**
+     * Indica si el numero dado existe en la tabla clientes.
+     * @param numero
+     * Numero de telefono del cliente a verificar.
+     * @return 
+     * TRUE:
+     *  Cuando EXISTE al menos 1 registro con ese número(en teoría solo sería 1 o ninguno).
+     * FALSE:
+     *  Cuando no existe ese cliente en la tabla clientes.
+     *  Cuando hubo SQLException también retorna false.
+     */
+    private boolean clienteExist(String numero){
+        try {
+            String queryExist = "SELECT * FROM clientes WHERE telefono = ?";
+            
+            ps = connection.prepareCall(queryExist);
+            ps.setString(1, numero);
+            ResultSet rs = ps.executeQuery();
+            
+            return rs.next();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionEscrituraClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
     }
     
 }

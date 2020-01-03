@@ -91,7 +91,7 @@ public class ConexionLecturaServicios
                                 rs.getString(6),
                                 rs.getInt(7),
                                 rs.getInt(8),
-                                rs.getDate(9).toLocalDate(),
+                                rs.getBoolean(9),//activo
                                 rs.getString(10),
                                 rs.getDate(11).toLocalDate(),
                                 rs.getTime(12).toLocalTime(),

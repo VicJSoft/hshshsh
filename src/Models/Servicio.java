@@ -210,10 +210,10 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
     }
     
     public String getDireccion(){
-        return this.calle +"|"+ this.colonia +"|"+ this.numeroExt +"|"+ this.numeroInt;
+        return this.calle +"_"+ this.colonia +"_"+ this.numeroExt +"_"+ this.numeroInt;
     }
     public void setDireccion(String direccion){
-        String[] split = direccion.split("|");
+        String[] split = direccion.split("_");
 
         this.calle = split[0];
         this.colonia = split[1];

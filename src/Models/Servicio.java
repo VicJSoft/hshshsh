@@ -224,6 +224,8 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         
     }
     
-    
+    public String getFechaHora(){
+        return getFecha_inicio() + " " + getHora();
+    }
     
 }

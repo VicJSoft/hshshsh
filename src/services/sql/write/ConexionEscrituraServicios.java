@@ -81,11 +81,25 @@ public class ConexionEscrituraServicios {
             rsID.next();
             servicio.setId_servicio(rsID.getInt(1));
             key = true;
-            
+            ps=null;
         } catch (SQLException ex) {
             Logger.getLogger(ConexionEscrituraServicios.class.getName()).log(Level.SEVERE, null, ex);
             key = false;
         }
+        return key;
+    }
+ 
+    public boolean cancelarServicio(int idSelected) {
+        key = false;
+        try {
+            query = "UPDATE servicios SET servicioActivo = '0' WHERE servicios.IdServicio =  " + idSelected;
+            
+            ps = connection.prepareStatement(query);
+            key= ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionEscrituraServicios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return key;
     }
     

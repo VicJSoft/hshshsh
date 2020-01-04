@@ -15,11 +15,12 @@
     <children>
       <JFXTreeTableView fx:id="table_servicios" layoutX="28.0" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="98.0">
          <columns>
-            <TreeTableColumn fx:id="nombre" maxWidth="300.0" minWidth="163.0" prefWidth="216.0" sortable="false" text="Nombre" />
+            <TreeTableColumn fx:id="fecha" maxWidth="300.0" minWidth="147.0" prefWidth="147.0" sortable="false" text="Fecha" />
+            <TreeTableColumn fx:id="nombre" maxWidth="300.0" minWidth="163.0" prefWidth="179.0" sortable="false" text="Nombre" />
             <TreeTableColumn fx:id="telefono" maxWidth="140.0" minWidth="130.0" prefWidth="130.0" text="Teléfono" />
             <TreeTableColumn fx:id="direccion" maxWidth="500.0" minWidth="215.0" prefWidth="215.0" text="Dirección" />
-            <TreeTableColumn fx:id="observaciones" maxWidth="500.0" minWidth="210.0" prefWidth="210.0" text="Observaciones" />
-            <TreeTableColumn fx:id="notas" maxWidth="500.0" minWidth="199.0" prefWidth="199.0" sortable="false" text="Notas" />
+            <TreeTableColumn fx:id="observaciones" maxWidth="500.0" minWidth="120.0" prefWidth="120.0" text="Observaciones" />
+            <TreeTableColumn fx:id="notas" maxWidth="500.0" minWidth="100.0" prefWidth="199.0" sortable="false" text="Notas" />
             <TreeTableColumn fx:id="unidad" maxWidth="75.0" minWidth="70.0" prefWidth="70.0" text="Unidad" />
          </columns>
          <columnResizePolicy>

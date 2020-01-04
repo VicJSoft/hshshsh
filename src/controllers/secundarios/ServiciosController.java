@@ -8,6 +8,7 @@ package controllers.secundarios;
 import Interfaces.IAbrir_Edicion_Registros;
 import Models.Servicio;
 import Models.Taxis;
+import Models.TooltippedTableCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableRow;
@@ -24,13 +25,20 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Callback;
 import services.Servicios;
 import services.sql.read.ConexionLecturaServicios;
 import services.sql.write.ConexionEscrituraServicios;
@@ -45,6 +53,9 @@ public class ServiciosController implements Initializable {
 
     @FXML
     private JFXTreeTableView<Models.Servicio> table_servicios;
+
+    @FXML
+    private TreeTableColumn<Models.Servicio, String> fecha;
 
     @FXML
     private TreeTableColumn<Models.Servicio, String> nombre;
@@ -86,6 +97,7 @@ public class ServiciosController implements Initializable {
        this.btnDelete_Servicios.setTooltip(new Tooltip("Cancelar servicio"));
         
         
+       fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("fechaHora"));
        nombre.setCellValueFactory(new TreeItemPropertyValueFactory<>("nombre"));
        telefono.setCellValueFactory(new TreeItemPropertyValueFactory<>("telefono"));
        direccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("direccion"));
@@ -93,6 +105,10 @@ public class ServiciosController implements Initializable {
        notas.setCellValueFactory(new TreeItemPropertyValueFactory<>("notas"));
        unidad.setCellValueFactory(new TreeItemPropertyValueFactory<>("idUnidad"));
        
+ 
+       
+        
+        /**/
        listaServicios= conexionLecturaServicios.getServicios();
        TreeItem<Models.Servicio> root = new RecursiveTreeItem<>(listaServicios, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
        table_servicios.setRoot(root);
@@ -147,8 +163,22 @@ public class ServiciosController implements Initializable {
             
             return row;
         });   
-
+        setCancelledGraphic();
     }   
+    /**
+     * Marca los registros que su campo son "servicioActivo = false"
+     */
+    private void setCancelledGraphic(){
+        int i = 0;
+        for(TreeItem<Servicio> treeItem : table_servicios.getRoot().getChildren())
+            if(!treeItem.getValue().isServicioActivo()){
+                treeItem.setGraphic(new Circle(5, Paint.valueOf("CB3234")));
+                treeItem.getGraphic().setLayoutY(10);
+            }
+        
+        //table_servicios.getSelectionModel().getModelItem(0);
+       // table_servicios.getRoot().getChildren();
+    }
     public void cargarListaFiltrada(TreeItem<Models.Servicio>  root)
     {
              textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
@@ -204,6 +234,19 @@ public class ServiciosController implements Initializable {
     @FXML
     private void btnDelete_OnAction(ActionEvent event) {
         
+        int idSelected = table_servicios.getSelectionModel().getSelectedItem().getValue().getId_servicio();
+       // table_servicios.getSelectionModel().getSelectedItem().setGraphic(new Rectangle(110, 80, Paint.valueOf("CB3234")));
+        
+         if(conexionEscrituraServicios.cancelarServicio(idSelected)){
+            for(Servicio servicioActual : listaServicios){
+                if(servicioActual.getId_servicio() == idSelected){
+                    servicioActual.setServicioActivo(false);
+                    table_servicios.getSelectionModel().getSelectedItem().setGraphic(new Circle(5, Paint.valueOf("CB3234")));
+                   // table_servicios.getSelectionModel().getSelectedItem().getGraphic().getBoundsInLocal();
+
+                }
+            }
+        }
     }
 
     @FXML

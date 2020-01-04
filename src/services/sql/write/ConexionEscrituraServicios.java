@@ -95,7 +95,8 @@ public class ConexionEscrituraServicios {
             query = "UPDATE servicios SET servicioActivo = '0' WHERE servicios.IdServicio =  " + idSelected;
             
             ps = connection.prepareStatement(query);
-            key= ps.execute();
+             ps.executeUpdate();
+             key = true;
         } catch (SQLException ex) {
             Logger.getLogger(ConexionEscrituraServicios.class.getName()).log(Level.SEVERE, null, ex);
         }

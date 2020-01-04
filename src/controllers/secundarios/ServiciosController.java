@@ -11,12 +11,14 @@ import Models.Taxis;
 import Models.TooltippedTableCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import controllers.crud.ServiciosCRUDController;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -90,6 +92,9 @@ public class ServiciosController implements Initializable {
     private final ConexionEscrituraServicios conexionEscrituraServicios = new ConexionEscrituraServicios();
     private  ObservableList<Models.Servicio> listaServicios = FXCollections.observableArrayList();
     private  ObservableList<Models.Servicio> listaServiciosFiltro = FXCollections.observableArrayList();
+    TreeItem<Models.Servicio> root;
+    @FXML
+    private JFXToggleButton togglebtn_ServiciosPendientes;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -110,10 +115,10 @@ public class ServiciosController implements Initializable {
         
         /**/
        listaServicios= conexionLecturaServicios.getServicios();
-       TreeItem<Models.Servicio> root = new RecursiveTreeItem<>(listaServicios, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+        root = new RecursiveTreeItem<>(listaServicios, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
        table_servicios.setRoot(root);
        table_servicios.setShowRoot(false);
-       cargarListaFiltrada(root);//filtra la lista que se carga por defecto y el filtro lo tranfiera al observable secundario
+       cargarListaFiltrada();//filtra la lista que se carga por defecto y el filtro lo tranfiera al observable secundario
        
        
        table_servicios.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -173,13 +178,13 @@ public class ServiciosController implements Initializable {
         for(TreeItem<Servicio> treeItem : table_servicios.getRoot().getChildren())
             if(!treeItem.getValue().isServicioActivo()){
                 treeItem.setGraphic(new Circle(5, Paint.valueOf("CB3234")));
-                treeItem.getGraphic().setLayoutY(10);
+             //   treeItem.getGraphic().setLayoutY(10);
             }
         
         //table_servicios.getSelectionModel().getModelItem(0);
        // table_servicios.getRoot().getChildren();
     }
-    public void cargarListaFiltrada(TreeItem<Models.Servicio>  root)
+    public void cargarListaFiltrada( )
     {
              textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
             {
@@ -242,6 +247,7 @@ public class ServiciosController implements Initializable {
                 if(servicioActual.getId_servicio() == idSelected){
                     servicioActual.setServicioActivo(false);
                     table_servicios.getSelectionModel().getSelectedItem().setGraphic(new Circle(5, Paint.valueOf("CB3234")));
+
                    // table_servicios.getSelectionModel().getSelectedItem().getGraphic().getBoundsInLocal();
 
                 }
@@ -251,6 +257,35 @@ public class ServiciosController implements Initializable {
 
     @FXML
     private void btnEdit_OnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void tooglebtn_OnAction(ActionEvent event) {
+        
+        JFXToggleButton toggle = (JFXToggleButton)event.getSource();
+        if(toggle.isSelected()){
+            
+            listaServiciosFiltro = FXCollections.observableArrayList();            
+           // ObservableList<TreeItem<Servicio>> children = table_servicios.getRoot().getChildren();
+            
+            for(Servicio servicioActual: listaServicios){
+                if(servicioActual.getFecha_inicio().toLocalDate().isAfter(LocalDate.now()) && servicioActual.isServicioActivo() == false /*si no es cancelado no aparece*/  ){
+                    listaServiciosFiltro.add(servicioActual);
+                }
+                TreeItem<Models.Servicio> root1 = new RecursiveTreeItem<>(listaServiciosFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+                
+                table_servicios.setRoot(null);
+                table_servicios.setRoot(root1);
+                table_servicios.setShowRoot(false);
+                setCancelledGraphic();
+            }
+            
+        }else{
+            table_servicios.setRoot(null);
+            table_servicios.setRoot(root);
+            table_servicios.setShowRoot(false);
+
+        }
     }
     
 }

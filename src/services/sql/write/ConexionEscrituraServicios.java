@@ -62,16 +62,24 @@ public class ConexionEscrituraServicios {
             ps.setBoolean(12, servicio.isDiario());
            // ps.setString(13, servicio.getSeleccionDia());
             ps.setBoolean(14, servicio.isProgramadow());
+            
             //cuando es un servicio regular
-            if(!servicio.isDiario() && !servicio.isProgramadow()){
+            if( !servicio.isProgramadow()){
                 ps.setString(13, null);
-            }else if(servicio.isDiario() && !servicio.isProgramadow()){
+            }
+            //cuando el servicio es diario
+            else if(servicio.isDiario() ){
                 ps.setString(13, "1111111");
-            }else if(!servicio.isDiario() && servicio.isProgramadow()){
+            }
+            //cuando es personalizado
+            else if(!servicio.isDiario() ){
                 ps.setString(13, servicio.getSeleccionDia());
 
             }
             ps.executeUpdate();
+            ResultSet rsID = ps.executeQuery("SELECT MAX(IdServicio) FROM servicios");
+            rsID.next();
+            servicio.setId_servicio(rsID.getInt(1));
             key = true;
             
         } catch (SQLException ex) {
@@ -80,6 +88,8 @@ public class ConexionEscrituraServicios {
         }
         return key;
     }
+    
+    
     
 }
 

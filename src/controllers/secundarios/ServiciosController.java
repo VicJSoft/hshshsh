@@ -24,6 +24,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
@@ -82,6 +83,9 @@ public class ServiciosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+       this.btnDelete_Servicios.setTooltip(new Tooltip("Cancelar servicio"));
+        
+        
        nombre.setCellValueFactory(new TreeItemPropertyValueFactory<>("nombre"));
        telefono.setCellValueFactory(new TreeItemPropertyValueFactory<>("telefono"));
        direccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("direccion"));
@@ -190,7 +194,7 @@ public class ServiciosController implements Initializable {
                 
                 
                 if(conexionEscrituraServicios.insertServicio(servicio)){
-                    listaServicios .add(servicio);
+                    listaServicios.add(servicio);
                 }
 
             }

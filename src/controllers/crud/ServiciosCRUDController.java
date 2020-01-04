@@ -268,6 +268,10 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                     rb_programado.selectedProperty().set(true);
                     rb_personalizado.selectedProperty().set(true);
                     calcularFechaInicioServicioProgramado();
+                    
+                    if(isAllDaysChecked()){
+                        rb_diario.fire();
+                    }
                 }
             }
             );
@@ -277,7 +281,15 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     }
  
 
-
+    private boolean isAllDaysChecked(){
+        boolean check = true;
+        
+        for(JFXCheckBox cb_actual : listaCheckBox){
+            check &= cb_actual.isSelected();
+        }
+        return check;
+    }
+    
     @Override
     public ArrayList<IFXValidatableControl> listControlsRequired() {
 

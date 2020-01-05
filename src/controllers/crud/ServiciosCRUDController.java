@@ -23,6 +23,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.DateTimeException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -45,6 +46,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import services.Servicios;
 import services.StringLengthValidator;
+import services.TimeValidator;
 
 /**
  * FXML Controller class
@@ -186,6 +188,8 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
       
        this.listControlsRequired = listControlsRequired();
        this.setFieldValidations();
+       rb_personalizado.fire();
+       rb_Regular.fire();
     }    
 
     /*
@@ -406,7 +410,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         }        
         
         boolean checkBoxes = true;
-        
+        //servicios programado?
         if(rb_programado.isSelected()){
             if(rb_personalizado.isSelected()){
                 boolean checkingBoxes = 
@@ -417,6 +421,14 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                 
                 checkBoxes = checkBoxes && checkingBoxes;
             }
+        }else{
+            LocalTime horaServicio = LocalTime.now();
+            
+            //cuando es un servicio regular.Da un margen de 5 minutos (así podrá mostrar el mensaje de error)
+            //mientras sea menor a TimeNow -5, no dará error label.
+            timePicker_horaServicio.getValidators().add(new TimeValidator(horaServicio.minusMinutes(5), "La hora del servicio debe ser mayor o igual a la hora actual.") );
+            datosValidos &= timePicker_horaServicio.validate();
+            timePicker_horaServicio.validate();
         }
         if(!(datosValidos && checkBoxes)){
             this.lbl_errorConfigTipoServicio.setVisible(true);
@@ -438,22 +450,38 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         
         
         ArrayList<Integer> diasSeleccionados = diasSeleccionados();
-        int dayOfYearMenor = diasSeleccionados.isEmpty()?0:fechaDiaDado(2020, dayOfYear, diasSeleccionados.get(0)).getDayOfYear();
-        //if(dayOfYearMenor != 0)
-        //si no es empty, entrará
+        ArrayList<LocalDate> diasSeleccionadosLD = new ArrayList<>();
+
+            //Así guarda las fechas de cada dia, para despues solo comparar la lista entre sí,
+            //la fecha menor, será la que se pondrá en el datepicker
             for(int diaActualCiclo:diasSeleccionados){
-                LocalDate localDate = fechaDiaDado(2020, dayOfYear, diaActualCiclo);
-               // dayOfYearMenor = localDate.getDayOfYear();
-                                            //==
-                if(localDate.getDayOfYear()>= dayOfYear && localDate.getDayOfYear()<= dayOfYearMenor){
-                    dayOfYearMenor = localDate.getDayOfYear();
-                    fechaASetear = LocalDate.ofYearDay(2020, dayOfYearMenor);
+                diasSeleccionadosLD.add(fechaDiaDado(year, dayOfYear, diaActualCiclo));
+            }
+            for(LocalDate localDateActual : diasSeleccionadosLD){
+                
+                //LocalDate fechaMenor = localDateActual;
+                fechaASetear = localDateActual;
+                //si una de las fechas es igual a hoy, inmediatamente, ese será el valor de inicio.
+                if(localDateActual.isEqual(LocalDate.now())){
+                    fechaASetear = localDateActual;
+                    break;
+                }
+                //si X fecha de la lista es "menor" a fechaASetear, entonces, fechaASetear será ese nuevo valor X
+                else if(localDateActual.isBefore(fechaASetear)){
+                    fechaASetear  = localDateActual;
                 }
             }
             
         datePicker_dia.setValue(fechaASetear);
         
-    }    
+    } 
+    
+    public void calcularFechaInicioServicioProgramado2(){
+        
+        
+        
+        
+    }
 
     private ArrayList<Integer> diasSeleccionados(){
         
@@ -488,6 +516,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     
     /**
      * busca la fecha más proxima para el diaBuscar dado, Busca X dia, apartir de hoy, incluyendo hoy.
+     * Y si el dia proximo más cercano es del año siguiente, aumenta el año y empieza a contar desde ahí.
      * @param year
      * Año en el cual se buscará (siempre será el actual).
      * @param dayOfYear
@@ -503,7 +532,19 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         //PARA UN MAXIMO DE 7 ITERACIONES
         for(int i = 0; i<7 ;i++){
             
-            fechaABuscar = LocalDate.ofYearDay(year, dayOfYear);
+            try{
+                fechaABuscar = LocalDate.ofYearDay(year, dayOfYear);
+            }catch(DateTimeException ex){
+                //año bisiesto, tira exeption en dayOfYear = 367+,  
+                //año no bisiesto, tira exeption en dayOfYear = 366+,  
+               // if(LocalDate.ofYearDay(year, dayOfYear-1).isLeapYear()){}
+               //si tira exception, significa que excedio el numero de dia del año.
+               //por lo tanto, para encontrar el dia siguiente, se suma 1 año, y dayOfYear = 1, (1 de Enero del Year+);
+                dayOfYear = 1;
+                year= year + 1;
+                fechaABuscar = LocalDate.ofYearDay(year, dayOfYear);
+                
+            }
             //si el dia de fechaBuscar es igual al dia a buscar, retornará esa fecha
             if(fechaABuscar.getDayOfWeek().getValue() == diaBuscar)
                 break;

@@ -9,9 +9,11 @@ import Models.Clientes;
 import Models.Servicio;
 import Resources.statics.Statics;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,7 +46,7 @@ public class ConexionEscrituraServicios {
         );
         ConexionEscrituraClientes cec = new ConexionEscrituraClientes();
         cec.insertClientes(cliente);//inserta cliente nuevo//si existe o no, ya se asegura que haya la foreign key telefono
-        query = "INSERT INTO servicios VALUES(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        query = "INSERT INTO servicios VALUES(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         
         try {
             ps = connection.prepareStatement(query);
@@ -62,7 +64,7 @@ public class ConexionEscrituraServicios {
             ps.setBoolean(12, servicio.isDiario());
            // ps.setString(13, servicio.getSeleccionDia());
             ps.setBoolean(14, servicio.isProgramadow());
-            
+            ps.setDate(15, servicio.getFecha_fin());
             //cuando es un servicio regular
             if( !servicio.isProgramadow()){
                 ps.setString(13, null);
@@ -77,6 +79,7 @@ public class ConexionEscrituraServicios {
 
             }
             ps.executeUpdate();
+            //obtiene el ID del servicio que acaba de subir
             ResultSet rsID = ps.executeQuery("SELECT MAX(IdServicio) FROM servicios");
             rsID.next();
             servicio.setId_servicio(rsID.getInt(1));
@@ -88,15 +91,22 @@ public class ConexionEscrituraServicios {
         }
         return key;
     }
- 
+    /**
+     * Consulta para cancelar un servicicio con el ID dado, la fecha de cancelación que se setea
+     * es now()*.
+     * @param idSelected
+     * ID de servicio a marcar como cancelado.
+     * @return 
+     */
     public boolean cancelarServicio(int idSelected) {
         key = false;
         try {
-            query = "UPDATE servicios SET servicioActivo = '0' WHERE servicios.IdServicio =  " + idSelected;
+            query = "UPDATE servicios SET servicioActivo = '0',fechaFin = ? WHERE servicios.IdServicio =  " + idSelected;
             
             ps = connection.prepareStatement(query);
-             ps.executeUpdate();
-             key = true;
+            ps.setDate(1, Date.valueOf(LocalDate.now()));
+            ps.executeUpdate();
+            key = true;
         } catch (SQLException ex) {
             Logger.getLogger(ConexionEscrituraServicios.class.getName()).log(Level.SEVERE, null, ex);
         }

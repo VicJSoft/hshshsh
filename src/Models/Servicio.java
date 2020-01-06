@@ -36,12 +36,13 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
     private boolean diario;
     private String seleccionDia;
     private boolean programadow;
+    private Date fecha_fin;
 
     public Servicio(int id_servicio, String telefono, String nombre,
             String calle, String colonia, String numeroExt, String numeroInt,
             String observaciones, String notas, int idUnidad, int idEmpleado, 
             boolean servicioActivo, String destino, LocalDate fecha_inicio, LocalTime hora, 
-            boolean diario, String seleccionDia, boolean programadow)
+            boolean diario, String seleccionDia, boolean programadow,Date fecha_fin)
     {
         this.id_servicio = id_servicio;
         this.telefono = telefono;
@@ -61,6 +62,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         this.diario = diario;
         this.seleccionDia = seleccionDia;
         this.programadow = programadow;
+        this.fecha_fin = fecha_fin;
     }
 
     public int getId_servicio() {
@@ -223,9 +225,22 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         
         
     }
-    
+    /**
+     * Para no llamar a 2 propiedades a la vez y darles formato String, aquí lo entrega directo.
+     * @return 
+     */
     public String getFechaHora(){
         return getFecha_inicio() + " " + getHora();
     }
+
+    public Date getFecha_fin() {
+        return fecha_fin;
+    }
+
+    public void setFecha_fin(Date fecha_fin) {
+        this.fecha_fin = fecha_fin;
+    }
+    
+    
     
 }

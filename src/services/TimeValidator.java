@@ -8,11 +8,11 @@ package services;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.validation.base.ValidatorBase;
 import java.time.LocalTime;
-import javafx.scene.control.TextInputControl;
 
 /**
- *
- * @author VAPESIN
+ * @author Victor Espino
+ * @version 1.0
+ * @since 2020-01-05
  */
 public class TimeValidator extends ValidatorBase{
 

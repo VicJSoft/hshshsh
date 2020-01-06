@@ -44,20 +44,20 @@
                   </ImageView>
                </graphic>
             </JFXButton>
+            <JFXButton fx:id="btnEdit_Servicios" disable="true" onAction="#btnEdit_OnAction" prefHeight="0.0" prefWidth="67.0" styleClass="boton-toolbar">
+               <graphic>
+                  <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Resources/imagenes/iconos/Taxi/taxi-okey.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
             <JFXButton fx:id="btnDelete_Servicios" disable="true" onAction="#btnDelete_OnAction" prefHeight="17.0" prefWidth="67.0" styleClass="boton-toolbar">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Resources/imagenes/iconos/Taxi/taxi-delete.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnEdit_Servicios" disable="true" onAction="#btnEdit_OnAction" prefHeight="0.0" prefWidth="67.0" styleClass="boton-toolbar">
-               <graphic>
-                  <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Resources/imagenes/iconos/Taxi/taxi-refresh.png" />
                      </image>
                   </ImageView>
                </graphic>

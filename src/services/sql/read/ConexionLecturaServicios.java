@@ -84,7 +84,7 @@ public class ConexionLecturaServicios
                                 rs.getString(2),
                                 rs.getString(3),
                                 rs.getString(4),//direccion split
-                                rs.getString(4),//direccion split
+                                rs.getString(4),//direccion split (no le puedo dar null, por eso repito la propiedad. y la asigno más adelante)
                                 rs.getString(4),//direccion split
                                 rs.getString(4),//direccion split
                                 rs.getString(5),
@@ -97,7 +97,8 @@ public class ConexionLecturaServicios
                                 rs.getTime(12).toLocalTime(),
                                 rs.getBoolean(13),
                                 rs.getString(14),
-                                rs.getBoolean(15)                                                                
+                                rs.getBoolean(15),
+                                rs.getDate(16)
                         );
                     //formatea la direccion, adecuadamente al model
                     nuevoServicio.setDireccion(rs.getString(4));

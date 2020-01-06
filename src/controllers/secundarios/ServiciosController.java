@@ -7,8 +7,6 @@ package controllers.secundarios;
 
 import Interfaces.IAbrir_Edicion_Registros;
 import Models.Servicio;
-import Models.Taxis;
-import Models.TooltippedTableCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
@@ -18,7 +16,6 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import controllers.crud.ServiciosCRUDController;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,11 +24,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
@@ -39,8 +33,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Callback;
 import services.Servicios;
 import services.sql.read.ConexionLecturaServicios;
 import services.sql.write.ConexionEscrituraServicios;
@@ -99,7 +91,9 @@ public class ServiciosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-       this.btnDelete_Servicios.setTooltip(new Tooltip("Cancelar servicio"));
+       this.btnDelete_Servicios.setTooltip(new Tooltip("Cancelar servicio."));
+       this.btnEdit_Servicios.setTooltip(new Tooltip("Servicio aplicado."));
+       this.btnAdd_Servicios.setTooltip(new Tooltip("Nuevo servicio."));
         
         
        fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("fechaHora"));
@@ -171,13 +165,16 @@ public class ServiciosController implements Initializable {
         setCancelledGraphic();
     }   
     /**
-     * Marca los registros que su campo son "servicioActivo = false"
+     * Marca los registros que su campo son "servicioActivo = false", 
+     * Si el servicio es regular, se marca un punto verde,
+     * Si el servicio es programado, se marca un punto rojo (cancelado).
+     * 
      */
     private void setCancelledGraphic(){
         int i = 0;
         for(TreeItem<Servicio> treeItem : table_servicios.getRoot().getChildren())
             if(!treeItem.getValue().isServicioActivo()){
-                treeItem.setGraphic(new Circle(5, Paint.valueOf("CB3234")));
+                treeItem.setGraphic(new Circle(5, Paint.valueOf(treeItem.getValue().isProgramadow()?ROJO:VERDE)));
              //   treeItem.getGraphic().setLayoutY(10);
             }
         
@@ -236,17 +233,35 @@ public class ServiciosController implements Initializable {
         });
     }
 
+    private final String ROJO = "CB3234";
+    private final String VERDE = "5AB444";
     @FXML
     private void btnDelete_OnAction(ActionEvent event) {
-        
-        int idSelected = table_servicios.getSelectionModel().getSelectedItem().getValue().getId_servicio();
+        //rojo
+        cancelarServicio(ROJO);
+    }
+
+    @FXML
+    private void btnEdit_OnAction(ActionEvent event) {
+        //verde
+        Servicio servicioSeleccionado = table_servicios.getSelectionModel().getSelectedItem().getValue();
+
+        //El servicio programado no puede ser marcado como enviado.
+        if(!servicioSeleccionado.isProgramadow())
+            cancelarServicio(VERDE);
+    
+    }
+
+    private void cancelarServicio(String color){
+        Servicio servicioSeleccionado = table_servicios.getSelectionModel().getSelectedItem().getValue();
+        int idSelected = servicioSeleccionado.getId_servicio();
        // table_servicios.getSelectionModel().getSelectedItem().setGraphic(new Rectangle(110, 80, Paint.valueOf("CB3234")));
-        
+       
          if(conexionEscrituraServicios.cancelarServicio(idSelected)){
             for(Servicio servicioActual : listaServicios){
                 if(servicioActual.getId_servicio() == idSelected){
                     servicioActual.setServicioActivo(false);
-                    table_servicios.getSelectionModel().getSelectedItem().setGraphic(new Circle(5, Paint.valueOf("CB3234")));
+                    table_servicios.getSelectionModel().getSelectedItem().setGraphic(new Circle(5, Paint.valueOf(color)));
 
                    // table_servicios.getSelectionModel().getSelectedItem().getGraphic().getBoundsInLocal();
 
@@ -254,11 +269,7 @@ public class ServiciosController implements Initializable {
             }
         }
     }
-
-    @FXML
-    private void btnEdit_OnAction(ActionEvent event) {
-    }
-
+    
     @FXML
     private void tooglebtn_OnAction(ActionEvent event) {
         
@@ -269,7 +280,12 @@ public class ServiciosController implements Initializable {
            // ObservableList<TreeItem<Servicio>> children = table_servicios.getRoot().getChildren();
             
             for(Servicio servicioActual: listaServicios){
-                if(servicioActual.getFecha_inicio().toLocalDate().isAfter(LocalDate.now()) && servicioActual.isServicioActivo() == false /*si no es cancelado no aparece*/  ){
+               // if(servicioActual.getFecha_inicio().toLocalDate().isAfter(LocalDate.now()) && servicioActual.isServicioActivo() == true /*si no es cancelado no aparece*/  ){
+               //Un servicio es activo cuando:
+               //Servicio Regular: cuando no se ha mandado taxi.
+               //Servicio Programado: cuando aún se espera que los dias siguientes, se siga mandando una unidad.
+               
+               if(servicioActual.isServicioActivo() == true /*si no es cancelado no aparece*/  ){
                     listaServiciosFiltro.add(servicioActual);
                 }
                 TreeItem<Models.Servicio> root1 = new RecursiveTreeItem<>(listaServiciosFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());

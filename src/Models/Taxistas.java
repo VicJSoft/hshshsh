@@ -5,18 +5,18 @@
  */
 package Models;
 
+import Interfaces.IModelReport;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.sql.Date;
 import java.time.LocalDate;
-import javafx.beans.property.SimpleStringProperty;
-
+ 
 /**
  *
  * @author vicen
  */
-public class Taxistas extends RecursiveTreeObject<Taxistas>
+public class Taxistas extends RecursiveTreeObject<Taxistas> implements IModelReport
 {
-    private SimpleStringProperty nombre, telefono;
+    private String nombre, telefono;
     private String sexo;
     private int id_taxista;
     private String calle,numInt,numExt,colonia;
@@ -26,10 +26,17 @@ public class Taxistas extends RecursiveTreeObject<Taxistas>
     public Taxistas()
     {}
 
+    public Taxistas(int id_taxista,String nombre) {
+        this.nombre = nombre;
+        this.id_taxista = id_taxista;
+    }
+
+    
+    
     public Taxistas(int id_taxista, String nombre, String telefono, LocalDate fecha_nacimiento, String sexo,String calle,String colonia,String numExt,String numInt, String observaciones ) {
         this.id_taxista = id_taxista;
-        this.nombre = new SimpleStringProperty(nombre);
-        this.telefono = new SimpleStringProperty(telefono);
+        this.nombre = nombre;
+        this.telefono = telefono;
       //  this.direccion = new SimpleStringProperty(direccion);
         this.calle = calle;
         this.numInt = numInt!=null?numInt:"";
@@ -50,19 +57,19 @@ public class Taxistas extends RecursiveTreeObject<Taxistas>
     }
 
     public String getNombre() {
-        return nombre.get();
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = new SimpleStringProperty(nombre);
+        this.nombre = nombre;
     }
 
     public String getTelefono() {
-        return telefono.get();
+        return telefono;
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = new SimpleStringProperty(telefono);
+        this.telefono =telefono;
     }
 
     public String getDireccion() {
@@ -125,6 +132,19 @@ public class Taxistas extends RecursiveTreeObject<Taxistas>
 
     public void setColonia(String colonia) {
         this.colonia = colonia;
+    }
+
+    @Override
+    public int getID() {
+
+        return this.getId_taxista();
+    }
+
+    @Override
+    public String getName() {
+
+        return this.getNombre();
+
     }
     
     

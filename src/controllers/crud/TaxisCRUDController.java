@@ -5,9 +5,12 @@
  */
 package controllers.crud;
 
+import Interfaces.ComboBoxCallback;
 import Interfaces.IAbrir_Edicion_Registros;
+import Interfaces.IModelReport;
 import Interfaces.IValidateCRUD;
 import Models.Taxis;
+import Models.Taxistas;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -39,7 +42,7 @@ import services.sql.read.ConexionLecturaUnidades;
  *
  * @author ESPINO
  */
-public class TaxisCRUDController implements Initializable,IValidateCRUD {
+public class TaxisCRUDController implements Initializable,IValidateCRUD,ComboBoxCallback {
 
   
     
@@ -61,7 +64,7 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
     
     private JFXComboBox<String> comboBox_marca;
     @FXML
-    private JFXComboBox<String> comboBox_taxista;
+    private JFXComboBox<IModelReport> comboBox_taxista;
     @FXML
     private JFXTextField textField_unidad;
 
@@ -88,7 +91,8 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
         comboBox_marca.setItems(Statics.marcas);
         comboBox_taxista.setItems(conexionLecturaTaxistas.getTaxistas_id_name());
        
-        
+        comboBox_taxista.setCellFactory(cellFactory);
+        comboBox_taxista.setButtonCell(cellFactory.call(null));
         
     }    
 
@@ -105,7 +109,7 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
           
       if(validarCampos()){
           
-            String val[]=comboBox_taxista.getSelectionModel().getSelectedItem().split("  ");
+          //  int id =comboBox_taxista.getSelectionModel().getSelectedItem().getID();
             if(this.isEdicion && iAbrir_Edicion_Registros!=null)  {
                this.iAbrir_Edicion_Registros.registroEditNuevo(getTaxiVentana());
                btn_cerrar.fire();
@@ -314,14 +318,15 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
      */
     public Taxis getTaxiVentana(){
         Taxis taxi;
-        String val[]=comboBox_taxista.getSelectionModel().getSelectedItem().split("  ");
+        //Taxistas taxistaSeleccionado = (Taxistas) comboBox_taxista.getSelectionModel().getSelectedItem();
+        IModelReport taxistaSeleccionado = comboBox_taxista.getSelectionModel().getSelectedItem();
         taxi = new Taxis(
                 Integer.parseInt(textField_unidad.getText().trim()),
                 comboBox_marca.getSelectionModel().getSelectedItem(),
                 Integer.parseInt(textField_modelo.getText().trim()),
                 textField_placa.getText().toUpperCase().trim(),
-                val[1].trim(),
-                Integer.parseInt(val[0].trim())
+                taxistaSeleccionado.getName(),
+                taxistaSeleccionado.getID()
                 
         );
          
@@ -341,13 +346,13 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
         this.textField_modelo.setText(taxiAEditar.getModelo()+"");
         this.textField_placa.setText(taxiAEditar.getPlaca());
         ObservableList<String> itemsCombroMarca = this.comboBox_marca.getItems();
-        ObservableList<String> itemsComboTaxistas = this.comboBox_taxista.getItems();
+        ObservableList<IModelReport> itemsComboTaxistas = this.comboBox_taxista.getItems();
 
         String val[];
         //como el valor de cada llave del combo es compuesta, hay que separarlas primero (
-        for(String TaxistaActual:itemsComboTaxistas){
-            val = TaxistaActual.split("  ");
-            if(val[1].equals(taxiAEditar.getTaxista()))
+        for(IModelReport TaxistaActual:itemsComboTaxistas){
+             
+            if(TaxistaActual.getName().equals(taxiAEditar.getTaxista()))
                 //Este set, solo funciona si el texto es identico, al de un elemento del combobox.
                 this.comboBox_taxista.valueProperty().set(TaxistaActual);
         }

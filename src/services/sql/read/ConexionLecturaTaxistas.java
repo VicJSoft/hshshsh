@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package services.sql.read;
+import Interfaces.IModelReport;
 import Models.Taxistas;
 import Resources.statics.Statics;
 import java.sql.Connection;
@@ -33,9 +34,9 @@ public class ConexionLecturaTaxistas
     
     
     
-    public ObservableList<String> getTaxistas_id_name()
+    public ObservableList<IModelReport> getTaxistas_id_name()
     {
-        ObservableList<String> taxistas =  FXCollections.observableArrayList();
+        ObservableList<IModelReport> taxistas =  FXCollections.observableArrayList();
         query="select id_taxista,nombre from taxistas";
         try
         {  
@@ -46,7 +47,8 @@ public class ConexionLecturaTaxistas
                 if(rs.getInt(1)!=0)
                 {
                     //lo trae en pascal case.
-                     taxistas.add(rs.getInt(1)+"  "+rs.getString(2));
+                     //taxistas.add(rs.getInt(1)+"  "+rs.getString(2));
+                    taxistas.add(new Taxistas(rs.getInt(1), rs.getString(2)));
                 }
             }
             

@@ -59,7 +59,7 @@ public class ConexionEscrituraServicios {
             ps.setInt(7, servicio.getIdEmpleado());
             ps.setBoolean(8, servicio.isServicioActivo());
             ps.setString(9, servicio.getDestino());
-            ps.setDate(10, servicio.getFecha_inicio());
+            ps.setDate(10, Date.valueOf(servicio.getFecha_inicio()));
             ps.setTime(11, servicio.getHora());
             ps.setBoolean(12, servicio.isDiario());
            // ps.setString(13, servicio.getSeleccionDia());

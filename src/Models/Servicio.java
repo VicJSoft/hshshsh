@@ -171,8 +171,8 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         this.destino = destino;
     }
 
-    public Date getFecha_inicio() {
-        return fecha_inicio;
+    public LocalDate getFecha_inicio() {
+        return fecha_inicio.toLocalDate();
     }
 
     public void setFecha_inicio(Date fecha_inicio) {

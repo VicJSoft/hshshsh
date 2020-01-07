@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -20,6 +22,7 @@ import javafx.collections.ObservableList;
  */
 public class ConexionLecturaServicios 
 {
+    
     PreparedStatement ps;
     String query="";
     ResultSet rs;
@@ -43,8 +46,8 @@ public class ConexionLecturaServicios
             rs=ps.executeQuery();
             while(rs.next()){
                 
-                    //lo trae en pascal case.
-                     servicios.add(rs.getString(1)+"  "+rs.getString(3)+" "+rs.getString(2));
+                //lo trae en pascal case.
+                servicios.add(rs.getString(1)+"  "+rs.getString(3)+" "+rs.getString(2));
                 
             }
             
@@ -61,7 +64,7 @@ public class ConexionLecturaServicios
     }
     
     
-     public ObservableList<Servicio> getServicios()
+    public ObservableList<Servicio> getServicios()
     {
         ObservableList<Servicio> servicios =  FXCollections.observableArrayList();
         query="select * from servicios";
@@ -72,37 +75,8 @@ public class ConexionLecturaServicios
             rs=ps.executeQuery();
             while(rs.next())
             {             
-                //String calle,colonia,numExt,numInt;
-               // String[] split = rs.getString(4).split("|");
-               /* calle = split[0];
-                colonia = split[1];
-                numExt = split[2];
-                split.length[]*/
-                
-                    Servicio nuevoServicio = new Servicio(                                
-                                rs.getInt(1),
-                                rs.getString(2),
-                                rs.getString(3),
-                                rs.getString(4),//direccion split
-                                rs.getString(4),//direccion split (no le puedo dar null, por eso repito la propiedad. y la asigno más adelante)
-                                rs.getString(4),//direccion split
-                                rs.getString(4),//direccion split
-                                rs.getString(5),
-                                rs.getString(6),
-                                rs.getInt(7),
-                                rs.getInt(8),
-                                rs.getBoolean(9),//activo
-                                rs.getString(10),
-                                rs.getDate(11).toLocalDate(),
-                                rs.getTime(12).toLocalTime(),
-                                rs.getBoolean(13),
-                                rs.getString(14),
-                                rs.getBoolean(15),
-                                rs.getDate(16)
-                        );
-                    //formatea la direccion, adecuadamente al model
-                    nuevoServicio.setDireccion(rs.getString(4));
-                servicios.add(nuevoServicio);
+               
+                servicios.add(crearServicio(rs));
        
             }
             
@@ -114,5 +88,62 @@ public class ConexionLecturaServicios
         }
         
         return servicios;
+    }
+    
+    /**
+     * 
+     * @param tipo
+     * El campo de la DB, telefono (filtro clientes), idUnidad (filtro unidad - taxista), idEmpleado (filtro modulador), 
+     * @param primaryKey
+     * @return 
+     */
+    public ObservableList<Servicio> getServicios(String tipo /*filtro*/,String primaryKey){
+        
+       ObservableList<Servicio> listaServicios = FXCollections.observableArrayList();
+        
+        try {
+            query = "SELECT * FROM servicios WHERE " + (tipo) + " = " + primaryKey;
+            
+            ps=connection.prepareCall(query);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                listaServicios.add(crearServicio(rs));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionLecturaServicios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaServicios;
+    }
+
+     
+     
+    private Servicio crearServicio(ResultSet rs) throws SQLException{
+       Servicio nuevoServicio = new Servicio(                                
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),//direccion split
+                        rs.getString(4),//direccion split (no le puedo dar null, por eso repito la propiedad. y la asigno más adelante)
+                        rs.getString(4),//direccion split
+                        rs.getString(4),//direccion split
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getBoolean(9),//activo
+                        rs.getString(10),
+                        rs.getDate(11).toLocalDate(),
+                        rs.getTime(12).toLocalTime(),
+                        rs.getBoolean(13),
+                        rs.getString(14),
+                        rs.getBoolean(15),
+                        rs.getDate(16)
+                 );
+       //formatea la direccion, adecuadamente al model
+       nuevoServicio.setDireccion(rs.getString(4));
+
+       return nuevoServicio;
     }
 }

@@ -323,9 +323,3 @@ que además es independiente a la de sin foco*/
         -fx-background-color: derive(-boton-color,30%);
 
  }
- 
- 
- .default-color0.chart-line-symbol { 
-    -fx-background-radius: 50px;
-    -fx-padding:6px;
-}

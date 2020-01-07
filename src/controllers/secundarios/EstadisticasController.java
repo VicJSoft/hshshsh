@@ -5,14 +5,11 @@
  */
 package controllers.secundarios;
 
-import Interfaces.ComboBoxCallback;
-import Interfaces.IModelReport;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXNodesList;
 import java.net.URL;
 import java.util.ResourceBundle;
- import javafx.collections.FXCollections;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,11 +22,10 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
- 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
- import services.sql.read.ConexionLecturaClientes;
+import services.sql.read.ConexionLecturaClientes;
 import services.sql.read.ConexionLecturaEmpleados;
 import services.sql.read.ConexionLecturaTaxistas;
 
@@ -38,7 +34,7 @@ import services.sql.read.ConexionLecturaTaxistas;
  *
  * @author vicen
  */
-public class EstadisticasController implements Initializable,ComboBoxCallback {
+public class EstadisticasController implements Initializable {
 
     private final ConexionLecturaTaxistas conexionLecturaTaxistas = new ConexionLecturaTaxistas();
     private final ConexionLecturaClientes conexionLecturaClientes = new ConexionLecturaClientes();
@@ -57,7 +53,7 @@ public class EstadisticasController implements Initializable,ComboBoxCallback {
     @FXML
     private JFXComboBox<String> comboBox_tipoReporte;
     @FXML
-    private JFXComboBox<IModelReport> comboBox_multiple;
+    private JFXComboBox<String> comboBox_multiple;
     
     ObservableList<XYChart.Series<String, Double>> lineChartData = FXCollections.observableArrayList();
 
@@ -80,23 +76,13 @@ public class EstadisticasController implements Initializable,ComboBoxCallback {
            @Override
            public void handle(ActionEvent event) {
               evaluarReporte(comboBox_tipoReporte.getSelectionModel().getSelectedItem());
-               
            }
        });
-       comboBox_multiple.setOnAction(new EventHandler<ActionEvent>() {
-           @Override
-           public void handle(ActionEvent event) {
-
-               
-               graficar();
-
-           }
-       });
-
+       
+      
+       
         
-        comboBox_multiple.setButtonCell(cellFactory.call(null));
-        comboBox_multiple.setCellFactory(cellFactory);
-          x.setLabel("Mes");       
+        x.setLabel("Mes");       
         y.setLabel("Cantidad");  
         
       
@@ -118,7 +104,7 @@ public class EstadisticasController implements Initializable,ComboBoxCallback {
         //series.getData().add(new XYChart.Data("Nov", 29d));
         
         XYChart.Data<String,Double> data = new XYChart.Data("Nov",42d);
-        data.setNode(new HoveredThresholdNode(data.getYValue()));
+        data.setNode(new HoveredThresholdNode(0,data.getYValue()));
         
         series.getData().add(data);
         series.getData().add(new XYChart.Data("Dec", 25d));
@@ -164,14 +150,14 @@ public class EstadisticasController implements Initializable,ComboBoxCallback {
        else if(selectedItem.equals(Statics.reportes.get(1)))
        {
            comboBox_multiple.setPromptText("Seleccione Cliente");
-//           comboBox_multiple.setItems(conexionLecturaClientes.getClientes_id_name());
+           comboBox_multiple.setItems(conexionLecturaClientes.getClientes_id_name());
            comboBox_multiple.setVisible(true);
            
        }
        else if(selectedItem.equals(Statics.reportes.get(4)))
        {
            comboBox_multiple.setPromptText("Seleccione Modulador");
-      //     comboBox_multiple.setItems(conexionLecturaClientes.getClientes_id_name());
+           comboBox_multiple.setItems(conexionLecturaClientes.getClientes_id_name());
            comboBox_multiple.setVisible(true);
            
        }
@@ -182,17 +168,13 @@ public class EstadisticasController implements Initializable,ComboBoxCallback {
        
     }
     
-    private void graficar(){
-        
-    }
-    
   /** a node which displays a value on hover, but is otherwise empty */
   class HoveredThresholdNode extends StackPane {
       
-    HoveredThresholdNode( double value) {
+    HoveredThresholdNode(double priorValue, double value) {
       setPrefSize(15, 15);
 
-      final Label label = createDataThresholdLabel(value);
+      final Label label = createDataThresholdLabel(priorValue, value);
 
       setOnMouseEntered(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent mouseEvent) {
@@ -209,10 +191,10 @@ public class EstadisticasController implements Initializable,ComboBoxCallback {
       });
     }
 
-    private Label createDataThresholdLabel( double value) {
+    private Label createDataThresholdLabel(double priorValue, double value) {
       final Label label = new Label((int)value + "");
       label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
-      label.setStyle("-fx-font-size: 20; -fx-font-weight: bold; ");
+      label.setStyle("-fx-font-size: 20; -fx-font-weight: bold; -fx-background-radius:50; -fx-border-radius:50;");
 
       label.setTextFill(Color.DARKGRAY);
      

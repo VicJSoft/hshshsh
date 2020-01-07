@@ -61,19 +61,11 @@ public class EstadisticasController implements Initializable {
     private JFXComboBox<String> comboBox_tipoReporte;
     @FXML
     private JFXComboBox<String> comboBox_multiple;
-    
+    /**
+     * Guarda multiples series (graficas).
+     */
     ObservableList<XYChart.Series<String, Integer>> lineChartData = FXCollections.observableArrayList();
 
-    @FXML
-    void generar(ActionEvent event) 
-    {
-        
-    }
-    @FXML
-    void imprimir(ActionEvent event) 
-    {
-        
-    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO 
@@ -89,9 +81,11 @@ public class EstadisticasController implements Initializable {
            @Override
            public void handle(ActionEvent event) {
 
-                ObservableList<Servicio> servicios;
-                servicios = conexionLecturaServicios.getServicios( getTipoReporte(),comboBox_multiple.getSelectionModel().getSelectedItem().split(" ")[0]);
-                separarServiciosPorFecha(servicios);
+               if(comboBox_multiple.getSelectionModel().getSelectedItem()!=null){
+                    ObservableList<Servicio> servicios;
+                    servicios = conexionLecturaServicios.getServicios( getTipoReporte(),comboBox_multiple.getSelectionModel().getSelectedItem().split(" ")[0]);
+                    separarServiciosPorFecha(servicios);
+               }
            }
        });
       
@@ -99,8 +93,22 @@ public class EstadisticasController implements Initializable {
         
         x.setLabel("Mes");       
         y.setLabel("Cantidad");  
-  
-    }    
+        inicializarGraficaCero();
+    }  
+    
+    
+    @FXML
+    void generar(ActionEvent event) 
+    {
+          
+
+    }
+    @FXML
+    void imprimir(ActionEvent event) 
+    {
+        
+    }
+    
     private String getTipoReporte(){
         String tipoReporte;
         String cb_selection = comboBox_tipoReporte.getSelectionModel().getSelectedItem();
@@ -121,8 +129,6 @@ public class EstadisticasController implements Initializable {
     
     private void separarServiciosPorFecha(ObservableList<Servicio> servicios){
         
-        //contadores = new Set<Map<String,Integer>>[12];
-       // ArrayList<XYChart.Data<String,Double>> 
         ArrayList<Integer> contadoresMes = new ArrayList<>();
        //ArrayList< Map<String,Integer>> contadores = new ArrayList<>();
         ObservableList<XYChart.Data<String, Integer>> listaData = FXCollections.observableArrayList();
@@ -137,25 +143,22 @@ public class EstadisticasController implements Initializable {
             int numMes = servicio.getFecha_inicio().getMonthValue();
 
             contadoresMes.set(numMes-1, contadoresMes.get(numMes-1)+1);
-            //contadoresMes.add(numMes-1, 
 
         }
         series = new LineChart.Series<>();
-      //  series.getData().clear();
-       // series.getData().addAll(listaData);
-        series.setName(getTipoReporte());
+
+        series.setName(comboBox_multiple.getValue());
         
         //ya que se contó cada servicio de cada mes, se debe guardar esa cantidad como un XYCHART.Data
         for(int i = 0;i<12;i++){
             XYChart.Data<String,Integer> punto = new XYChart.Data(getNombreMes(i+1),contadoresMes.get(i));
-           // punto.setNode(new HoveredThresholdNode(punto.getYValue()));
+            punto.setNode(new HoveredThresholdNode(punto.getYValue()));
             series.getData().add(punto);
             /////series.getData().add(new XYChart.Data(getNombreMes(i+1),contadoresMes.get(i)) );
             listaData.add(punto);
         }
-        for(XYChart.Data<String,Integer> a:series.getData()){
-            a.setNode(new HoveredThresholdNode(a.getYValue()));
-        }
+ 
+        lineChartData.clear();
         lineChartData.add(series);
         
         linechart.setCreateSymbols(true);
@@ -237,10 +240,10 @@ public class EstadisticasController implements Initializable {
            comboBox_multiple.setVisible(true);
            
        }
-       else if(selectedItem.equals(Statics.reportes.get(4)))
+       else if(selectedItem.equals(Statics.reportes.get(2)))
        {
            comboBox_multiple.setPromptText("Seleccione Modulador");
-           comboBox_multiple.setItems(conexionLecturaClientes.getClientes_id_name());
+           comboBox_multiple.setItems(conexionLecturaEmpleados.getModulador_id_name());
            comboBox_multiple.setVisible(true);
            
        }
@@ -250,11 +253,51 @@ public class EstadisticasController implements Initializable {
        }
        
     }
+
+    private void inicializarGraficaCero() {
+
+        ObservableList<XYChart.Series<String, Integer>> lineChartData = FXCollections.observableArrayList();
+        // Iniciamos el objeto series
+        series = new LineChart.Series<>();
+        series.setName("My portfolio");
+        
+        series.getData().add(new XYChart.Data("Jan", 0));  
+        series.getData().add(new XYChart.Data("Feb", 0));
+        series.getData().add(new XYChart.Data("Mar", 0));
+        series.getData().add(new XYChart.Data("Apr", 0));
+        series.getData().add(new XYChart.Data("May", 0));
+        series.getData().add(new XYChart.Data("Jun", 0));
+        series.getData().add(new XYChart.Data("Jul", 0));
+        series.getData().add(new XYChart.Data("Aug", 0));
+        series.getData().add(new XYChart.Data("Sep", 0));
+        series.getData().add(new XYChart.Data("Oct", 0));
+        series.getData().add(new XYChart.Data("Nov", 0));
+        series.getData().add(new XYChart.Data("Dec", 0));
+        
+        
+       
+         // Guardamos todos los puntos de la función que hemos obtenido
+        lineChartData.add(series);
+        
+        // Si No quereis que se pinten los puntos, poner a false
+        linechart.setCreateSymbols(true);
+        linechart.setTitle("Reporte");
+        linechart.setAnimated(true);
+        linechart.setLegendSide(Side.BOTTOM);
+        linechart.setLegendVisible(true);
+        
+        
+        
+        // Ponemos los puntos en la gráfica
+        linechart.setData(lineChartData);
+
+
+    }
     
   /** a node which displays a value on hover, but is otherwise empty */
   class HoveredThresholdNode extends StackPane {
       
-    HoveredThresholdNode(  double value) {
+    HoveredThresholdNode(  int value) {
       setPrefSize(15, 15);
 
       final Label label = createDataThresholdLabel(  value);
@@ -274,8 +317,8 @@ public class EstadisticasController implements Initializable {
       });
     }
 
-    private Label createDataThresholdLabel( double value) {
-      final Label label = new Label((int)value + "");
+    private Label createDataThresholdLabel( int value) {
+      final Label label = new Label(value + "");
       label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
       label.setStyle("-fx-font-size: 20; -fx-font-weight: bold; -fx-background-radius:50; -fx-border-radius:50;");
 

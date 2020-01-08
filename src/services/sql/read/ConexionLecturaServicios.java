@@ -102,8 +102,9 @@ public class ConexionLecturaServicios
        ObservableList<Servicio> listaServicios = FXCollections.observableArrayList();
         
         try {
-            query = "SELECT * FROM servicios WHERE " + (tipo) + " = " + primaryKey;
+            query = "SELECT * FROM servicios WHERE " + tipo + primaryKey;
             
+
             ps=connection.prepareCall(query);
             rs = ps.executeQuery();
             

@@ -75,17 +75,18 @@ public class EstadisticasController implements Initializable {
            @Override
            public void handle(ActionEvent event) {
               evaluarReporte(comboBox_tipoReporte.getSelectionModel().getSelectedItem());
+              
            }
        });
        comboBox_multiple.setOnAction(new EventHandler<ActionEvent>() {
            @Override
            public void handle(ActionEvent event) {
 
-               if(comboBox_multiple.getSelectionModel().getSelectedItem()!=null){
+                if(comboBox_multiple.getSelectionModel().getSelectedItem()!=null){
                     ObservableList<Servicio> servicios;
                     servicios = conexionLecturaServicios.getServicios( getTipoReporte(),comboBox_multiple.getSelectionModel().getSelectedItem().split(" ")[0]);
                     separarServiciosPorFecha(servicios);
-               }
+                }
            }
        });
       
@@ -114,13 +115,15 @@ public class EstadisticasController implements Initializable {
         String cb_selection = comboBox_tipoReporte.getSelectionModel().getSelectedItem();
         
         if(cb_selection.equals(Statics.reportes.get(0)))            
-            tipoReporte = "idUnidad";
+            tipoReporte = "idUnidad=";
         else  if(cb_selection.equals(Statics.reportes.get(1)))            
-            tipoReporte = "telefono";
+            tipoReporte = "telefono=";
         else  if(cb_selection.equals(Statics.reportes.get(2)))            
-            tipoReporte = "idEmpleado";
+            tipoReporte = "idEmpleado=";
         else if(cb_selection.equals(Statics.reportes.get(3)))
-            tipoReporte = "programado";
+            tipoReporte = "programado=";
+        else if(cb_selection.equals(Statics.reportes.get(4)))
+            tipoReporte = "destino!=";
         else
             tipoReporte = "ERROR";
         
@@ -247,9 +250,19 @@ public class EstadisticasController implements Initializable {
            comboBox_multiple.setVisible(true);
            
        }
-       else
+       else if(selectedItem.equals(Statics.reportes.get(3)))/*Programados*/
        {
-           comboBox_multiple.setVisible(false);
+            ObservableList<Servicio> servicios;
+            servicios = conexionLecturaServicios.getServicios( getTipoReporte(),"1");
+            separarServiciosPorFecha(servicios);
+            comboBox_multiple.setVisible(false);
+       }
+       else if(selectedItem.equals(Statics.reportes.get(4)))/*Foraneos*/
+       {
+            ObservableList<Servicio> servicios;
+            servicios = conexionLecturaServicios.getServicios( getTipoReporte(),"null");
+            separarServiciosPorFecha(servicios);
+            comboBox_multiple.setVisible(false);
        }
        
     }

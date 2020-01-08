@@ -21,6 +21,7 @@
             <TreeTableColumn fx:id="direccion" maxWidth="500.0" minWidth="215.0" prefWidth="215.0" text="Dirección" />
             <TreeTableColumn fx:id="observaciones" maxWidth="500.0" minWidth="120.0" prefWidth="120.0" text="Observaciones" />
             <TreeTableColumn fx:id="notas" maxWidth="500.0" minWidth="100.0" prefWidth="199.0" sortable="false" text="Notas" />
+            <TreeTableColumn fx:id="destino" maxWidth="500.0" minWidth="120.0" prefWidth="120.0" text="Destino" />
             <TreeTableColumn fx:id="unidad" maxWidth="75.0" minWidth="70.0" prefWidth="70.0" text="Unidad" />
          </columns>
          <columnResizePolicy>

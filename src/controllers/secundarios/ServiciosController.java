@@ -307,6 +307,8 @@ public class ServiciosController implements Initializable {
             table_servicios.setRoot(null);
             table_servicios.setRoot(root);
             table_servicios.setShowRoot(false);
+           // table_servicios.refresh();
+            setCancelledGraphic();
 
         }
     }

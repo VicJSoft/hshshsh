@@ -19,9 +19,10 @@
             <TreeTableColumn fx:id="nombre" maxWidth="300.0" minWidth="163.0" prefWidth="179.0" sortable="false" text="Nombre" />
             <TreeTableColumn fx:id="telefono" maxWidth="140.0" minWidth="130.0" prefWidth="130.0" text="Teléfono" />
             <TreeTableColumn fx:id="direccion" maxWidth="500.0" minWidth="215.0" prefWidth="215.0" text="Dirección" />
-            <TreeTableColumn fx:id="observaciones" maxWidth="500.0" minWidth="120.0" prefWidth="120.0" text="Observaciones" />
-            <TreeTableColumn fx:id="notas" maxWidth="500.0" minWidth="100.0" prefWidth="199.0" sortable="false" text="Notas" />
+            <TreeTableColumn fx:id="observaciones" maxWidth="500.0" minWidth="90.0" prefWidth="120.0" text="Observaciones" />
+            <TreeTableColumn fx:id="notas" maxWidth="500.0" minWidth="90.0" prefWidth="199.0" sortable="false" text="Notas" />
             <TreeTableColumn fx:id="destino" maxWidth="500.0" minWidth="120.0" prefWidth="120.0" text="Destino" />
+            <TreeTableColumn fx:id="diasSeleccion" maxWidth="500.0" minWidth="125.0" prefWidth="125.0" text="Dias programado" />
             <TreeTableColumn fx:id="unidad" maxWidth="75.0" minWidth="70.0" prefWidth="70.0" text="Unidad" />
          </columns>
          <columnResizePolicy>

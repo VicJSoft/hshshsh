@@ -5,11 +5,19 @@
  */
 package Models;
 
+import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
 
 /**
  *
@@ -37,6 +45,8 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
     private String seleccionDia;
     private boolean programadow;
     private Date fecha_fin;
+    
+    private HBox diasSeleccion;
 
     public Servicio(int id_servicio, String telefono, String nombre,
             String calle, String colonia, String numeroExt, String numeroInt,
@@ -239,6 +249,55 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
 
     public void setFecha_fin(Date fecha_fin) {
         this.fecha_fin = fecha_fin;
+    }
+
+    private ArrayList<Label> getDiasSeleccionados(){
+        ArrayList<Label> listaDias = new ArrayList<>();
+        if(this.seleccionDia ==null)
+            return listaDias;//me da weva xd
+
+        listaDias.add(new Label("Lun"));            
+        listaDias.add(new Label("Mar"));            
+        listaDias.add(new Label("Mie"));            
+        listaDias.add(new Label("Jue"));            
+        listaDias.add(new Label("Vie"));            
+        listaDias.add(new Label("Sab"));            
+        listaDias.add(new Label("Dom"));            
+
+
+        
+        if(this.seleccionDia.charAt(0)=='1')
+            listaDias.get(0).setTextFill(Paint.valueOf("5AB444"));
+        if(this.seleccionDia.charAt(1)=='1')
+            listaDias.get(1).setTextFill(Paint.valueOf("5AB444"));
+        if(this.seleccionDia.charAt(2)=='1')
+            listaDias.get(2).setTextFill(Paint.valueOf("5AB444"));
+        if(this.seleccionDia.charAt(3)=='1')
+            listaDias.get(3).setTextFill(Paint.valueOf("5AB444"));
+        if(this.seleccionDia.charAt(4)=='1')
+            listaDias.get(4).setTextFill(Paint.valueOf("5AB444"));
+        if(this.seleccionDia.charAt(5)=='1')
+            listaDias.get(5).setTextFill(Paint.valueOf("5AB444"));
+        if(this.seleccionDia.charAt(6)=='1')
+            listaDias.get(6).setTextFill(Paint.valueOf("5AB444"));
+        
+        return listaDias;
+        
+    }
+    
+    
+    public HBox getDiasSeleccion() {
+ 
+        this.diasSeleccion = new HBox();
+        
+        this.diasSeleccion.getChildren().addAll(getDiasSeleccionados());
+        this.diasSeleccion.setAlignment(Pos.CENTER);
+        this.diasSeleccion.setSpacing(2);
+        return diasSeleccion;
+    }
+
+    public void setDiasSeleccion(HBox diasSeleccion) {
+        this.diasSeleccion = diasSeleccion;
     }
     
     

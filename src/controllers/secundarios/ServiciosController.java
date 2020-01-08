@@ -68,8 +68,12 @@ public class ServiciosController implements Initializable {
 
     @FXML
     private TreeTableColumn<Models.Servicio, String> unidad;
+    
     @FXML
     private TreeTableColumn<Models.Servicio, String> destino;
+    
+    @FXML
+    private TreeTableColumn<Models.Servicio, String> diasSeleccion;
 
     @FXML
     private JFXTextField  textField_buscar;
@@ -106,6 +110,7 @@ public class ServiciosController implements Initializable {
        notas.setCellValueFactory(new TreeItemPropertyValueFactory<>("notas"));
        unidad.setCellValueFactory(new TreeItemPropertyValueFactory<>("idUnidad"));
        destino.setCellValueFactory(new TreeItemPropertyValueFactory<>("destino"));
+       diasSeleccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("diasSeleccion"));
  
        
         

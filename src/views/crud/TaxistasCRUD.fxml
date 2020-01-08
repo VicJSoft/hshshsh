@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="687.0" prefWidth="538.0" styleClass="ventana" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.crud.TaxistasCRUDController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="712.0" prefWidth="538.0" styleClass="ventana" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.crud.TaxistasCRUDController">
    <children>
       <AnchorPane fx:id="ap_tittleBar" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" onMouseReleased="#tittleBar_Released" prefHeight="34.0" prefWidth="1081.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -37,27 +37,27 @@
          </children>
       </AnchorPane>
       <Label fx:id="lbl_tittle" layoutX="8.0" layoutY="41.0" styleClass="titulo-CRUD-windows" text="Taxistas" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="41.0" />
-      <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos personales" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="100.0" />
+      <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos personales" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="100.0" />
       <Separator layoutX="232.0" layoutY="132.0" prefHeight="3.0" prefWidth="274.0" />
-      <JFXTextField fx:id="textField_nombre" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="167.0" prefHeight="31.0" prefWidth="466.0" promptText="Nombre" />
-      <JFXTextField fx:id="textField_telefono" focusColor="#5ab444" labelFloat="true" layoutX="39.0" layoutY="235.0" prefHeight="25.0" prefWidth="182.0" promptText="Teléfono">
+      <JFXTextField fx:id="textField_nombre" focusColor="#5ab444" labelFloat="true" layoutX="45.0" layoutY="161.0" prefHeight="31.0" prefWidth="466.0" promptText="Nombre" />
+      <JFXTextField fx:id="textField_telefono" focusColor="#5ab444" labelFloat="true" layoutX="45.0" layoutY="231.0" prefHeight="25.0" prefWidth="182.0" promptText="Teléfono">
          <font>
             <Font name="Gadugi" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXComboBox fx:id="comboBox_sexo" focusColor="#5ab444" labelFloat="true" layoutX="278.0" layoutY="235.0" prefHeight="25.0" prefWidth="182.0" promptText="Sexo" />
-      <JFXDatePicker fx:id="datePicker_nacimiento" editable="false" layoutX="39.0" layoutY="302.0" prefHeight="31.0" prefWidth="220.0" promptText="Fecha de Nacimiento" />
-      <Label layoutX="29.0" layoutY="344.0" styleClass="tittle-seccion-CRUD" text="Dirección" AnchorPane.leftAnchor="29.0" />
-      <Separator layoutX="155.0" layoutY="364.0" prefHeight="3.0" prefWidth="353.0" />
+      <JFXComboBox fx:id="comboBox_sexo" focusColor="#5ab444" labelFloat="true" layoutX="281.0" layoutY="231.0" prefHeight="25.0" prefWidth="182.0" promptText="Sexo" />
+      <JFXDatePicker fx:id="datePicker_nacimiento" editable="false" layoutX="45.0" layoutY="296.0" prefHeight="31.0" prefWidth="220.0" promptText="Fecha de Nacimiento" />
+      <Label layoutX="99.0" layoutY="350.0" styleClass="tittle-seccion-CRUD" text="Dirección" AnchorPane.leftAnchor="27.0" />
+      <Separator layoutX="155.0" layoutY="369.0" prefHeight="3.0" prefWidth="353.0" />
       <JFXTextField fx:id="textField_calle" focusColor="#5ab444" labelFloat="true" layoutX="45.0" layoutY="395.0" prefHeight="25.0" prefWidth="182.0" promptText="Calle" />
-      <JFXTextField fx:id="textField_colonia" focusColor="#5ab444" labelFloat="true" layoutX="265.0" layoutY="395.0" prefHeight="25.0" prefWidth="182.0" promptText="Colonia" />
-      <JFXTextField fx:id="textField_numExt" focusColor="#5ab444" labelFloat="true" layoutX="45.0" layoutY="459.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Exterior" />
-      <JFXTextField fx:id="textField_numInt" focusColor="#5ab444" labelFloat="true" layoutX="265.0" layoutY="459.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
-      <Label layoutX="27.0" layoutY="502.0" styleClass="tittle-seccion-CRUD" text="Extra" AnchorPane.leftAnchor="27.0" />
-      <Separator layoutX="96.0" layoutY="521.0" prefHeight="3.0" prefWidth="405.0" />
-      <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="43.0" layoutY="559.0" prefHeight="31.0" prefWidth="451.0" promptText="Observaciones" />
-      <Button layoutX="395.0" layoutY="608.0" mnemonicParsing="false" onAction="#btn_Agregar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
-      <Button layoutX="268.0" layoutY="607.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
+      <JFXTextField fx:id="textField_colonia" focusColor="#5ab444" labelFloat="true" layoutX="281.0" layoutY="395.0" prefHeight="25.0" prefWidth="182.0" promptText="Colonia" />
+      <JFXTextField fx:id="textField_numExt" focusColor="#5ab444" labelFloat="true" layoutX="45.0" layoutY="473.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Exterior" />
+      <JFXTextField fx:id="textField_numInt" focusColor="#5ab444" labelFloat="true" layoutX="281.0" layoutY="473.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
+      <Label layoutX="99.0" layoutY="530.0" styleClass="tittle-seccion-CRUD" text="Extra" AnchorPane.leftAnchor="27.0" />
+      <Separator layoutX="96.0" layoutY="550.0" prefHeight="3.0" prefWidth="405.0" />
+      <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="43.0" layoutY="579.0" prefHeight="31.0" prefWidth="451.0" promptText="Observaciones" />
+      <Button layoutX="395.0" layoutY="642.0" mnemonicParsing="false" onAction="#btn_Agregar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Aceptar" />
+      <Button layoutX="268.0" layoutY="641.0" mnemonicParsing="false" onAction="#btn_Cancelar_Click" prefHeight="25.0" prefWidth="113.0" styleClass="boton-cancelar" text="Cancelar" />
       <Label layoutX="800.0" layoutY="579.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="10.0" />

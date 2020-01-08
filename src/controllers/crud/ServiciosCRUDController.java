@@ -452,25 +452,26 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         ArrayList<Integer> diasSeleccionados = diasSeleccionados();
         ArrayList<LocalDate> diasSeleccionadosLD = new ArrayList<>();
 
-            //Así guarda las fechas de cada dia, para despues solo comparar la lista entre sí,
-            //la fecha menor, será la que se pondrá en el datepicker
-            for(int diaActualCiclo:diasSeleccionados){
-                diasSeleccionadosLD.add(fechaDiaDado(year, dayOfYear, diaActualCiclo));
-            }
-            for(LocalDate localDateActual : diasSeleccionadosLD){
-                
-                //LocalDate fechaMenor = localDateActual;
+        //Así guarda las fechas de cada dia, para despues solo comparar la lista entre sí,
+        //la fecha menor, será la que se pondrá en el datepicker
+        for(int diaActualCiclo:diasSeleccionados){
+            diasSeleccionadosLD.add(fechaDiaDado(year, dayOfYear, diaActualCiclo));
+        }
+
+        //LocalDate fechaMenor = localDateActual;
+        fechaASetear = diasSeleccionadosLD.get(0)!=null?diasSeleccionadosLD.get(0):null;
+
+        for(LocalDate localDateActual : diasSeleccionadosLD){
+            //si una de las fechas es igual a hoy, inmediatamente, ese será el valor de inicio.
+            if(localDateActual.isEqual(LocalDate.now())){
                 fechaASetear = localDateActual;
-                //si una de las fechas es igual a hoy, inmediatamente, ese será el valor de inicio.
-                if(localDateActual.isEqual(LocalDate.now())){
-                    fechaASetear = localDateActual;
-                    break;
-                }
-                //si X fecha de la lista es "menor" a fechaASetear, entonces, fechaASetear será ese nuevo valor X
-                else if(localDateActual.isBefore(fechaASetear)){
-                    fechaASetear  = localDateActual;
-                }
+                break;
             }
+            //si X fecha de la lista es "menor" a fechaASetear, entonces, fechaASetear será ese nuevo valor X
+            else if(localDateActual.isBefore(fechaASetear)){
+                fechaASetear  = localDateActual;
+            }
+        }
             
         datePicker_dia.setValue(fechaASetear);
         

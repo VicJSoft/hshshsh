@@ -55,7 +55,11 @@ public class Ventana_PrincipalController implements Initializable {
     private Button btn_maximizar;
     @FXML
     private Button btn_minimizar;
-   
+    @FXML
+    private Button btnRefresh;
+    private String rutaPantallaActual;
+    private String tituloActual;
+    private DrawerMenuController drawerController;
   
   @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -80,6 +84,8 @@ public class Ventana_PrincipalController implements Initializable {
             FXMLLoader empleadosLoader = new FXMLLoader(getClass().getResource("/views/secundarios/Servicios.fxml"));
             AnchorPane contenedor =empleadosLoader.load();
             container.getChildren().addAll(contenedor.getChildren());
+            this.rutaPantallaActual = "/views/secundarios/Servicios.fxml";
+            this.tituloActual = "Servicios";
         } 
         catch (IOException ex) 
         {
@@ -91,7 +97,7 @@ public class Ventana_PrincipalController implements Initializable {
             AnchorPane menu = drawerLoader.load();
             //Controlador propio de la vista.
             //TODO setear eventos con interfaces a cada boton.
-            DrawerMenuController drawerController = drawerLoader.getController();
+            drawerController = drawerLoader.getController();
             drawerController.setGuardarEnviarListener((String routeFXML, String tittleWindow) -> {
                 if(routeFXML==null&&tittleWindow==null){
                     drawer_Menu.close();
@@ -107,7 +113,8 @@ public class Ventana_PrincipalController implements Initializable {
                     lbl_title.setText(tittleWindow);
                     
                     drawer_Menu.close();
-                    
+                    rutaPantallaActual = routeFXML;
+                    tituloActual = tittleWindow;
                 } catch (IOException ex) {
                     Logger.getLogger(Ventana_PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -219,7 +226,13 @@ public class Ventana_PrincipalController implements Initializable {
         }
         
     }
-
+    
+    @FXML
+    public void btnRefresh_OnAction(ActionEvent event){
+        
+        this.drawerController.actualizarPantalla(rutaPantallaActual, tituloActual);
+        
+    }
    
 
     /**

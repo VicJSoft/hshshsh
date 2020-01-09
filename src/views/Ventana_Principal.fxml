@@ -79,6 +79,15 @@
             <Font size="10.0" />
          </font>
       </Label>
+      <Button fx:id="btnRefresh" layoutX="992.0" layoutY="51.0" mnemonicParsing="false" onAction="#btnRefresh_OnAction" prefHeight="24.0" prefWidth="15.0" styleClass="boton-aceptar" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="47.0">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/imagenes/refresh-icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
    <styleClass>
       <String fx:value="ventana" />

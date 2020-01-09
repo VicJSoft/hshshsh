@@ -106,6 +106,10 @@ public class DrawerMenuController implements Initializable {
         this.cargar_Secundaria = cargar_Secundaria;
     }
 
+    public void actualizarPantalla(String routeXML,String titulo){
+        this.cargar_Secundaria.ventana(routeXML, titulo);
+    }
+    
     @FXML
     private void btnConfiguracion_OnAction(ActionEvent event) throws IOException {
         
@@ -125,6 +129,11 @@ public class DrawerMenuController implements Initializable {
             this.btnTaxis.disableProperty().set(true);
             this.btnTaxistas.disableProperty().set(true);
             this.btnEstad.disableProperty().set(true);
+            
+            this.btnEmpleados.setVisible(false);
+            this.btnTaxis.setVisible(false);
+            this.btnTaxistas.setVisible(false);
+            this.btnEstad.setVisible(false);
         }
 
 

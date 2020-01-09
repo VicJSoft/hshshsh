@@ -256,13 +256,13 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         if(this.seleccionDia ==null)
             return listaDias;//me da weva xd
 
-        listaDias.add(new Label("Lun"));            
-        listaDias.add(new Label("Mar"));            
-        listaDias.add(new Label("Mie"));            
-        listaDias.add(new Label("Jue"));            
-        listaDias.add(new Label("Vie"));            
-        listaDias.add(new Label("Sab"));            
-        listaDias.add(new Label("Dom"));            
+        listaDias.add(new Label("Lu"));            
+        listaDias.add(new Label("Ma"));            
+        listaDias.add(new Label("Mi"));            
+        listaDias.add(new Label("Ju"));            
+        listaDias.add(new Label("Vi"));            
+        listaDias.add(new Label("Sa"));            
+        listaDias.add(new Label("Do"));            
 
 
         

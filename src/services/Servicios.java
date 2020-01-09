@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 /**
@@ -64,14 +65,24 @@ public class Servicios {
         System.out.println("Error presente.");
         
         Ventana_ErrorController ventanaError = new Ventana_ErrorController( tittleBar, tittleContent , contentMessage);
-        Stage stage = new Stage();
-        Scene scene = new Scene(ventanaError);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        stage.initOwner(ownerWindowError);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.show();
+       
+                Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage stage;
+                stage = new Stage();
+                Scene scene = new Scene(ventanaError);
+                scene.setFill(Color.TRANSPARENT);
+                stage.setScene(scene);
+
+                if(ownerWindowError!=null)
+                    stage.initOwner(ownerWindowError);
+                stage.initStyle(StageStyle.TRANSPARENT);
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.show();
+            }
+        });
+
     }
     /**
      * Retorna el stage dueño del evento proporcionado.

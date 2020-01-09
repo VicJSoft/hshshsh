@@ -1,5 +1,6 @@
 package controllers;
 
+import Models.Empleados;
 import services.sql.read.ConexionLecturaEmpleados;
 import services.sql.ConexionSQL;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -91,7 +92,8 @@ public class LoginController implements Initializable {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
  
-        boolean obtencionEmpleado = false;
+        Empleados empleadoObtenido = null;
+        
         if(connection!=null)
         {
             Statics.setConnections(connection);
@@ -99,7 +101,7 @@ public class LoginController implements Initializable {
 
                 
             try {
-                obtencionEmpleado = conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText());
+                empleadoObtenido = conexionLectura.obtenerEmpleado(txt_usuario.getText(), txt_contrasena.getText());
 
             } 
             catch (SQLException ex) {
@@ -107,17 +109,17 @@ public class LoginController implements Initializable {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 return;//si tira exception, saldrá del metodo
             }
-                if(obtencionEmpleado)
+                if(empleadoObtenido!=null)
                 {
                     //conexion a la siguiente pantalla
                     System.out.println("Entre");
 
                     System.out.println(connection);
                     
+                    Statics.EMPLEADO_SESION_ACTUAL = empleadoObtenido;
                     Servicios.crearVentana(
                             "/views/Ventana_Principal.fxml",
                             null,getClass());
-                    
                     if(cb_recordar.isSelected())
                         setCredenciales();
                     else

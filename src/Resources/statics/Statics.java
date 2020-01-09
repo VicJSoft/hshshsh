@@ -5,7 +5,7 @@
  */
 package Resources.statics;
 
-import java.sql.Array;
+import Models.Empleados;
 import java.sql.Connection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +32,7 @@ public class Statics
     public static int SABADO = 6;
     public static int DOMINGO = 7;
     public static int ID_EMPLEADO_SESION_ACTUAL;
+    public static Empleados EMPLEADO_SESION_ACTUAL;
     
     public static void setConnections(Connection connection)
     {

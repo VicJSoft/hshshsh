@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -55,22 +57,22 @@ public class ConexionLecturaEmpleados
         return empleados;
     }
     
-    public boolean obtenerEmpleado(String nombre, String password)throws SQLException
+    public Empleados obtenerEmpleado(String nombre, String password)throws SQLException
     {
         query = "select * from empleados where nombre='"+nombre+"' and password='"+password+"'";      
-        key=false;
-
+             Empleados empleado = null;
             ps = connection.prepareStatement(query);
             rs= ps.executeQuery();
             if(rs.first())
             {
-                Statics.ID_EMPLEADO_SESION_ACTUAL = rs.getInt(1);//id_empleado
-                key=true;
+                empleado = crearEmpleado(rs);
+                
+                //Statics.ID_EMPLEADO_SESION_ACTUAL = rs.getInt(1);//id_empleado
             }
             ps.close();
         
         
-        return key;
+        return empleado;
     }
      public ObservableList<Empleados> getEmpleados()
     {
@@ -83,25 +85,7 @@ public class ConexionLecturaEmpleados
             rs=ps.executeQuery();
             while(rs.next())
             {             
-                empleados.add(
-                        new Empleados(                                
-                                rs.getInt(1),
-                                rs.getString(2),
-                                rs.getDate(3).toLocalDate(),
-                                rs.getString(4),
-                                !"0".equals(rs.getString(5))?Statics.sexo.get(0):Statics.sexo.get(1),
-                                rs.getString(6),
-                                rs.getString(7),
-                                rs.getString(8),
-                                rs.getString(9),
-                                rs.getString(10),
-                                rs.getString(11),
-                                rs.getString(12)
-                        )
-                
-                );
-
-                        
+                empleados.add(crearEmpleado(rs));
             }
             
             ps.close();
@@ -113,5 +97,28 @@ public class ConexionLecturaEmpleados
         
         return empleados;
     }
+     
+     private Empleados crearEmpleado(ResultSet rs){
+        Empleados empleado = null;
+        try {
+            empleado = new Empleados(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getDate(3).toLocalDate(),
+                    rs.getString(4),
+                    !"0".equals(rs.getString(5))?Statics.sexo.get(0):Statics.sexo.get(1),
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12)
+            );
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionLecturaEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return empleado;
+     }
     
 }

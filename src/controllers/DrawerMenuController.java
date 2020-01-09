@@ -6,6 +6,7 @@
 package controllers;
 
 import Interfaces.Cargar_Secundaria;
+import Resources.statics.Statics;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,12 +29,29 @@ public class DrawerMenuController implements Initializable {
     private Cargar_Secundaria cargar_Secundaria;
     @FXML
     private AnchorPane menu;
+    
+    @FXML
+    private Button btnEmpleados;
+    @FXML
+    private Button btnClientes;
+    @FXML
+    private Button btnServicios;
+    @FXML
+    private Button btnTaxistas;
+    @FXML
+    private Button btnTaxis;
+    @FXML
+    private Button btnEstad;
+    
+    
     @FXML
     private Button btn_configuracion;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        identificarTipoUsuario();
     } 
     
     @FXML
@@ -95,6 +113,21 @@ public class DrawerMenuController implements Initializable {
         
     }
 
-   
+    private void identificarTipoUsuario() {
+
+        //admin
+        if(Statics.EMPLEADO_SESION_ACTUAL.getTipo_empleado().equals(Statics.tipo_empledo.get(0)))
+        {
+            
+        }//modulador
+        else if(Statics.EMPLEADO_SESION_ACTUAL.getTipo_empleado().equals(Statics.tipo_empledo.get(1))){
+            this.btnEmpleados.disableProperty().set(true);
+            this.btnTaxis.disableProperty().set(true);
+            this.btnTaxistas.disableProperty().set(true);
+            this.btnEstad.disableProperty().set(true);
+        }
+
+
+    }
     
 }

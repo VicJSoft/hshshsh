@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import Resources.statics.Statics;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.events.JFXDrawerEvent;
 import java.io.IOException;
@@ -58,7 +59,9 @@ public class Ventana_PrincipalController implements Initializable {
   
   @Override
     public void initialize(URL location, ResourceBundle resources) {
-       
+        
+        identificarTipoUsuario();
+        
         drawer_Menu.setOnDrawerClosed((event) -> {
            drawer_Menu.toBack();
         });
@@ -281,6 +284,20 @@ public class Ventana_PrincipalController implements Initializable {
                     clickScreenX -12 -(nuevaPosMouseClicX),
                     clickScreenY +12 - (nuevaPosMouseClicY) );
         
+    }
+
+    private void identificarTipoUsuario() {
+
+        //admin
+        if(Statics.EMPLEADO_SESION_ACTUAL.getTipo_empleado().equals(Statics.tipo_empledo.get(0)))
+        {
+            
+        }//modulador
+        else if(Statics.EMPLEADO_SESION_ACTUAL.getTipo_empleado().equals(Statics.tipo_empledo.get(1))){
+            
+        }
+
+
     }
 
     

@@ -567,7 +567,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                 0/*no nescesario*/, this.textField_telefono.getText(), this.textField_nombre.getText(),
                 this.textField_calle.getText(), this.textField_colonia.getText(), this.textField_num_ext.getText(), this.textField_numInt.getText(), 
                 this.textField_observaciones.getText(), this.textField_notas.getText(),
-                Integer.parseInt(this.textField_unidad.getText()),/*id empleado*/ Statics.ID_EMPLEADO_SESION_ACTUAL,
+                Integer.parseInt(this.textField_unidad.getText()),/*id empleado*/ Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(),
                 true, this.txt_destino.getText(), this.datePicker_dia.getValue(), timePicker_horaServicio.getValue(),
                 this.rb_diario.isSelected(), diasSeleccionadosCadena(), this.rb_programado.isSelected(),null/*Siempre manda null ya que este campo, solo será modificado cuando lo cancelen.*/
         );

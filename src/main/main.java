@@ -11,6 +11,7 @@ import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,16 +48,19 @@ public class main extends Application {
     }
     
     public static void main(String[] args){
-        try {
-            SERVER_SOCKET = new ServerSocket(1334);
+                 try {
             
-            launch(args);
-        } catch (IOException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
-           Servicios.crearVentanaError(null, "Error RunTime", "Ejecución fallida", "Se intenta duplicar el proceso.\nCierre primero la instancia existente de la aplicación, antes de intentar iniciar otra."+
-                   "\nPuede terminar el proceso residual anterior en el administrador de tareas.");
+                    SERVER_SOCKET = new ServerSocket(1334);
+              
+                } catch (IOException ex) {
+                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                   Servicios.crearVentanaError(null, "Error RunTime", "Ejecución fallida", "Se intenta duplicar el proceso.\nCierre primero la instancia existente de la aplicación, antes de intentar iniciar otra."+
+                           "\nPuede terminar el proceso residual anterior en el administrador de tareas.");
 
-        }
+                }
+ 
+            launch(args);
+            
     }
     
 }

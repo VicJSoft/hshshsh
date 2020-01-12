@@ -326,6 +326,7 @@ public class ServiciosController implements Initializable {
         //cuando solo está pendiente, para ser marcado como enviado
         if(!servicioSeleccionado.isProgramadow()){
             cancelarServicio(VERDE);
+            table_servicios.refresh();
             
         }else if(servicioSeleccionado.isProgramadow()&&servicioSeleccionado.getIdUnidad()==null){//solo aplica para cuando no se le asignó unidad al servicio programado
             Ventana_AsignarUnidadController ventanaAsignarUnidad = 

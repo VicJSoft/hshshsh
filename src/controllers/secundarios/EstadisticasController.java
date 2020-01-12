@@ -9,7 +9,10 @@ import Models.Servicio;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -144,8 +147,30 @@ public class EstadisticasController implements Initializable {
         for(Servicio servicio:servicios){
            
             int numMes = servicio.getFecha_inicio().getMonthValue();
-
-            contadoresMes.set(numMes-1, contadoresMes.get(numMes-1)+1);
+            if(servicio.isProgramadow()){
+                LocalDate diaInicio = servicio.getFecha_inicio();
+                String seleccionDia = servicio.getSeleccionDia();//dias en que aplica ese servicio 0,1,2...
+                boolean isFechaFinNull = servicio.getFecha_fin()==null?true:false;
+                LocalDate diaFin = isFechaFinNull?LocalDate.now():servicio.getFecha_fin().toLocalDate();
+                if(servicio.getFecha_fin()!=null){
+                    //significa que se cancelo el servicio programado, antes de su primera aplicacón
+                    if(servicio.getFecha_fin().toLocalDate().isBefore(diaInicio))
+                        continue;
+                }
+                while( diaInicio.isBefore(diaFin)|| diaInicio.isEqual(diaFin) ){
+                    if(isDiaEstaEnProgramado(diaInicio,seleccionDia)){
+                        
+                        contadoresMes.set(numMes-1, contadoresMes.get(numMes-1)+1);
+                        numMes = servicio.getFecha_inicio().getMonthValue();
+                    }
+                    
+                    diaInicio = diaInicio.plusDays(1);//la instancia original nunca se modifica.
+                }
+                
+            }else{
+                
+              contadoresMes.set(numMes-1, contadoresMes.get(numMes-1)+1);
+            }
 
         }
         series = new LineChart.Series<>();
@@ -172,6 +197,25 @@ public class EstadisticasController implements Initializable {
         
         linechart.setData(lineChartData);
 
+    }
+    
+    private boolean isDiaEstaEnProgramado(LocalDate dia,String seleccionDia){
+        ArrayList<DayOfWeek> listaDias = new ArrayList<>();
+        //extrae los dias del string a lista dayOfWeek
+        for(int i = 0;i<7;i++){
+            if(seleccionDia.charAt(i)=='1'){
+                listaDias.add(DayOfWeek.of(i+1));
+            }
+        }
+        
+        //comprobar si dia.DayOfWeek es igual a alguno de la lista
+        for(DayOfWeek diaActual :listaDias){
+            
+            if(dia.getDayOfWeek().getValue() == diaActual.getValue()){
+                return true;
+            }
+        }                        
+        return false;
     }
     
     private String getNombreMes(int mes){

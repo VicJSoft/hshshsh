@@ -19,9 +19,9 @@
         </yAxis>
       </LineChart>
       <JFXComboBox fx:id="comboBox_tipoReporte" focusColor="#5ab444" labelFloat="true" layoutX="744.0" layoutY="48.0" prefHeight="31.0" prefWidth="267.0" promptText="Tipo de reporte" styleClass="jfx-combo-box" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="48.0" />
-      <JFXButton layoutX="783.0" layoutY="422.0" onAction="#generar" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Generar" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="169.0" />
-      <JFXButton layoutX="911.0" layoutY="422.0" onAction="#imprimir" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Imprimir" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="41.0" />
+      <JFXButton layoutX="783.0" layoutY="422.0" onAction="#generar" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Generar" visible="false" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="169.0" />
+      <JFXButton layoutX="911.0" layoutY="422.0" onAction="#imprimir" prefHeight="25.0" prefWidth="113.0" styleClass="boton-aceptar" text="Imprimir" visible="false" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="41.0" />
       <JFXComboBox fx:id="comboBox_multiple" focusColor="#5ab444" labelFloat="true" layoutX="533.0" layoutY="124.0" prefHeight="31.0" prefWidth="482.0" styleClass="jfx-combo-box" visible="false" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="124.0" />
-      <JFXTextArea layoutX="542.0" layoutY="180.0" prefHeight="216.0" prefWidth="482.0" promptText="Descripción extra" styleClass="area-texto" AnchorPane.bottomAnchor="84.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="180.0" />
+      <JFXTextArea disable="true" layoutX="542.0" layoutY="180.0" prefHeight="216.0" prefWidth="482.0" promptText="Descripción extra" styleClass="area-texto" AnchorPane.bottomAnchor="84.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="180.0" />
    </children>
 </AnchorPane>

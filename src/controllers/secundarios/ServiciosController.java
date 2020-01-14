@@ -8,6 +8,7 @@ package controllers.secundarios;
 import Interfaces.IAbrir_Edicion_Registros;
 import Models.Servicio;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.controls.JFXTreeTableRow;
@@ -85,9 +86,12 @@ public class ServiciosController implements Initializable {
 
     @FXML
     private JFXButton btnEdit_Servicios;
+    
 
     private final ConexionLecturaServicios conexionLecturaServicios = new ConexionLecturaServicios();
     private final ConexionEscrituraServicios conexionEscrituraServicios = new ConexionEscrituraServicios();
+    
+    
     private  ObservableList<Models.Servicio> listaServicios = FXCollections.observableArrayList();
     private  ObservableList<Models.Servicio> listaServiciosFiltro = FXCollections.observableArrayList();
     TreeItem<Models.Servicio> root;
@@ -101,7 +105,7 @@ public class ServiciosController implements Initializable {
        this.btnEdit_Servicios.setTooltip(new Tooltip("Servicio aplicado."));
        this.btnAdd_Servicios.setTooltip(new Tooltip("Nuevo servicio."));
         
-        
+       
        fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("fechaHora"));
        nombre.setCellValueFactory(new TreeItemPropertyValueFactory<>("nombre"));
        telefono.setCellValueFactory(new TreeItemPropertyValueFactory<>("telefono"));
@@ -119,6 +123,7 @@ public class ServiciosController implements Initializable {
         root = new RecursiveTreeItem<>(listaServicios, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
        table_servicios.setRoot(root);
        table_servicios.setShowRoot(false);
+//       table_servicios.setSortMode(TreeSortMode.ONLY_FIRST_LEVEL);
        cargarListaFiltrada();//filtra la lista que se carga por defecto y el filtro lo tranfiera al observable secundario
        
        
@@ -233,7 +238,7 @@ public class ServiciosController implements Initializable {
                 
                 
                 if(conexionEscrituraServicios.insertServicio(servicio)){
-                    listaServicios.add(servicio);
+                    listaServicios.add(0,servicio);
                 }
 
             }

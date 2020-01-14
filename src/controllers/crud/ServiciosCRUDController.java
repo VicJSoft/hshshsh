@@ -10,6 +10,7 @@ import Interfaces.IValidateCRUD;
 import Models.Servicio;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
@@ -47,6 +48,8 @@ import javafx.scene.layout.AnchorPane;
 import services.Servicios;
 import services.StringLengthValidator;
 import services.TimeValidator;
+import services.sql.read.ConexionLecturaTaxistas;
+import services.sql.read.ConexionLecturaUnidades;
 
 /**
  * FXML Controller class
@@ -135,6 +138,9 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     private Label lbl_errorConfigTipoServicio;
     @FXML
     private JFXToggleButton togglebtn_ServiciosPendientes;
+    @FXML
+    private JFXComboBox cb_unidad;
+    private final ConexionLecturaUnidades conexionLecturaUnidades = new ConexionLecturaUnidades();
     
     private ArrayList<IFXValidatableControl> listControlsRequired = new ArrayList();
     private ArrayList<JFXCheckBox> listaCheckBox = new ArrayList();
@@ -150,6 +156,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         this.lbl_tittle.setText("Servicios");
         
         setClickedEventCheckBox();
+        cb_unidad.setItems(conexionLecturaUnidades.getUnidades());
         
         this.rb_Regular.setOnAction((ActionEvent event) -> {
             setChecksDays(false);
@@ -304,9 +311,10 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         lista.add(this.textField_calle);
         lista.add(this.textField_colonia);
         lista.add(this.textField_num_ext);
-        lista.add(this.textField_unidad);
+        //lista.add(this.textField_unidad);
         lista.add(this.datePicker_dia);
         lista.add(this.timePicker_horaServicio);
+        lista.add(this.cb_unidad);
         
         return lista;
     }
@@ -347,7 +355,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
             }
         });
         
-        this.textField_unidad.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+       /* this.textField_unidad.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if(!newValue.equals(""))
             {
                 if(newValue.charAt(newValue.length()-1)<48 ||  newValue.charAt(newValue.length()-1)>57)
@@ -360,7 +368,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                 textField_unidad.setText("");
             }
         });        
-
+*/
     }
 
     @Override
@@ -368,7 +376,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
 
         this.textField_telefono.getValidators().add(new StringLengthValidator("Únicamente 10 dígitos permitidos.", 10));
         this.textField_nombre.getValidators().add(new StringLengthValidator("Únicamente 100 carácteres permitidos.", 100));
-        this.textField_unidad.getValidators().add(new StringLengthValidator("Únicamente 11 dígitos permitidos.", 11));
+        //this.textField_unidad.getValidators().add(new StringLengthValidator("Únicamente 11 dígitos permitidos.", 11));
 
         
     }
@@ -567,7 +575,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                 0/*no nescesario*/, this.textField_telefono.getText(), this.textField_nombre.getText(),
                 this.textField_calle.getText(), this.textField_colonia.getText(), this.textField_num_ext.getText(), this.textField_numInt.getText(), 
                 this.textField_observaciones.getText(), this.textField_notas.getText(),
-                Integer.parseInt(this.textField_unidad.getText()),/*id empleado*/ Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(),
+                Integer.parseInt(this.cb_unidad.getValue().toString().split("")[0]),/*id empleado*/ Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(),
                 true, this.txt_destino.getText(), this.datePicker_dia.getValue(), timePicker_horaServicio.getValue(),
                 this.rb_diario.isSelected(), diasSeleccionadosCadena(), this.rb_programado.isSelected(),null/*Siempre manda null ya que este campo, solo será modificado cuando lo cancelen.*/
         );

@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -115,15 +115,15 @@ public class EstadisticasController implements Initializable {
         String cb_selection = comboBox_tipoReporte.getSelectionModel().getSelectedItem();
         
         if(cb_selection.equals(Statics.reportes.get(0)))            
-            tipoReporte = "idUnidad=";
+            tipoReporte = " idUnidad= ";
         else  if(cb_selection.equals(Statics.reportes.get(1)))            
-            tipoReporte = "telefono=";
+            tipoReporte = " telefono= ";
         else  if(cb_selection.equals(Statics.reportes.get(2)))            
-            tipoReporte = "idEmpleado=";
+            tipoReporte = " idEmpleado= ";
         else if(cb_selection.equals(Statics.reportes.get(3)))
-            tipoReporte = "programado=";
+            tipoReporte = " programado= ";
         else if(cb_selection.equals(Statics.reportes.get(4)))
-            tipoReporte = "destino!=";
+            tipoReporte = " destino!= ";
         else
             tipoReporte = "ERROR";
         
@@ -233,7 +233,7 @@ public class EstadisticasController implements Initializable {
        if(selectedItem.equals(Statics.reportes.get(0)))
        {
            comboBox_multiple.setPromptText("Seleccione Taxista");
-           comboBox_multiple.setItems(conexionLecturaTaxistas.getTaxistas_id_name());
+           comboBox_multiple.setItems(conexionLecturaTaxistas.getTaxistas_id_name(true));
            comboBox_multiple.setVisible(true);
        }
        else if(selectedItem.equals(Statics.reportes.get(1)))

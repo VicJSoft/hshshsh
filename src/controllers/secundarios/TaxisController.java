@@ -7,7 +7,6 @@ package controllers.secundarios;
 
 import Interfaces.IAbrir_Edicion_Registros;
 import Models.Taxis;
-import Resources.statics.Statics;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableRow;
@@ -17,7 +16,6 @@ import controllers.crud.TaxisCRUDController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;

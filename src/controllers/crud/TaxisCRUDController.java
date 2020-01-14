@@ -86,7 +86,7 @@ public class TaxisCRUDController implements Initializable,IValidateCRUD {
         this.listaControles = listControlsRequired();
         this.setFieldValidations();
         comboBox_marca.setItems(Statics.marcas);
-        comboBox_taxista.setItems(conexionLecturaTaxistas.getTaxistas_id_name());
+        comboBox_taxista.setItems(conexionLecturaTaxistas.getTaxistas_id_name(false));
        
         
         

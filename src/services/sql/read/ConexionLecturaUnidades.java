@@ -5,13 +5,17 @@
  */
 package services.sql.read;
 
+import Models.Taxis;
 import Resources.statics.Statics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 
 /**
  *
@@ -51,6 +55,27 @@ public class ConexionLecturaUnidades
         }
         
         return key;
+    }
+    
+    public ObservableList<String> getUnidades(){
+        ObservableList<String> listaUnidades = FXCollections.observableArrayList();
+        try {
+            query = "SELECT unidades.id_unidad,taxistas.nombre " +
+                    " FROM unidades INNER JOIN taxistas " +
+                    " ON unidades.id_taxista = taxistas.id_taxista ";
+            
+            ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                listaUnidades.add( rs.getString(1) + " " + rs.getString(2) );
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionLecturaUnidades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaUnidades;
     }
     
 }

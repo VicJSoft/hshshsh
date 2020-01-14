@@ -33,15 +33,16 @@ public class ConexionLecturaTaxistas
     
     
     
-    public ObservableList<String> getTaxistas_id_name()
+    public ObservableList<String> getTaxistas_id_name(boolean allTaxis)
     {
         ObservableList<String> taxistas =  FXCollections.observableArrayList();
-        query="select id_taxista,nombre from taxistas ";
         query ="SELECT taxistas.id_taxista ,taxistas.nombre"+/*",unidades.id_taxista" +*/
         " FROM " +
         " taxistas LEFT JOIN unidades " +
         " ON taxistas.id_taxista = unidades.id_taxista " +
         " WHERE unidades.id_taxista IS NULL ";
+        if(allTaxis)
+            query="select id_taxista,nombre from taxistas ";
         try
         {  
             

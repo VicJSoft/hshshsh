@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="root" onMouseClicked="#cerrarHamburger" prefHeight="680.0" prefWidth="1090.0" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ventana_PrincipalController">
+<AnchorPane id="AnchorPane" fx:id="root" onMouseClicked="#cerrarHamburger" prefHeight="680.0" prefWidth="1230.0" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ventana_PrincipalController">
    <children>
       <Label fx:id="lbl_title" layoutX="41.0" layoutY="52.0" prefHeight="87.0" prefWidth="941.0" styleClass="titulo" text="titulo" AnchorPane.leftAnchor="41.0" AnchorPane.topAnchor="52.0" />
       <AnchorPane fx:id="ap_tittleBar" layoutX="12.0" layoutY="14.0" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" onMouseReleased="#tittleBar_Released" prefHeight="34.0" prefWidth="1081.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

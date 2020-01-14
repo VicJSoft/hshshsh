@@ -17,7 +17,10 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import controllers.crud.ServiciosCRUDController;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.ResourceBundle;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,6 +37,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.util.Callback;
 import services.Servicios;
 import services.sql.read.ConexionLecturaServicios;
 import services.sql.write.ConexionEscrituraServicios;
@@ -50,7 +54,7 @@ public class ServiciosController implements Initializable {
     private JFXTreeTableView<Models.Servicio> table_servicios;
 
     @FXML
-    private TreeTableColumn<Models.Servicio, String> fecha;
+    private TreeTableColumn<Models.Servicio, LocalDateTime> fecha;
 
     @FXML
     private TreeTableColumn<Models.Servicio, String> nombre;
@@ -106,7 +110,7 @@ public class ServiciosController implements Initializable {
        this.btnAdd_Servicios.setTooltip(new Tooltip("Nuevo servicio."));
         
        
-       fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("fechaHora"));
+       fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("dateTime"));
        nombre.setCellValueFactory(new TreeItemPropertyValueFactory<>("nombre"));
        telefono.setCellValueFactory(new TreeItemPropertyValueFactory<>("telefono"));
        direccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("direccion"));
@@ -116,8 +120,29 @@ public class ServiciosController implements Initializable {
        destino.setCellValueFactory(new TreeItemPropertyValueFactory<>("destino"));
        diasSeleccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("diasSeleccion"));
  
-       
-        
+     /*  fecha.setComparator(new Comparator<LocalDateTime>() {
+           @Override
+           public int compare(LocalDateTime o1, LocalDateTime o2) {
+
+               if(o1.isBefore(o2))
+                   return -1;
+               if(o1.isEqual(o2))
+                   return 0;
+               else
+                   return 1;//mayor
+           }
+       });*/
+ /*        Callback<Servicio,Observable[]> cb = new Callback<Servicio, Observable[]>() {
+           @Override
+           public Observable[] call(Servicio param) {
+
+               return new Observable[]{
+                   param.getDateTime(),//tiene que ser un property, se tendria que agregar al model
+               };
+               
+           }
+       };
+   */      
         /**/
        listaServicios= conexionLecturaServicios.getServicios();
         root = new RecursiveTreeItem<>(listaServicios, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
@@ -239,6 +264,15 @@ public class ServiciosController implements Initializable {
                 
                 if(conexionEscrituraServicios.insertServicio(servicio)){
                     listaServicios.add(0,servicio);
+                  // table_servicios.sort();
+                   /* listaServicios.sort(new Comparator<Servicio>() {
+                        @Override
+                        public int compare(Servicio o1, Servicio o2) {
+                            
+                        }
+                    });*/
+                      //fecha.sortTypeProperty().set(TreeTableColumn.SortType.ASCENDING);
+                   // listaServicios.sort(c);
                 }
 
             }
@@ -259,9 +293,9 @@ public class ServiciosController implements Initializable {
         Servicio servicioSeleccionado = table_servicios.getSelectionModel().getSelectedItem().getValue();
 
         //El servicio programado no puede ser marcado como enviado.
-        if(!servicioSeleccionado.isProgramadow())
+        if(!servicioSeleccionado.isProgramadow()){
             cancelarServicio(VERDE);
-    
+        }
     }
 
     private void cancelarServicio(String color){

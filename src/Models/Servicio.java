@@ -10,6 +10,7 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
@@ -251,6 +252,13 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         this.fecha_fin = fecha_fin;
     }
 
+    
+    public LocalDateTime getDateTime(){
+        LocalDateTime dateTime = LocalDateTime.of(getFecha_inicio(), getHora().toLocalTime());
+         //return dateTime.toString().replace('T', ' ');
+         return dateTime;
+    }
+    
     private ArrayList<Label> getDiasSeleccionados(){
         ArrayList<Label> listaDias = new ArrayList<>();
         if(this.seleccionDia ==null)

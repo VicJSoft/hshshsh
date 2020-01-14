@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -44,6 +45,7 @@ public class main extends Application {
         primaryStage.show();
 
         SharePreferencesDB.getConfiguracion();
+        primaryStage.getIcons().add(new Image("/Resources/imagenes/iconos/Taxi/taxi.png" ));
         
     }
     

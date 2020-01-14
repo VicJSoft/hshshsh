@@ -12,6 +12,9 @@ import javafx.beans.property.StringProperty;
 /**
  *
  * @author vicen
+ * @deprecated 
+ * Usa objetos StringProperty en su totalidad, para más dinamismo se debe usar datos concretos.
+ * En su lugar, usar la clase modelo "Servicio".
  */
 public class Servicios extends RecursiveTreeObject<Servicios>
 {

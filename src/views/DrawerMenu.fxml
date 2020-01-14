@@ -22,7 +22,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#empleados" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Empleados">
+            <Button fx:id="btnEmpleados" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#empleados" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Empleados">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -36,7 +36,7 @@
                      </image></ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#clientes" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Clientes">
+            <Button fx:id="btnClientes" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#clientes" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Clientes">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>
@@ -47,7 +47,7 @@
                      </image></ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#servicios" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Servicios">
+            <Button fx:id="btnServicios" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#servicios" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Servicios">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>             
@@ -58,7 +58,7 @@
                      </image></ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#taxistas" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Taxistas">
+            <Button fx:id="btnTaxistas" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#taxistas" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Taxistas">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>
@@ -69,7 +69,7 @@
                      </image></ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#taxis" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Taxis">
+            <Button fx:id="btnTaxis" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#taxis" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Taxis">
                <font>
                   <Font name="Century Gothic" size="17.0" />
                </font>
@@ -81,7 +81,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#estadisticas" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Estadísticas y Reportes">
+            <Button fx:id="btnEstad" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#estadisticas" prefHeight="40.0" prefWidth="350.0" styleClass="button-drawer" text="Estadísticas y Reportes">
                <font>
                   <Font name="Century Gothic" size="14.0" />
                </font>

@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
@@ -14,18 +15,26 @@
     <children>
       <JFXTreeTableView fx:id="table_servicios" layoutX="28.0" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="98.0">
          <columns>
-            <TreeTableColumn fx:id="nombre" maxWidth="300.0" minWidth="163.0" prefWidth="216.0" sortable="false" text="Nombre" />
+            <TreeTableColumn fx:id="fecha" maxWidth="300.0" minWidth="147.0" prefWidth="147.0" sortable="false" text="Fecha" />
+            <TreeTableColumn fx:id="nombre" maxWidth="300.0" minWidth="163.0" prefWidth="179.0" sortable="false" text="Nombre" />
             <TreeTableColumn fx:id="telefono" maxWidth="140.0" minWidth="130.0" prefWidth="130.0" text="Teléfono" />
             <TreeTableColumn fx:id="direccion" maxWidth="500.0" minWidth="215.0" prefWidth="215.0" text="Dirección" />
-            <TreeTableColumn fx:id="observaciones" maxWidth="500.0" minWidth="210.0" prefWidth="210.0" text="Observaciones" />
-            <TreeTableColumn fx:id="notas" maxWidth="500.0" minWidth="199.0" prefWidth="199.0" sortable="false" text="Notas" />
+            <TreeTableColumn fx:id="observaciones" maxWidth="500.0" minWidth="90.0" prefWidth="120.0" text="Observaciones" />
+            <TreeTableColumn fx:id="notas" maxWidth="500.0" minWidth="90.0" prefWidth="199.0" sortable="false" text="Notas" />
+            <TreeTableColumn fx:id="destino" maxWidth="500.0" minWidth="120.0" prefWidth="120.0" text="Destino" />
+            <TreeTableColumn fx:id="diasSeleccion" maxWidth="500.0" minWidth="125.0" prefWidth="125.0" text="Dias programado" />
             <TreeTableColumn fx:id="unidad" maxWidth="75.0" minWidth="70.0" prefWidth="70.0" text="Unidad" />
          </columns>
          <columnResizePolicy>
             <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </JFXTreeTableView>
-      <JFXTextField fx:id="textField_buscar" layoutX="26.5" layoutY="37.0" prefHeight="25.0" prefWidth="399.0" promptText="Buscar servicios" styleClass="text-field-busqueda" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="639.5" AnchorPane.topAnchor="37.0" />
+      <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="21.0" prefHeight="75.0" prefWidth="695.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="356.0" AnchorPane.topAnchor="12.0">
+         <children>
+            <JFXTextField fx:id="textField_buscar" prefHeight="25.0" prefWidth="399.0" promptText="Buscar servicios" styleClass="text-field-busqueda" />
+            <JFXToggleButton fx:id="togglebtn_ServiciosPendientes" onAction="#tooglebtn_OnAction" text="Servicios pendientes" toggleColor="#5ab444" toggleLineColor="#9cdd89" />
+         </children>
+      </HBox>
       <HBox alignment="CENTER" layoutX="674.0" layoutY="12.0" prefHeight="75.0" prefWidth="299.0" spacing="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="12.0">
          <children>
             <JFXButton fx:id="btnAdd_Servicios" onAction="#btnAdd_OnAction" prefHeight="31.0" prefWidth="72.0" styleClass="boton-toolbar">
@@ -37,20 +46,20 @@
                   </ImageView>
                </graphic>
             </JFXButton>
+            <JFXButton fx:id="btnEdit_Servicios" disable="true" onAction="#btnEdit_OnAction" prefHeight="0.0" prefWidth="67.0" styleClass="boton-toolbar">
+               <graphic>
+                  <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Resources/imagenes/iconos/Taxi/taxi-okey.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
             <JFXButton fx:id="btnDelete_Servicios" disable="true" onAction="#btnDelete_OnAction" prefHeight="17.0" prefWidth="67.0" styleClass="boton-toolbar">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Resources/imagenes/iconos/Taxi/taxi-delete.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnEdit_Servicios" disable="true" onAction="#btnEdit_OnAction" prefHeight="0.0" prefWidth="67.0" styleClass="boton-toolbar">
-               <graphic>
-                  <ImageView fitHeight="39.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Resources/imagenes/iconos/Taxi/taxi-refresh.png" />
                      </image>
                   </ImageView>
                </graphic>

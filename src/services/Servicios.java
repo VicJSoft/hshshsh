@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 /**
  * Esta clase proporciona metódos generalers para el código de todo el proyecto,
  * para no repetir el código, teniendo un manejor m´a sencillo.
@@ -126,6 +127,8 @@ public class Servicios {
                 stage.initModality(Modality.WINDOW_MODAL);
             }
             stage.initStyle(StageStyle.TRANSPARENT);
+            stage.getIcons().add(new Image("/Resources/imagenes/iconos/Taxi/taxi.png" ));
+
             stage.show();
             
         } catch (IOException ex) {

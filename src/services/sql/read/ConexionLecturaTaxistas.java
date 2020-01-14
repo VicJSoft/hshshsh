@@ -36,7 +36,12 @@ public class ConexionLecturaTaxistas
     public ObservableList<String> getTaxistas_id_name()
     {
         ObservableList<String> taxistas =  FXCollections.observableArrayList();
-        query="select id_taxista,nombre from taxistas";
+        query="select id_taxista,nombre from taxistas ";
+        query ="SELECT taxistas.id_taxista ,taxistas.nombre"+/*",unidades.id_taxista" +*/
+        " FROM " +
+        " taxistas LEFT JOIN unidades " +
+        " ON taxistas.id_taxista = unidades.id_taxista " +
+        " WHERE unidades.id_taxista IS NULL ";
         try
         {  
             
@@ -56,7 +61,8 @@ public class ConexionLecturaTaxistas
         }
         catch(SQLException ex)
         {
-         
+            System.out.println("Error ger idName taxis.");
+            System.out.println(ex.getMessage());
         }
         
         return taxistas;

@@ -217,7 +217,7 @@ public class TaxisController implements Initializable {
                     this.btnAdd_Taxi.getScene().getWindow(), 
                     "Error SQL", 
                     "Error al eliminar registro",
-                    "No fue posible eliminar el regitro. \n Asegure que el servidor de la base de datos, se encuentre activo.\nMensaje error:\n"
+                    "No fue posible eliminar el regitro. \nAsegurese que el servidor de la base de datos, se encuentre activo, si ya lo está, contacte con el desarrollador.\nMensaje error:\n"
                             + ex.getMessage());
             Logger.getLogger(EmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
         }

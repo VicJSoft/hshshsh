@@ -19,7 +19,7 @@ public class Statics
     public static ObservableList<String> sexo = FXCollections.observableArrayList("MASCULINO","FEMENINO");
     public static ObservableList<String> tipo_empledo = FXCollections.observableArrayList("Administrativo","Modulador");
     public static ObservableList<String> marcas = FXCollections.observableArrayList("APRIO","ATOS","ATTITUDE","AVEO","BEAT","CRUZE","FIESTA","i10",
-            "MARCH","MATIZ","POINTER","SENTRA","SPARK","TIIDA","TSURU","VERSA");
+            "MARCH","MATIZ","POINTER","SENTRA","SPARK","TIIDA","TSURU","VERSA","OTRO");
     public static ObservableList<String> reportes=FXCollections.observableArrayList("Servicios por Unidad Específica","Servicios por Cliente","Servicios por Modulador","Servicios Programados","Servicios Foráneos");
     
     private static Connection connection;

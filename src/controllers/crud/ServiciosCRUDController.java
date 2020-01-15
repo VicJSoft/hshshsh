@@ -93,8 +93,8 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     @FXML
     private JFXTextField textField_notas;
 
-    @FXML
-    private JFXTextField textField_unidad;
+   // @FXML
+    //private JFXTextField textField_unidad;
 
     @FXML
     private JFXTextField textField_observaciones;

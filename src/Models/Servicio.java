@@ -36,7 +36,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
     
     private String observaciones;
     private String notas;
-    private int idUnidad;
+    private Integer idUnidad;
     private int idEmpleado;
     private boolean servicioActivo;
     private String destino;
@@ -51,7 +51,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
 
     public Servicio(int id_servicio, String telefono, String nombre,
             String calle, String colonia, String numeroExt, String numeroInt,
-            String observaciones, String notas, int idUnidad, int idEmpleado, 
+            String observaciones, String notas, Integer idUnidad, int idEmpleado, 
             boolean servicioActivo, String destino, LocalDate fecha_inicio, LocalTime hora, 
             boolean diario, String seleccionDia, boolean programadow,Date fecha_fin)
     {
@@ -148,11 +148,11 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         this.notas = notas;
     }
 
-    public int getIdUnidad() {
+    public Integer getIdUnidad() {
         return idUnidad;
     }
 
-    public void setIdUnidad(int idUnidad) {
+    public void setIdUnidad(Integer idUnidad) {
         this.idUnidad = idUnidad;
     }
 

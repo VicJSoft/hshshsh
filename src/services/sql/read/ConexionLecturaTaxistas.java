@@ -32,7 +32,11 @@ public class ConexionLecturaTaxistas
     }
     
     
-    
+    /**
+     * Trae una lista de taxis
+     * @param allTaxis
+     * @return 
+     */
     public ObservableList<String> getTaxistas_id_name(boolean allTaxis)
     {
         ObservableList<String> taxistas =  FXCollections.observableArrayList();

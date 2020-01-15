@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,7 +56,10 @@ public class ConexionEscrituraServicios {
             ps.setString(3, servicio.getDireccion());
             ps.setString(4, servicio.getObservaciones());
             ps.setString(5, servicio.getNotas());
-            ps.setInt(6, servicio.getIdUnidad());
+            if(servicio.getIdUnidad()==null){
+                ps.setNull(6,Types.INTEGER);
+            }else
+                ps.setInt(6, servicio.getIdUnidad());
             ps.setInt(7, servicio.getIdEmpleado());
             ps.setBoolean(8, servicio.isServicioActivo());
             ps.setString(9, servicio.getDestino().equals("")? null:servicio.getDestino());
@@ -114,7 +118,23 @@ public class ConexionEscrituraServicios {
         return key;
     }
     
-    
+    public boolean asignarUnidad(Servicio servicioAAsignar){
+        try {
+            key = false;
+            query = "UPDATE servicios SET idUnidad = ? WHERE servicios.IdServicio = ?";
+            
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, servicioAAsignar.getIdUnidad());
+            ps.setInt(2, servicioAAsignar.getId_servicio());
+            
+            ps.executeUpdate();
+            key = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionEscrituraServicios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return key;
+        
+    }
     
 }
 

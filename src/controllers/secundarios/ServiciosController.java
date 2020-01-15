@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
+import controllers.Ventana_AsignarUnidadController;
 import controllers.crud.ServiciosCRUDController;
 import java.io.IOException;
 import java.net.URL;
@@ -37,6 +38,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.Servicios;
 import services.sql.read.ConexionLecturaServicios;
@@ -200,6 +202,7 @@ public class ServiciosController implements Initializable {
             return row;
         });   
         setCancelledGraphic();
+        table_servicios.scrollTo( table_servicios.getCurrentItemsCount()-1);
     }   
     /**
      * Marca los registros que su campo son "servicioActivo = false", 
@@ -292,12 +295,30 @@ public class ServiciosController implements Initializable {
     private void btnEdit_OnAction(ActionEvent event) {
         //verde
         Servicio servicioSeleccionado = table_servicios.getSelectionModel().getSelectedItem().getValue();
+        if(servicioSeleccionado.getIdUnidad()==null&&!servicioSeleccionado.isProgramadow()){
+            Ventana_AsignarUnidadController ventanaAsignarUnidad = 
+                    (Ventana_AsignarUnidadController) Servicios.crearVentana("/views/Ventana_AsignarUnidad.fxml", (Stage) this.btnAdd_Servicios.getScene().getWindow(), getClass());
+            //cancelarServicio(VERDE);
+            ventanaAsignarUnidad.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
+                @Override
+                public void registroEditNuevo(Object registro) {
+                    
+                    Integer idUnidad = (Integer) registro;
+                    servicioSeleccionado.setIdUnidad(idUnidad);
+                    conexionEscrituraServicios.asignarUnidad(servicioSeleccionado);
+                    cancelarServicio(VERDE);
+                    table_servicios.refresh();
 
+
+                }
+            });
+        }else
         //El servicio programado no puede ser marcado como enviado.
         if(!servicioSeleccionado.isProgramadow()){
             cancelarServicio(VERDE);
+            
         }
-    }
+     }
 
     private void cancelarServicio(String color){
         Servicio servicioSeleccionado = table_servicios.getSelectionModel().getSelectedItem().getValue();

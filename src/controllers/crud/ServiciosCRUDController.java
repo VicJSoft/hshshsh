@@ -314,7 +314,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         //lista.add(this.textField_unidad);
         lista.add(this.datePicker_dia);
         lista.add(this.timePicker_horaServicio);
-        lista.add(this.cb_unidad);
+       // lista.add(this.cb_unidad);
         
         return lista;
     }
@@ -575,7 +575,10 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                 0/*no nescesario*/, this.textField_telefono.getText(), this.textField_nombre.getText(),
                 this.textField_calle.getText(), this.textField_colonia.getText(), this.textField_num_ext.getText(), this.textField_numInt.getText(), 
                 this.textField_observaciones.getText(), this.textField_notas.getText(),
-                Integer.parseInt(this.cb_unidad.getValue().toString().split("")[0]),/*id empleado*/ Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(),
+                
+                this.cb_unidad.getSelectionModel().isEmpty()?null:
+                Integer.parseInt(this.cb_unidad.getValue().toString().split("")[0]),
+                /*id empleado*/ Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(),
                 true, this.txt_destino.getText(), this.datePicker_dia.getValue(), timePicker_horaServicio.getValue(),
                 this.rb_diario.isSelected(), diasSeleccionadosCadena(), this.rb_programado.isSelected(),null/*Siempre manda null ya que este campo, solo será modificado cuando lo cancelen.*/
         );

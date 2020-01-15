@@ -56,7 +56,11 @@ public class ConexionLecturaUnidades
         
         return key;
     }
-    
+    /**
+     * Trae todos las unidades que intersectan a un taxista.
+     * Es decir, lista una relacion de cada taxi que contenga un taxista relacionado.
+     * @return 
+     */
     public ObservableList<String> getUnidades(){
         ObservableList<String> listaUnidades = FXCollections.observableArrayList();
         try {

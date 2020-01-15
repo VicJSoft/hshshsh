@@ -5,6 +5,7 @@
  */
 package Models;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.sql.Date;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import javafx.beans.property.BooleanProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -48,7 +50,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
     private Date fecha_fin;
     
     private HBox diasSeleccion;
-
+    public JFXCheckBox cb_estado;
     public Servicio(int id_servicio, String telefono, String nombre,
             String calle, String colonia, String numeroExt, String numeroInt,
             String observaciones, String notas, Integer idUnidad, int idEmpleado, 
@@ -74,8 +76,33 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         this.seleccionDia = seleccionDia;
         this.programadow = programadow;
         this.fecha_fin = fecha_fin;
+        cb_estado = new JFXCheckBox();
+        cb_estado.allowIndeterminateProperty().set(true);
+        
+        calcularEstadoServicio();
+ 
+        
     }
 
+    private void calcularEstadoServicio(){
+        if(!programadow){
+            //si está pendiente, entonces no es marcado.
+            cb_estado.selectedProperty().set(!servicioActivo);                      
+        }else if(programadow){
+            //seleccionado cuando está en curso la programacion = true, cuando se termina la programacion = false
+            cb_estado.selectedProperty().set(servicioActivo);
+                   
+        }
+        if(idUnidad==null){
+            cb_estado.indeterminateProperty().set(true);
+        }else{
+            //si no es null, quedará seleccionado, con los if de arriba
+            //cb_estado.indeterminateProperty().set(false);
+        }  
+
+        
+    }
+    
     public int getId_servicio() {
         return id_servicio;
     }
@@ -154,6 +181,8 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
 
     public void setIdUnidad(Integer idUnidad) {
         this.idUnidad = idUnidad;
+        calcularEstadoServicio();//se llama 2 veces, porque alfinal quedaba con la palomita chequeada, cuando era unidad null, 
+      //  calcularEstadoServicio();
     }
 
     public int getIdEmpleado() {
@@ -170,6 +199,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
 
     public void setServicioActivo(boolean servicioActivo) {
         this.servicioActivo = servicioActivo;
+        calcularEstadoServicio();
     }
 
     
@@ -306,6 +336,14 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
 
     public void setDiasSeleccion(HBox diasSeleccion) {
         this.diasSeleccion = diasSeleccion;
+    }
+
+    public JFXCheckBox getCb_estado() {
+        return cb_estado;
+    }
+
+    public void setCb_estado(JFXCheckBox cb_estado) {
+        this.cb_estado = cb_estado;
     }
     
     

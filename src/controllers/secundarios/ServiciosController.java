@@ -21,6 +21,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -81,6 +82,9 @@ public class ServiciosController implements Initializable {
     
     @FXML
     private TreeTableColumn<Models.Servicio, String> diasSeleccion;
+    
+    @FXML
+    private TreeTableColumn<Models.Servicio, String> estado;
 
     @FXML
     private JFXTextField  textField_buscar;
@@ -100,6 +104,7 @@ public class ServiciosController implements Initializable {
     
     private  ObservableList<Models.Servicio> listaServicios = FXCollections.observableArrayList();
     private  ObservableList<Models.Servicio> listaServiciosFiltro = FXCollections.observableArrayList();
+    private  ObservableList<Models.Servicio> listaServiciosPendientes = FXCollections.observableArrayList();
     TreeItem<Models.Servicio> root;
     @FXML
     private JFXToggleButton togglebtn_ServiciosPendientes;
@@ -111,7 +116,7 @@ public class ServiciosController implements Initializable {
        this.btnEdit_Servicios.setTooltip(new Tooltip("Servicio aplicado."));
        this.btnAdd_Servicios.setTooltip(new Tooltip("Nuevo servicio."));
         
-       
+       estado.setCellValueFactory(new TreeItemPropertyValueFactory<>("cb_estado"));
        fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("dateTime"));
        nombre.setCellValueFactory(new TreeItemPropertyValueFactory<>("nombre"));
        telefono.setCellValueFactory(new TreeItemPropertyValueFactory<>("telefono"));
@@ -201,14 +206,15 @@ public class ServiciosController implements Initializable {
             
             return row;
         });   
-        setCancelledGraphic();
+     //   setCancelledGraphic();
         table_servicios.scrollTo( table_servicios.getCurrentItemsCount()-1);
     }   
     /**
      * Marca los registros que su campo son "servicioActivo = false", 
      * Si el servicio es regular, se marca un punto verde,
      * Si el servicio es programado, se marca un punto rojo (cancelado).
-     * 
+     * @deprecated 
+     * Afectaba mucho el rendimiento.
      */
     private void setCancelledGraphic(){
         int i = 0;
@@ -223,31 +229,30 @@ public class ServiciosController implements Initializable {
     }
     public void cargarListaFiltrada( )
     {
-             textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
-            {
-                table_servicios.setRoot(null);
-                if (newValue.equals("")) 
-                {
-                     table_servicios.setRoot(root); 
-                } else 
-                {
-                    table_servicios.setRoot(null);
-                    listaServiciosFiltro.clear();
-                    
-                    for(Models.Servicio servicioActual : listaServicios)
-                    {
-                        //if(newValue.contains( servicioActual.getId_servicio()+"" ) )
-                        if(servicioActual.getTelefono().contains(newValue))
-                        {
-                            listaServiciosFiltro.add(servicioActual);
-                        }
-                    }
-                    TreeItem<Models.Servicio> root1 = new RecursiveTreeItem<>(listaServiciosFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
-                    table_servicios.setRoot(root1);
-                    table_servicios.setShowRoot(false);
-                }
-            
-             });
+        textField_buscar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
+       {
+           table_servicios.setRoot(null);
+           if (newValue.equals("")) 
+           {
+                table_servicios.setRoot(root); 
+           } else 
+           {
+               table_servicios.setRoot(null);
+               listaServiciosFiltro.clear();
+
+               for(Models.Servicio servicioActual : listaServicios)
+               {
+                   if(servicioActual.getTelefono().contains(newValue))
+                   {
+                       listaServiciosFiltro.add(servicioActual);
+                   }
+               }
+               TreeItem<Models.Servicio> root1 = new RecursiveTreeItem<>(listaServiciosFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+               table_servicios.setRoot(root1);
+               table_servicios.setShowRoot(false);
+           }
+
+        });
     }
 
     @FXML
@@ -295,28 +300,49 @@ public class ServiciosController implements Initializable {
     private void btnEdit_OnAction(ActionEvent event) {
         //verde
         Servicio servicioSeleccionado = table_servicios.getSelectionModel().getSelectedItem().getValue();
+        //Cuando está pendiente y sin unidad
         if(servicioSeleccionado.getIdUnidad()==null&&!servicioSeleccionado.isProgramadow()){
+            
             Ventana_AsignarUnidadController ventanaAsignarUnidad = 
                     (Ventana_AsignarUnidadController) Servicios.crearVentana("/views/Ventana_AsignarUnidad.fxml", (Stage) this.btnAdd_Servicios.getScene().getWindow(), getClass());
-            //cancelarServicio(VERDE);
+
             ventanaAsignarUnidad.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
                 @Override
                 public void registroEditNuevo(Object registro) {
                     
-                    Integer idUnidad = (Integer) registro;
+                    Integer idUnidad = (Integer) registro; 
                     servicioSeleccionado.setIdUnidad(idUnidad);
-                    conexionEscrituraServicios.asignarUnidad(servicioSeleccionado);
-                    cancelarServicio(VERDE);
-                    table_servicios.refresh();
+                    if(conexionEscrituraServicios.asignarUnidad(servicioSeleccionado)){
+                        
+                       
+                        cancelarServicio(VERDE);
+                        table_servicios.refresh();
+                    }
 
 
                 }
             });
         }else
-        //El servicio programado no puede ser marcado como enviado.
+        //cuando solo está pendiente, para ser marcado como enviado
         if(!servicioSeleccionado.isProgramadow()){
             cancelarServicio(VERDE);
             
+        }else if(servicioSeleccionado.isProgramadow()){//solo aplica para cuando no se le asignó unidad al servicio programado
+            Ventana_AsignarUnidadController ventanaAsignarUnidad = 
+                    (Ventana_AsignarUnidadController) Servicios.crearVentana("/views/Ventana_AsignarUnidad.fxml", (Stage) this.btnAdd_Servicios.getScene().getWindow(), getClass());
+                    ventanaAsignarUnidad.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
+                                    @Override
+                                    public void registroEditNuevo(Object registro) {
+
+                                        Integer idUnidad = (Integer) registro; 
+                                        servicioSeleccionado.setIdUnidad(idUnidad);
+                                        if(conexionEscrituraServicios.asignarUnidad(servicioSeleccionado)){
+                                            table_servicios.refresh();
+                                        }
+
+
+                                    }
+                                });
         }
      }
 
@@ -328,50 +354,42 @@ public class ServiciosController implements Initializable {
          if(conexionEscrituraServicios.cancelarServicio(idSelected)){
             for(Servicio servicioActual : listaServicios){
                 if(servicioActual.getId_servicio() == idSelected){
-                    servicioActual.setServicioActivo(false);
-                    table_servicios.getSelectionModel().getSelectedItem().setGraphic(new Circle(5, Paint.valueOf(color)));
-
-                   // table_servicios.getSelectionModel().getSelectedItem().getGraphic().getBoundsInLocal();
-
+                    servicioActual.setServicioActivo(false);                 
                 }
             }
         }
     }
-    
+    TreeItem<Models.Servicio> rootPendientes = new RecursiveTreeItem<>(listaServiciosPendientes, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+
     @FXML
     private void tooglebtn_OnAction(ActionEvent event) {
         
         JFXToggleButton toggle = (JFXToggleButton)event.getSource();
         if(toggle.isSelected()){
             
-            listaServiciosFiltro = FXCollections.observableArrayList();            
+            //listaServiciosFiltro = FXCollections.observableArrayList();            
            // ObservableList<TreeItem<Servicio>> children = table_servicios.getRoot().getChildren();
-            
+            listaServiciosPendientes.clear();
             for(Servicio servicioActual: listaServicios){
-               // if(servicioActual.getFecha_inicio().toLocalDate().isAfter(LocalDate.now()) && servicioActual.isServicioActivo() == true /*si no es cancelado no aparece*/  ){
                //Un servicio es activo cuando:
                //Servicio Regular: cuando no se ha mandado taxi.
                //Servicio Programado: cuando aún se espera que los dias siguientes, se siga mandando una unidad.
-               
-               if(servicioActual.isServicioActivo() == true /*si no es cancelado no aparece*/  ){
-                    listaServiciosFiltro.add(servicioActual);
+                if(servicioActual.isServicioActivo() == true /*si no es cancelado no aparece*/  ){
+                    listaServiciosPendientes.add(servicioActual);
                 }
-                TreeItem<Models.Servicio> root1 = new RecursiveTreeItem<>(listaServiciosFiltro, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
-                
-                table_servicios.setRoot(null);
-                table_servicios.setRoot(root1);
-                table_servicios.setShowRoot(false);
-                setCancelledGraphic();
+                //el setRoot estaba aquí, por eso se congelaba tanto la interfaz
+                //   setCancelledGraphic();
             }
-            
+            table_servicios.setRoot(null);
+            table_servicios.setRoot(rootPendientes);
+            table_servicios.setShowRoot(false);                   
+                   
         }else{
             table_servicios.setRoot(null);
             table_servicios.setRoot(root);
             table_servicios.setShowRoot(false);
            // table_servicios.refresh();
-            setCancelledGraphic();
-
+          //  setCancelledGraphic();
         }
     }
-    
-}
+ }

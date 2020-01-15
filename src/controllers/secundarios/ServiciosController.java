@@ -327,7 +327,7 @@ public class ServiciosController implements Initializable {
         if(!servicioSeleccionado.isProgramadow()){
             cancelarServicio(VERDE);
             
-        }else if(servicioSeleccionado.isProgramadow()){//solo aplica para cuando no se le asignó unidad al servicio programado
+        }else if(servicioSeleccionado.isProgramadow()&&servicioSeleccionado.getIdUnidad()==null){//solo aplica para cuando no se le asignó unidad al servicio programado
             Ventana_AsignarUnidadController ventanaAsignarUnidad = 
                     (Ventana_AsignarUnidadController) Servicios.crearVentana("/views/Ventana_AsignarUnidad.fxml", (Stage) this.btnAdd_Servicios.getScene().getWindow(), getClass());
                     ventanaAsignarUnidad.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {

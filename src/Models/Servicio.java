@@ -18,6 +18,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
@@ -51,6 +52,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
     
     private HBox diasSeleccion;
     public JFXCheckBox cb_estado;
+   // Tooltip tooltipEstado;
     public Servicio(int id_servicio, String telefono, String nombre,
             String calle, String colonia, String numeroExt, String numeroInt,
             String observaciones, String notas, Integer idUnidad, int idEmpleado, 
@@ -77,27 +79,46 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         this.programadow = programadow;
         this.fecha_fin = fecha_fin;
         cb_estado = new JFXCheckBox();
+        cb_estado.disableProperty().set(false);
         cb_estado.allowIndeterminateProperty().set(true);
         
+       // cb_estado.setTooltip(new Tooltip("asdasewewwwwwww"));
+      //  this.tooltipEstado = new Tooltip();
         calcularEstadoServicio();
- 
-        
     }
 
     private void calcularEstadoServicio(){
-        if(!programadow){
+        if(!programadow){//servicio regular
             //si está pendiente, entonces no es marcado.
-            cb_estado.selectedProperty().set(!servicioActivo);                      
-        }else if(programadow){
-            //seleccionado cuando está en curso la programacion = true, cuando se termina la programacion = false
-            cb_estado.selectedProperty().set(servicioActivo);
-                   
+           //// cb_estado.selectedProperty().set(!servicioActivo); 
+           if(!servicioActivo){//cuando ya se aplicó
+               cb_estado.selectedProperty().set(true);
+               cb_estado.setTooltip(new Tooltip("Servicio regular aplicado."));
+               
+           }else if(servicioActivo){//cuando está pendiente
+               cb_estado.selectedProperty().set(false);
+                cb_estado.setTooltip(new Tooltip("Servicio regular no aplicado aún."));
+
+           }
+           
+        }else if(programadow){//servicio programado(periodico)
+          
+            if(servicioActivo){//cuando sigue en curso la programacion
+               cb_estado.selectedProperty().set(true);
+               cb_estado.setTooltip(new Tooltip("Servicio programado en curso."));
+
+           }else if(!servicioActivo){//cuando está cancelado
+               cb_estado.selectedProperty().set(false);
+                cb_estado.setTooltip(new Tooltip("Servicio programado finalizado."));
+
+           }                   
         }
         if(idUnidad==null){
             cb_estado.indeterminateProperty().set(true);
+            cb_estado.setTooltip(new Tooltip("Servicio pendiente de unidad."));
         }else{
             //si no es null, quedará seleccionado, con los if de arriba
-            //cb_estado.indeterminateProperty().set(false);
+//lo desactivaba casi siempre xd alv.            cb_estado.setTooltip(null);
         }  
 
         
@@ -302,7 +323,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         listaDias.add(new Label("Sa"));            
         listaDias.add(new Label("Do"));            
 
-
+        listaDias.get(0).setTooltip(getFecha_fin()==null?null: new Tooltip(getFecha_fin().toLocalDate().toString()));
         
         if(this.seleccionDia.charAt(0)=='1')
             listaDias.get(0).setTextFill(Paint.valueOf("5AB444"));
@@ -331,11 +352,13 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         this.diasSeleccion.getChildren().addAll(getDiasSeleccionados());
         this.diasSeleccion.setAlignment(Pos.CENTER);
         this.diasSeleccion.setSpacing(2);
+        
         return diasSeleccion;
     }
 
     public void setDiasSeleccion(HBox diasSeleccion) {
         this.diasSeleccion = diasSeleccion;
+       
     }
 
     public JFXCheckBox getCb_estado() {

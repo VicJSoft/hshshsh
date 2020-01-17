@@ -86,7 +86,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
       //  this.tooltipEstado = new Tooltip();
         calcularEstadoServicio();
     }
-
+   
     private void calcularEstadoServicio(){
         if(!programadow){//servicio regular
             //si está pendiente, entonces no es marcado.

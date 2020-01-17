@@ -138,8 +138,8 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     private Label lbl_errorConfigTipoServicio;
     @FXML
     private JFXToggleButton togglebtn_ServiciosPendientes;
-    @FXML
-    private JFXComboBox cb_unidad;
+    //@FXML
+    //private JFXComboBox cb_unidad;
     private final ConexionLecturaUnidades conexionLecturaUnidades = new ConexionLecturaUnidades();
     
     private ArrayList<IFXValidatableControl> listControlsRequired = new ArrayList();
@@ -156,7 +156,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         this.lbl_tittle.setText("Servicios");
         
         setClickedEventCheckBox();
-        cb_unidad.setItems(conexionLecturaUnidades.getUnidades());
+        //cb_unidad.setItems(conexionLecturaUnidades.getUnidades());
         
         this.rb_Regular.setOnAction((ActionEvent event) -> {
             setChecksDays(false);
@@ -576,8 +576,9 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                 this.textField_calle.getText(), this.textField_colonia.getText(), this.textField_num_ext.getText(), this.textField_numInt.getText(), 
                 this.textField_observaciones.getText(), this.textField_notas.getText(),
                 
-                this.cb_unidad.getSelectionModel().isEmpty()?null:
-                Integer.parseInt(this.cb_unidad.getValue().toString().split("")[0]),
+               // this.cb_unidad.getSelectionModel().isEmpty()?null:
+                //Integer.parseInt(this.cb_unidad.getValue().toString().split("")[0]),
+                null,
                 /*id empleado*/ Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(),
                 true, this.txt_destino.getText(), this.datePicker_dia.getValue(), timePicker_horaServicio.getValue(),
                 this.rb_diario.isSelected(), diasSeleccionadosCadena(), this.rb_programado.isSelected(),null/*Siempre manda null ya que este campo, solo será modificado cuando lo cancelen.*/

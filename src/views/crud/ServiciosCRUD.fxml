@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -64,8 +63,7 @@
       <JFXTextField fx:id="textField_numInt" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
       <Label layoutX="158.0" layoutY="402.0" styleClass="tittle-seccion-CRUD" text="Servicio" AnchorPane.leftAnchor="14.0" />
       <Separator layoutX="129.0" layoutY="421.0" prefHeight="3.0" prefWidth="371.0" />
-      <JFXComboBox fx:id="cb_unidad" focusColor="#5ab444" layoutX="42.0" layoutY="468.0" promptText="Unidad" />
-      <JFXTextField fx:id="textField_notas" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="518.0" prefHeight="31.0" prefWidth="404.0" promptText="Notas" />
+      <JFXTextField fx:id="textField_notas" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="484.0" prefHeight="31.0" prefWidth="404.0" promptText="Notas" />
       <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="569.0" prefHeight="31.0" prefWidth="404.0" promptText="Observaciones" />
       <Label layoutX="421.0" layoutY="648.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="15.0">
          <font>

@@ -25,6 +25,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import services.Servicios;
@@ -77,6 +79,7 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
 
     private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
     private boolean isEdicion;
+    private int focus=-1;//indica a quien le hara el focus
 
     
     @Override
@@ -84,6 +87,7 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
         // TODO
        this.listaControles = listControlsRequired();
        this.setFieldValidations();
+       focus++;
     }    
     
     @FXML
@@ -131,7 +135,84 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
     {
        
     }
+     @FXML
+    void focusable_OnKey(KeyEvent event) 
+    {
+         if(event.getCode() == KeyCode.ENTER)
+         {  
+           switch(focus)
+           {
+               case -1:
+                   textField_telefono.requestFocus();
+                   focus++;
+                   break;
+               case 0:
+                   textField_nombre.requestFocus();
+                   focus++;
+                   break;
+                case 1:
+                   textField_calle.requestFocus();
+                   focus++;
+                   break;
+                case 2:
+                   textField_colonia.requestFocus();
+                   focus++;
+                   break;
+                case 3:
+                   textField_numExt.requestFocus();
+                   focus++;
+                   break;
+               case 4:
+                   textField_numInt.requestFocus();
+                   focus++;
+                   break;
+                default:
+                   textField_observ.requestFocus();
+                   focus=-1;
+                   break;   
+           }
+        }
+    }
+      @FXML
+    void DetectFocusable_OnMouse(MouseEvent event) 
+    {
+        if(textField_telefono.isFocused())
+        {
+            focus=0;
+            System.out.println(focus);
+        }
+        else if(textField_nombre.isFocused())
+        {
+            focus=1;
+            System.out.println(focus);
+        }
+        else if(textField_calle.isFocused())
+        {
+            focus=2;
+            System.out.println(focus);
+        }
+        else if(textField_colonia.isFocused())
+        {
+            focus=3;
+            System.out.println(focus);
+        }
+        else if(textField_numExt.isFocused())
+        {
+            focus=4;
+            System.out.println(focus);
+        }
+        else if(textField_numInt.isFocused())
+        {
+            focus=5;
+            System.out.println(focus);
+        }
+        else if(textField_observ.isFocused())
+        {
+            focus=-1;
+            System.out.println(focus);
+        }
 
+    }
     @Override
     public ArrayList<IFXValidatableControl> listControlsRequired() {
 

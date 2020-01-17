@@ -42,6 +42,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -145,7 +146,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     private ArrayList<IFXValidatableControl> listControlsRequired = new ArrayList();
     private ArrayList<JFXCheckBox> listaCheckBox = new ArrayList();
     private IAbrir_Edicion_Registros iAbrir_Edicion_Registros;
-
+    private int focus=-1;//indica a quien le hara el focus
     /**
      * Initializes the controller class.
      */
@@ -193,10 +194,13 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
             
         });
       
+           
+       focus++;
        this.listControlsRequired = listControlsRequired();
        this.setFieldValidations();
        rb_personalizado.fire();
        rb_Regular.fire();
+       
     }    
 
     /*
@@ -246,6 +250,102 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     @FXML
     private void tittleBar_Pressed(MouseEvent event) {
         Servicios.tittleBar_Pressed(event);
+    }
+     @FXML
+    void focusable_OnKey(KeyEvent event) 
+    {
+         if(event.getCode() == KeyCode.ENTER)
+         {  
+           switch(focus)
+           {
+               case -1:
+                   textField_telefono_buscar.requestFocus();
+                   focus++;
+                   break;
+               case 0:
+                   textField_telefono.requestFocus();
+                   focus++;
+                   break;
+                case 1:
+                   textField_nombre.requestFocus();
+                   focus++;
+                   break;
+                case 2:
+                   textField_calle.requestFocus();
+                   focus++;
+                   break;
+                case 3:
+                   textField_colonia.requestFocus();
+                   focus++;
+                   break;
+                case 4:
+                   textField_num_ext.requestFocus();
+                   focus++;
+                   break;
+                case 5:
+                   textField_numInt.requestFocus();
+                   focus++;
+                   break;
+                case 6:
+                   textField_notas.requestFocus();
+                   focus++;
+                   break;
+                default:
+                   textField_observaciones.requestFocus();
+                   focus=-1;
+                   break;   
+           }
+        }
+    }
+      @FXML
+    void DetectFocusable_OnMouse(MouseEvent event) 
+    {
+        if(textField_telefono_buscar.isFocused())
+        {
+            focus=0;
+            System.out.println(focus);
+        }
+        else if(textField_telefono.isFocused())
+        {
+            focus=1;
+            System.out.println(focus);
+        }
+        else if(textField_nombre.isFocused())
+        {
+            focus=2;
+            System.out.println(focus);
+        }
+        else if(textField_calle.isFocused())
+        {
+            focus=3;
+            System.out.println(focus);
+        }
+        else if(textField_colonia.isFocused())
+        {
+            focus=4;
+            System.out.println(focus);
+        }
+        else if(textField_num_ext.isFocused())
+        {
+            focus=5;
+            System.out.println(focus);
+        }
+        else if(textField_numInt.isFocused())
+        {
+            focus=6;
+            System.out.println(focus);
+        }
+        else if(textField_notas.isFocused())
+        {
+            focus=7;
+            System.out.println(focus);
+        }
+        else if(textField_observaciones.isFocused())
+        {
+            focus=-1;
+            System.out.println(focus);
+        }
+
     }
     
 
@@ -334,6 +434,10 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                 {
                     textField_telefono.setText(oldValue);
                 }
+                else if(newValue.charAt(newValue.length()-1)!=114 && newValue.charAt(newValue.length()-1)!=82)//significa que no es R o r
+                {
+                    textField_telefono.setText(oldValue);
+                }
             }
             else
             {
@@ -345,6 +449,10 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
             if(!newValue.equals(""))
             {
                 if(newValue.charAt(newValue.length()-1)<48 ||  newValue.charAt(newValue.length()-1)>57)
+                {
+                    textField_telefono.setText(oldValue);
+                }
+                else if(newValue.charAt(newValue.length()-1)!=114 && newValue.charAt(newValue.length()-1)!=82)//significa que no es R o r
                 {
                     textField_telefono.setText(oldValue);
                 }
@@ -377,7 +485,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         this.textField_telefono.getValidators().add(new StringLengthValidator("Únicamente 10 dígitos permitidos.", 10));
         this.textField_nombre.getValidators().add(new StringLengthValidator("Únicamente 100 carácteres permitidos.", 100));
         //this.textField_unidad.getValidators().add(new StringLengthValidator("Únicamente 11 dígitos permitidos.", 11));
-
+        
         
     }
 

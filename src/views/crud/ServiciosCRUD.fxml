@@ -17,8 +17,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="669.0" prefWidth="900.0" styleClass="ventana" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.crud.ServiciosCRUDController">
+<AnchorPane id="AnchorPane" fx:id="root" onKeyPressed="#focusable_OnKey" prefHeight="669.0" prefWidth="900.0" styleClass="ventana" stylesheets="@../../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.crud.ServiciosCRUDController">
    <children>
+      <JFXTextField fx:id="textField_telefono_buscar" focusColor="#5ab444" labelFloat="true" layoutX="208.0" layoutY="67.0" onKeyPressed="#txtBuscarTelefono_OnKeyPressed" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="25.0" prefWidth="182.0" promptText="Buscar teléfono">
+         <font>
+            <Font name="Gadugi" size="13.0" />
+         </font>
+      </JFXTextField>
       <AnchorPane fx:id="ap_tittleBar" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" onMouseReleased="#tittleBar_Released" prefHeight="34.0" prefWidth="1081.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fx:id="iv_iconBar" fitHeight="24.0" fitWidth="27.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
@@ -41,30 +46,25 @@
             </Label>
          </children>
       </AnchorPane>
-      <JFXTextField fx:id="textField_telefono_buscar" focusColor="#5ab444" labelFloat="true" layoutX="208.0" layoutY="67.0" onKeyPressed="#txtBuscarTelefono_OnKeyPressed" prefHeight="25.0" prefWidth="182.0" promptText="Buscar teléfono">
-         <font>
-            <Font name="Gadugi" size="13.0" />
-         </font>
-      </JFXTextField>
       <Label fx:id="lbl_tittle" layoutX="8.0" layoutY="41.0" styleClass="titulo-CRUD-windows" text="Servicios" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="41.0" />
       <Label layoutX="14.0" layoutY="114.0" styleClass="tittle-seccion-CRUD" text="Datos personales" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="100.0" />
       <Separator layoutX="232.0" layoutY="132.0" prefHeight="3.0" prefWidth="274.0" />
-      <JFXTextField fx:id="textField_telefono" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Teléfono">
+      <JFXTextField fx:id="textField_telefono" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="169.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="25.0" prefWidth="182.0" promptText="Teléfono">
          <font>
             <Font name="Gadugi" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="textField_nombre" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="169.0" prefHeight="25.0" prefWidth="182.0" promptText="Nombre" />
+      <JFXTextField fx:id="textField_nombre" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="169.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="25.0" prefWidth="182.0" promptText="Nombre" />
       <Label layoutX="146.0" layoutY="225.0" styleClass="tittle-seccion-CRUD" text="Dirección" AnchorPane.leftAnchor="14.0" />
       <Separator layoutX="152.0" layoutY="245.0" prefHeight="3.0" prefWidth="353.0" />
-      <JFXTextField fx:id="textField_calle" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Calle" />
-      <JFXTextField fx:id="textField_colonia" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="276.0" prefHeight="25.0" prefWidth="182.0" promptText="Colonia" />
-      <JFXTextField fx:id="textField_num_ext" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Exterior" />
-      <JFXTextField fx:id="textField_numInt" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="340.0" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
+      <JFXTextField fx:id="textField_calle" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="276.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="25.0" prefWidth="182.0" promptText="Calle" />
+      <JFXTextField fx:id="textField_colonia" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="276.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="25.0" prefWidth="182.0" promptText="Colonia" />
+      <JFXTextField fx:id="textField_num_ext" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="340.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="25.0" prefWidth="182.0" promptText="Numero Exterior" />
+      <JFXTextField fx:id="textField_numInt" focusColor="#5ab444" labelFloat="true" layoutX="262.0" layoutY="340.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="25.0" prefWidth="182.0" promptText="Numero Interior" />
       <Label layoutX="158.0" layoutY="402.0" styleClass="tittle-seccion-CRUD" text="Servicio" AnchorPane.leftAnchor="14.0" />
       <Separator layoutX="129.0" layoutY="421.0" prefHeight="3.0" prefWidth="371.0" />
-      <JFXTextField fx:id="textField_notas" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="484.0" prefHeight="31.0" prefWidth="404.0" promptText="Notas" />
-      <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="569.0" prefHeight="31.0" prefWidth="404.0" promptText="Observaciones" />
+      <JFXTextField fx:id="textField_notas" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="484.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="31.0" prefWidth="404.0" promptText="Notas" />
+      <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="42.0" layoutY="569.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="31.0" prefWidth="404.0" promptText="Observaciones" />
       <Label layoutX="421.0" layoutY="648.0" text="VicJSoft © 2019" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="10.0" />

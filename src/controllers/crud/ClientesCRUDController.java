@@ -179,37 +179,30 @@ public class ClientesCRUDController implements Initializable, IValidateCRUD{
         if(textField_telefono.isFocused())
         {
             focus=0;
-            System.out.println(focus);
         }
         else if(textField_nombre.isFocused())
         {
             focus=1;
-            System.out.println(focus);
         }
         else if(textField_calle.isFocused())
         {
             focus=2;
-            System.out.println(focus);
         }
         else if(textField_colonia.isFocused())
         {
             focus=3;
-            System.out.println(focus);
         }
         else if(textField_numExt.isFocused())
         {
             focus=4;
-            System.out.println(focus);
         }
         else if(textField_numInt.isFocused())
         {
             focus=5;
-            System.out.println(focus);
         }
         else if(textField_observ.isFocused())
         {
             focus=-1;
-            System.out.println(focus);
         }
 
     }

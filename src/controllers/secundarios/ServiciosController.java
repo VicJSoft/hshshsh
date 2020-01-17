@@ -310,8 +310,14 @@ public class ServiciosController implements Initializable {
                 @Override
                 public void registroEditNuevo(Object registro) {
                     
-                    Integer idUnidad = (Integer) registro; 
+                    String informacion[] = registro.toString().split(":");
+                    Integer idUnidad = Integer.parseInt(informacion[0]);
+                    String nota= informacion[1];
+                    String observaciones= informacion[2];
                     servicioSeleccionado.setIdUnidad(idUnidad);
+                    servicioSeleccionado.setNotas(nota);
+                    servicioSeleccionado.setObservaciones(observaciones);
+                  
                     if(conexionEscrituraServicios.asignarUnidad(servicioSeleccionado)){
                         
                        
@@ -335,8 +341,13 @@ public class ServiciosController implements Initializable {
                                     @Override
                                     public void registroEditNuevo(Object registro) {
 
-                                        Integer idUnidad = (Integer) registro; 
+                                        String informacion[] = registro.toString().split(":");
+                                        Integer idUnidad = Integer.parseInt(informacion[0]);
+                                        String nota= informacion[1];
+                                        String observaciones= informacion[2];
                                         servicioSeleccionado.setIdUnidad(idUnidad);
+                                        servicioSeleccionado.setNotas(nota);
+                                        servicioSeleccionado.setObservaciones(observaciones);
                                         if(conexionEscrituraServicios.asignarUnidad(servicioSeleccionado)){
                                             table_servicios.refresh();
                                         }

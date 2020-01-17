@@ -19,7 +19,7 @@
             <TreeTableColumn fx:id="column_telefono" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" text="Teléfono" />
             <TreeTableColumn fx:id="column_direccion" maxWidth="1000.0" minWidth="250.0" prefWidth="277.0" text="Dirección" />
             <TreeTableColumn fx:id="column_obsevaciones" maxWidth="1000.0" minWidth="248.0" prefWidth="248.0" text="Observaciones" />
-            <TreeTableColumn fx:id="column_nacimiento" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" sortable="false" text="Fecha de nacimiento" />
+            <TreeTableColumn fx:id="column_nacimiento" maxWidth="180.0" minWidth="135.0" prefWidth="135.0" sortable="false" text="Fecha de nacimiento" />
          </columns>
          <columnResizePolicy>
             <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

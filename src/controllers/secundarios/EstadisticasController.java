@@ -316,7 +316,7 @@ public class EstadisticasController implements Initializable {
         ObservableList<XYChart.Series<String, Integer>> lineChartData = FXCollections.observableArrayList();
         // Iniciamos el objeto series
         series = new LineChart.Series<>();
-        series.setName("My portfolio");
+        series.setName("Cantidad del por mes");
         
         series.getData().add(new XYChart.Data("Jan", 0));  
         series.getData().add(new XYChart.Data("Feb", 0));

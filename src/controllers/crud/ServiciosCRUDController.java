@@ -303,47 +303,38 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         if(textField_telefono_buscar.isFocused())
         {
             focus=0;
-            System.out.println(focus);
         }
         else if(textField_telefono.isFocused())
         {
             focus=1;
-            System.out.println(focus);
         }
         else if(textField_nombre.isFocused())
         {
             focus=2;
-            System.out.println(focus);
         }
         else if(textField_calle.isFocused())
         {
             focus=3;
-            System.out.println(focus);
         }
         else if(textField_colonia.isFocused())
         {
             focus=4;
-            System.out.println(focus);
         }
         else if(textField_num_ext.isFocused())
         {
             focus=5;
-            System.out.println(focus);
         }
         else if(textField_numInt.isFocused())
         {
             focus=6;
-            System.out.println(focus);
         }
         else if(textField_notas.isFocused())
         {
             focus=7;
-            System.out.println(focus);
         }
         else if(textField_observaciones.isFocused())
         {
             focus=-1;
-            System.out.println(focus);
         }
 
     }
@@ -430,13 +421,13 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         this.textField_telefono.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if(!newValue.equals(""))
             {
-                if(newValue.charAt(newValue.length()-1)<48 ||  newValue.charAt(newValue.length()-1)>57)
+                if(newValue.charAt(newValue.length()-1)<48 )
                 {
                     textField_telefono.setText(oldValue);
                 }
-                else if(newValue.charAt(newValue.length()-1)!=114 && newValue.charAt(newValue.length()-1)!=82)//significa que no es R o r
+                else if( newValue.charAt(newValue.length()-1)>57)//significa que no es R o r
                 {
-                    textField_telefono.setText(oldValue);
+                   textField_telefono.setText(oldValue);
                 }
             }
             else
@@ -452,10 +443,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                 {
                     textField_telefono.setText(oldValue);
                 }
-                else if(newValue.charAt(newValue.length()-1)!=114 && newValue.charAt(newValue.length()-1)!=82)//significa que no es R o r
-                {
-                    textField_telefono.setText(oldValue);
-                }
+               
             }
             else
             {
@@ -680,15 +668,15 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     }
     private Servicio getVentanaServicio(){
         Servicio servicio = new Servicio(
-                0/*no nescesario*/, this.textField_telefono.getText(), this.textField_nombre.getText(),
-                this.textField_calle.getText(), this.textField_colonia.getText(), this.textField_num_ext.getText(), this.textField_numInt.getText(), 
-                this.textField_observaciones.getText(), this.textField_notas.getText(),
+                0/*no nescesario*/, this.textField_telefono.getText().toUpperCase(), this.textField_nombre.getText().toUpperCase(),
+                this.textField_calle.getText().toUpperCase(), this.textField_colonia.getText().toUpperCase(), this.textField_num_ext.getText().toUpperCase(), this.textField_numInt.getText().toUpperCase(), 
+                this.textField_observaciones.getText().toUpperCase(), this.textField_notas.getText().toUpperCase(),
                 
                // this.cb_unidad.getSelectionModel().isEmpty()?null:
                 //Integer.parseInt(this.cb_unidad.getValue().toString().split("")[0]),
                 null,
                 /*id empleado*/ Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(),
-                true, this.txt_destino.getText(), this.datePicker_dia.getValue(), timePicker_horaServicio.getValue(),
+                true, this.txt_destino.getText().toUpperCase(), this.datePicker_dia.getValue(), timePicker_horaServicio.getValue(),
                 this.rb_diario.isSelected(), diasSeleccionadosCadena(), this.rb_programado.isSelected(),null/*Siempre manda null ya que este campo, solo será modificado cuando lo cancelen.*/
         );
                 

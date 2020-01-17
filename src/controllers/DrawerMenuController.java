@@ -120,11 +120,11 @@ public class DrawerMenuController implements Initializable {
     private void identificarTipoUsuario() {
 
         //admin
-        if(Statics.EMPLEADO_SESION_ACTUAL.getTipo_empleado().equals(Statics.tipo_empledo.get(0)))
+        if(Statics.EMPLEADO_SESION_ACTUAL.getTipo_empleado().equalsIgnoreCase(Statics.tipo_empledo.get(0)))
         {
             
         }//modulador
-        else if(Statics.EMPLEADO_SESION_ACTUAL.getTipo_empleado().equals(Statics.tipo_empledo.get(1))){
+        else if(Statics.EMPLEADO_SESION_ACTUAL.getTipo_empleado().equalsIgnoreCase(Statics.tipo_empledo.get(1))){
             this.btnEmpleados.disableProperty().set(true);
             this.btnTaxis.disableProperty().set(true);
             this.btnTaxistas.disableProperty().set(true);

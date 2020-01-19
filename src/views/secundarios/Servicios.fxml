@@ -30,10 +30,12 @@
             <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </JFXTreeTableView>
-      <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="21.0" prefHeight="75.0" prefWidth="695.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="356.0" AnchorPane.topAnchor="12.0">
+      <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="21.0" prefHeight="75.0" prefWidth="730.0" spacing="10.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="323.0" AnchorPane.topAnchor="12.0">
          <children>
-            <JFXTextField fx:id="textField_buscar" prefHeight="25.0" prefWidth="399.0" promptText="Buscar servicios" styleClass="text-field-busqueda" />
+            <JFXTextField fx:id="textField_buscar" prefHeight="25.0" prefWidth="237.0" promptText="Buscar servicios" styleClass="text-field-busqueda" />
             <JFXToggleButton fx:id="togglebtn_ServiciosPendientes" onAction="#tooglebtn_OnAction" text="Servicios pendientes" toggleColor="#5ab444" toggleLineColor="#9cdd89" />
+            <JFXTextField fx:id="txt_servicioRapido" onKeyReleased="#txtServicioRapido_OnKeyReleased" prefHeight="25.0" prefWidth="140.0" promptText="Servicio rápido" styleClass="text-field-busqueda" />
+            <JFXTextField fx:id="txt_cantidad" onKeyReleased="#txtCantidad_OnKeyReleased" prefHeight="25.0" prefWidth="86.0" promptText="Cantidad" styleClass="text-field-busqueda" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="674.0" layoutY="12.0" prefHeight="75.0" prefWidth="299.0" spacing="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="12.0">

@@ -6,7 +6,9 @@
 package controllers.secundarios;
 
 import Interfaces.IAbrir_Edicion_Registros;
+import Models.Clientes;
 import Models.Servicio;
+import Resources.statics.Statics;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -18,7 +20,9 @@ import controllers.Ventana_AsignarUnidadController;
 import controllers.crud.ServiciosCRUDController;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -28,6 +32,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tooltip;
@@ -35,6 +40,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
@@ -42,6 +49,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.Servicios;
+import services.sql.read.ConexionLecturaClientes;
 import services.sql.read.ConexionLecturaServicios;
 import services.sql.write.ConexionEscrituraServicios;
 
@@ -95,11 +103,18 @@ public class ServiciosController implements Initializable {
     private JFXButton btnDelete_Servicios;
 
     @FXML
-    private JFXButton btnEdit_Servicios;
+    private JFXButton btnEdit_Servicios;    
+    
+    @FXML
+    private JFXTextField txt_servicioRapido;
+
+    @FXML
+    private JFXTextField txt_cantidad;
     
 
     private final ConexionLecturaServicios conexionLecturaServicios = new ConexionLecturaServicios();
     private final ConexionEscrituraServicios conexionEscrituraServicios = new ConexionEscrituraServicios();
+    private final ConexionLecturaClientes conexionLecturaClientes = new ConexionLecturaClientes();
     
     
     private  ObservableList<Models.Servicio> listaServicios = FXCollections.observableArrayList();
@@ -253,6 +268,16 @@ public class ServiciosController implements Initializable {
            }
 
         });
+        textField_buscar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                if(event.getCode()==KeyCode.ESCAPE){
+                    textField_buscar.clear();
+                }
+
+            }
+        });
     }
 
     @FXML
@@ -271,7 +296,7 @@ public class ServiciosController implements Initializable {
                 
                 
                 if(conexionEscrituraServicios.insertServicio(servicio)){
-                    listaServicios.add(0,servicio);
+                    listaServicios.add(servicio);
                     table_servicios.scrollTo(table_servicios.getCurrentItemsCount()==0?0:table_servicios.getCurrentItemsCount()-1);
                   // table_servicios.sort();
                    /* listaServicios.sort(new Comparator<Servicio>() {
@@ -404,4 +429,58 @@ public class ServiciosController implements Initializable {
           //  setCancelledGraphic();
         }
     }
+    
+    
+    //ServiciosCRUDController crud = new ServiciosCRUDController();
+    @FXML
+    public void txtServicioRapido_OnKeyReleased(KeyEvent event){
+       /* if(event.getCode() == KeyCode.ENTER){
+            ServiciosCRUDController.buscadorTelefono busquedaTelefono;
+            busquedaTelefono = crud.new buscadorTelefono(this.txt_servicioRapido.getText());
+            //pasarlo al thread, pero alv, así no se hace xd.//no se sabria si el trhead haria todo correcto. sería mejor usarlo en el thread main
+            Clientes cliente = busquedaTelefono.getCliente();
+           // ServiciosCRUDController.buscadorTelefono bTelefono =
+             //       new ServiciosCRUDController.buscadorTelefono("asd");
+            
+        }*/
+       
+       if(event.getCode() == KeyCode.ENTER && !this.txt_servicioRapido.getText().equals("")){
+          txt_cantidad.requestFocus();
+       }
+
+        
+    }
+    
+    @FXML
+    public void txtCantidad_OnKeyReleased(KeyEvent event){
+        Clientes clientByNumber = conexionLecturaClientes.getClientByNumber(this.txt_servicioRapido.getText());
+        if(clientByNumber==null){
+            //si no trae ningun cliente, significa que no existe, entonces ->
+            btnAdd_Servicios.fire();
+        }else if(event.getCode()==KeyCode.ENTER){
+             int cantidad = 1;
+            try{
+                cantidad= Integer.parseInt(this.txt_cantidad.getText());
+            }catch(NumberFormatException ex){
+                System.out.println("Error, ingresar numeros.");
+                //si la conversion falla, por defecto será = 1;
+                cantidad = 1;
+            }
+                // cantidad = cantidad==0?1:cantidad;//xd, para setearlo en 1, por si metieron 0
+                for (int j=0;j<cantidad;j++){
+                    Servicio servicio = 
+                            new Servicio(0, clientByNumber.getTelefono(), clientByNumber.getNombre(), 
+                                    clientByNumber.getCalle(), clientByNumber.getColonia(), clientByNumber.getNumeroExt(), clientByNumber.getNumeroInt(),
+                                    clientByNumber.getObservaciones(), ""/*notas*/,null/*idUnidad siempre pendientes*/, Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(), 
+                                    true/*1, para que lo marque pendiente*/, ""/*destino*/,
+                                    LocalDate.now(), LocalTime.now(), false/*diario*/, "0000000", false, null/*fechafin*/);
+                    if(conexionEscrituraServicios.insertServicio(servicio))
+                        listaServicios.add(servicio);
+                }
+                txt_cantidad.clear();
+                txt_servicioRapido.clear();
+                txt_servicioRapido.requestFocus();
+        }
+    }
+    
  }

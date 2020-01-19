@@ -7,6 +7,7 @@ package controllers.crud;
 
 import Interfaces.IAbrir_Edicion_Registros;
 import Interfaces.IValidateCRUD;
+import Models.Clientes;
 import Models.Servicio;
 import Resources.statics.Statics;
 import com.jfoenix.controls.JFXCheckBox;
@@ -93,6 +94,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
 
     @FXML
     private JFXTextField textField_notas;
+
 
    // @FXML
     //private JFXTextField textField_unidad;
@@ -208,11 +210,25 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
     */
     Thread hiloBusqueda ;
   
-    @FXML
     private void txtBuscarTelefono_OnKeyPressed(KeyEvent event) {
-        hiloBusqueda =  new Thread(new buscadorTelefono());
+
+       // hiloBusqueda =  new Thread(new buscadorTelefono(textField_telefono_buscar.getText()));
+       // hiloBusqueda.start();
+    } 
+    /*
+    Hacia la busqueda al detectar press, y si hay un press, aun no habia nada de texto,
+    por lo tanto encontraba basura de la consultanterior con el realesed, se asegura que halla almenor algo escrito, 
+    antes de hacer la consulta. Aunque lo optimo sería un textChange event.
+    */
+    @FXML
+    private void txtBuscarTelefono_OnKeyRealased(KeyEvent event) {
+
+        hiloBusqueda =  new Thread(new buscadorTelefono(textField_telefono_buscar.getText()));
         hiloBusqueda.start();
     } 
+    
+    
+    
     @FXML
     private void btnCerrar_Click(ActionEvent event) {
         Servicios.cerrarVentana(event);
@@ -683,45 +699,80 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         return servicio;
     }
     
+    private void setClienteVentana(Clientes cliente){
+        
+        if(cliente==null){
+            textField_telefono.clear();
+            textField_nombre.clear();
+            textField_calle.clear();
+            textField_colonia.clear();
+            textField_numInt.clear();
+            textField_num_ext.clear();
+        }else{
+            textField_telefono.setText(cliente.getTelefono());
+            textField_nombre.setText(cliente.getNombre());
+            textField_calle.setText(cliente.getCalle());
+            textField_colonia.setText(cliente.getColonia());
+            textField_numInt.setText(cliente.getNumeroInt());
+            textField_num_ext.setText(cliente.getNumeroExt());
+        }
+        
+    }
+    
     public void setIAbrirEdicionRegistros(IAbrir_Edicion_Registros iAbrir_Edicion_Registros){
         this.iAbrir_Edicion_Registros = iAbrir_Edicion_Registros;
     }
     
         
-class buscadorTelefono implements Runnable
+public class buscadorTelefono implements Runnable
 {
+    private Clientes cliente;
+    private String telefonoABuscar;
    
-    Connection connection;
     
-    public buscadorTelefono()
-    {
-        connection = Statics.getConnections();
+    public buscadorTelefono(String telefonoABuscar)
+    {        
+        this.telefonoABuscar = telefonoABuscar;
     }
     @Override
     public void run() {
         
          //while(true){
-            
-            String sql = "select * from clientes where telefono like '"+textField_telefono_buscar.getText()+"%'";
+            //si telefonoABuscar es empty, la consulta se ejecuta con el numero anterior, debe ser por el signo modulo,
+            String sql = "select * from clientes where telefono like '"+this.telefonoABuscar+"%'";
             String  nombre="", telefono="", calle ="",colonia ="",numEx ="",numInt="";
             
             try
             {
                 
-                PreparedStatement ps= connection.prepareStatement(sql);
+                PreparedStatement ps= Statics.getConnections().prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
-                 while(rs.next())
-                    {
-                        telefono=rs.getString(1);
-                        nombre=rs.getString(2);
-                        calle=rs.getString(3);
-                        colonia=rs.getString(4);
-                        numEx=rs.getString(5);
-                        numInt=rs.getString(6);
-                   }
+                if(this.telefonoABuscar.equals("")||this.telefonoABuscar ==null)
+                {
+
+                    this.cliente = null;
+                }
+                else if(rs.next())
+                {
+                //si telefonoABuscar es empty, la consulta se ejecuta con el numero anterior, debe ser por el signo modulo,
+
+                    telefono=rs.getString(1);
+                    nombre=rs.getString(2);
+                    calle=rs.getString(3);
+                    colonia=rs.getString(4);
+                    numEx=rs.getString(5);
+                    numInt=rs.getString(6);
+                    this.cliente = new Clientes(telefono, nombre, calle, colonia, numEx, numInt, rs.getString(6));
+                }else{
+                    this.cliente = null;//explicito
+                }
                  //sino hago esto cambio de variable  tengo que hacer las primeras variables string despues de la query finales y no puedo porque tiene
                  //que estar cambiando en el while del rs.next();
-                String nombre1=nombre, telefono1=telefono, calle1 =calle,colonia1 =colonia,numEx1 =numEx,numInt1=numInt;
+               /* String nombre1=nombre,
+                        telefono1=telefono,
+                        calle1 =calle,
+                        colonia1 =colonia,
+                        numEx1 =numEx,numInt1=numInt;
                 Platform.runLater(() -> {
                     textField_telefono.setText(telefono1);
                     textField_nombre.setText(nombre1);
@@ -729,19 +780,17 @@ class buscadorTelefono implements Runnable
                     textField_colonia.setText(colonia1);
                     textField_numInt.setText(numInt1);
                     textField_num_ext.setText(numEx1);
-                });
-                if(textField_telefono_buscar.getText().equals(""))
-                {
-                    Platform.runLater(() -> {
-                    textField_telefono.setText("");
-                    textField_nombre.setText("");
-                    textField_calle.setText("");
-                    textField_colonia.setText("");
-                    textField_numInt.setText("");
-                    textField_num_ext.setText("");
-                });
-                }
-                  
+                });*/
+               //el resultado ya viene en el if de arriba, esto ya no es nescesario.
+
+            //cuando la ventana halla siedo creada los controles son !=null, o sea, son insttanciados (se abre la ventana del crud
+                if(textField_telefono_buscar!=null){
+                    Platform.runLater(()->{
+                        //se setea el valor del cliente traido de la consulta
+                        //ya sea si no encontró registro o encontró algo.
+                        setClienteVentana(this.cliente);
+                    });
+                }  
                     
                   //  break;
             }
@@ -752,7 +801,11 @@ class buscadorTelefono implements Runnable
      //}
     }
     
+    public Clientes getCliente(){
+        return this.cliente;
+    }
 }
 
+ 
 
 }

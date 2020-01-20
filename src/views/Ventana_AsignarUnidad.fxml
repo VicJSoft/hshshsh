@@ -12,7 +12,10 @@
 
 <AnchorPane id="AnchorPane" onKeyPressed="#focusable_OnKey" prefHeight="322.0" prefWidth="392.0" styleClass="ventana" stylesheets="@../Resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ventana_AsignarUnidadController">
    <children>
-      <JFXComboBox fx:id="cb_unidad" focusColor="#5ab444" layoutX="25.0" layoutY="103.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="31.0" prefWidth="257.0" promptText="Unidad" />
+      <JFXComboBox fx:id="cb_unidad" editable="true" focusColor="#5ab444" layoutX="25.0" layoutY="103.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="31.0" prefWidth="257.0" promptText="Unidad" />
+      <JFXTextField fx:id="textField_notas" focusColor="#5ab444" labelFloat="true" layoutX="25.0" layoutY="157.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="31.0" prefWidth="337.0" promptText="Notas" />
+      <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="25.0" layoutY="210.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="31.0" prefWidth="337.0" promptText="Observaciones" />
+      <Button fx:id="btnAceptar" layoutX="309.0" layoutY="273.0" mnemonicParsing="false" onAction="#btnAceptar_OnAction" styleClass="boton-aceptar" text="Aceptar" />
       <AnchorPane fx:id="ap_tittleBar" layoutX="11.0" layoutY="14.0" onMouseDragged="#tittleBarr_Drag" onMousePressed="#tittleBar_Pressed" prefHeight="32.0" prefWidth="627.0" styleClass="tittle-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fx:id="iv_icon" fitHeight="24.0" fitWidth="27.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
@@ -40,8 +43,5 @@
             <Font name="Gadugi" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="btnAceptar" layoutX="309.0" layoutY="273.0" mnemonicParsing="false" onAction="#btnAceptar_OnAction" styleClass="boton-aceptar" text="Aceptar" />
-      <JFXTextField fx:id="textField_notas" focusColor="#5ab444" labelFloat="true" layoutX="25.0" layoutY="157.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="31.0" prefWidth="337.0" promptText="Notas" />
-      <JFXTextField fx:id="textField_observaciones" focusColor="#5ab444" labelFloat="true" layoutX="25.0" layoutY="210.0" onMouseClicked="#DetectFocusable_OnMouse" prefHeight="31.0" prefWidth="337.0" promptText="Observaciones" />
    </children>
 </AnchorPane>

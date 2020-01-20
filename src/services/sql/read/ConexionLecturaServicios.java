@@ -122,6 +122,8 @@ public class ConexionLecturaServicios
      
     private Servicio crearServicio(ResultSet rs) throws SQLException{
         rs.getDate(16);
+        Integer idUnidad = (Integer) rs.getObject(7);
+
        Servicio nuevoServicio = new Servicio(                                
                         rs.getInt(1),
                         rs.getString(2),
@@ -132,7 +134,8 @@ public class ConexionLecturaServicios
                         rs.getString(4),//direccion split
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7)==0?null:rs.getInt(7),
+                        // Este integer si es null, da un 0.
+                        idUnidad/*me casteaba a 0 alv, ya lo corregí*/,
                         rs.getInt(8),
                         rs.getBoolean(9),//activo
                         rs.getString(10),
@@ -145,7 +148,6 @@ public class ConexionLecturaServicios
                  );
        //formatea la direccion, adecuadamente al model
        nuevoServicio.setDireccion(rs.getString(4));
-
        return nuevoServicio;
     }
 }

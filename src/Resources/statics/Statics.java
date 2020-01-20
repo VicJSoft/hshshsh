@@ -34,6 +34,9 @@ public class Statics
     public static int ID_EMPLEADO_SESION_ACTUAL;
     public static Empleados EMPLEADO_SESION_ACTUAL;
     
+    public static final String ROJO = "CB3234";
+    public static final String VERDE = "5AB444";
+    
     public static void setConnections(Connection connection)
     {
         Statics.connection=connection;

@@ -5,6 +5,7 @@
  */
 package Models;
 
+import Resources.statics.Statics;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
@@ -88,15 +89,27 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
     }
    
     private void calcularEstadoServicio(){
-        if(!programadow){//servicio regular
+        if(idUnidad==null){
+            cb_estado.indeterminateProperty().set(true);//
+            cb_estado.setTooltip(new Tooltip("Servicio pendiente de unidad."));
+        }else if(idUnidad == 0){
+            //si no es null, quedará seleccionado, con los if de arriba
+            //lo desactivaba casi siempre xd alv.            cb_estado.setTooltip(null);
+            cb_estado.checkedColorProperty().set(Paint.valueOf(Statics.ROJO));;
+            cb_estado.indeterminateProperty().set(true);
+      //     listaServicios.get(listaServicios.size()-1).cb_estado.indeterminateProperty().set(false);
+       // listaServicios.get(listaServicios.size()-1).cb_estado.selectedProperty().setValue(false);
+            cb_estado.setTooltip(new Tooltip("Servicio cancelado."));
+        }  
+        else if(!programadow){//servicio regular
             //si está pendiente, entonces no es marcado.
            //// cb_estado.selectedProperty().set(!servicioActivo); 
            if(!servicioActivo){//cuando ya se aplicó
-               cb_estado.selectedProperty().set(true);
+               cb_estado.selectedProperty().set(true);////
                cb_estado.setTooltip(new Tooltip("Servicio regular aplicado."));
                
            }else if(servicioActivo){//cuando está pendiente
-               cb_estado.selectedProperty().set(false);
+               cb_estado.selectedProperty().set(false);//
                 cb_estado.setTooltip(new Tooltip("Servicio regular no aplicado aún."));
 
            }
@@ -113,13 +126,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
 
            }                   
         }
-        if(idUnidad==null){
-            cb_estado.indeterminateProperty().set(true);
-            cb_estado.setTooltip(new Tooltip("Servicio pendiente de unidad."));
-        }else{
-            //si no es null, quedará seleccionado, con los if de arriba
-//lo desactivaba casi siempre xd alv.            cb_estado.setTooltip(null);
-        }  
+
 
         
     }

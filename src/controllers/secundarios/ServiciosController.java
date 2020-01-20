@@ -127,10 +127,11 @@ public class ServiciosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-       this.btnDelete_Servicios.setTooltip(new Tooltip("Cancelar servicio."));
-       this.btnEdit_Servicios.setTooltip(new Tooltip("Servicio aplicado."));
-       this.btnAdd_Servicios.setTooltip(new Tooltip("Nuevo servicio."));
-        
+       this.btnAdd_Servicios.setTooltip(new Tooltip("Nuevo servicio.(F1)"));
+       this.btnEdit_Servicios.setTooltip(new Tooltip("Servicio aplicado.(F2)"));
+       this.btnDelete_Servicios.setTooltip(new Tooltip("Cancelar servicio.(F3)"));
+       this.txt_servicioRapido.setTooltip(new Tooltip("Servicio rápido. (F4)"));
+       
        estado.setCellValueFactory(new TreeItemPropertyValueFactory<>("cb_estado"));
        fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("dateTime"));
        nombre.setCellValueFactory(new TreeItemPropertyValueFactory<>("nombre"));
@@ -218,12 +219,45 @@ public class ServiciosController implements Initializable {
                     
                 
             });
+ 
             
             return row;
         });   
      //   setCancelledGraphic();
+        table_servicios.setOnKeyReleased(new EventHandler<KeyEvent>() {
+              @Override
+              public void handle(KeyEvent event) {
+
+                    if(null!=  event.getCode())switch (event.getCode()) {
+                      case ENTER:
+                          //el boton de edicion está desactivado hasta que no se seleccione algo, por lo tanto, si este se llama con el boton disableado, no pasa nada.
+                          btnEdit_Servicios.fire();
+                          break;
+                      case F1:
+                          btnAdd_Servicios.fire();
+                          break;
+                      case F2:
+                          btnEdit_Servicios.fire();
+                          break;
+                      case F3:
+                          btnDelete_Servicios.fire();
+                          break;
+                          
+                      case F4:
+                          txt_servicioRapido.requestFocus();
+                          break;
+                      default:
+                          break;
+                  }
+
+              }
+        });
         table_servicios.scrollTo( table_servicios.getCurrentItemsCount()-1);
+        togglebtn_ServiciosPendientes.fire();
     }   
+ 
+    
+    
     /**
      * Marca los registros que su campo son "servicioActivo = false", 
      * Si el servicio es regular, se marca un punto verde,
@@ -323,10 +357,9 @@ public class ServiciosController implements Initializable {
 
     @FXML
     private void btnEdit_OnAction(ActionEvent event) {
-        //verde
         Servicio servicioSeleccionado = table_servicios.getSelectionModel().getSelectedItem().getValue();
-        //Cuando está pendiente y sin unidad
-        if(servicioSeleccionado.getIdUnidad()==null&&!servicioSeleccionado.isProgramadow()){
+        //Cuando está sin unidad (pendiente)(siempre)(si el idUnidad es 0 (cancelado) no entra 7u7)
+        if(servicioSeleccionado.getIdUnidad()==null){
             
             Ventana_AsignarUnidadController ventanaAsignarUnidad = 
                     (Ventana_AsignarUnidadController) Servicios.crearVentana("/views/Ventana_AsignarUnidad.fxml", (Stage) this.btnAdd_Servicios.getScene().getWindow(), getClass());
@@ -334,67 +367,60 @@ public class ServiciosController implements Initializable {
             ventanaAsignarUnidad.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
                 @Override
                 public void registroEditNuevo(Object registro) {
-                    
-                    String informacion[] = registro.toString().split(":");
+                    String registroS = (String) registro;
+                    String informacion[] = registroS.split(":");
                     Integer idUnidad = Integer.parseInt(informacion[0]);
-                    String nota= informacion[1];
-                    String observaciones= informacion[2];
                     servicioSeleccionado.setIdUnidad(idUnidad);
-                    servicioSeleccionado.setNotas(nota);
-                    servicioSeleccionado.setObservaciones(observaciones);
+                        try{
+                            String nota= informacion[1];
+                            servicioSeleccionado.setNotas(nota);
+                        }catch(IndexOutOfBoundsException ex){
+                            System.out.println("No hubo uno de esos index.");
+                        }
+                        try{
+                            String observaciones= informacion[2];
+                            servicioSeleccionado.setObservaciones(observaciones);                                                                                        
+                        }catch(IndexOutOfBoundsException ex){
+
+                            System.out.println("No hubo uno de esos index.");
+
+                        }
                   
                     if(conexionEscrituraServicios.asignarUnidad(servicioSeleccionado)){
                         
-                       
-                        cancelarServicio(VERDE);
-                        table_servicios.refresh();
+                       table_servicios.refresh();
                     }
 
 
                 }
             });
-        }else
-        //cuando solo está pendiente, para ser marcado como enviado
-        if(!servicioSeleccionado.isProgramadow()){
-            cancelarServicio(VERDE);
-            table_servicios.refresh();
-            
-        }else if(servicioSeleccionado.isProgramadow()&&servicioSeleccionado.getIdUnidad()==null){//solo aplica para cuando no se le asignó unidad al servicio programado
-            Ventana_AsignarUnidadController ventanaAsignarUnidad = 
-                    (Ventana_AsignarUnidadController) Servicios.crearVentana("/views/Ventana_AsignarUnidad.fxml", (Stage) this.btnAdd_Servicios.getScene().getWindow(), getClass());
-                    ventanaAsignarUnidad.setIAbrirEdicionRegistro(new IAbrir_Edicion_Registros() {
-                                    @Override
-                                    public void registroEditNuevo(Object registro) {
-
-                                        String informacion[] = registro.toString().split(":");
-                                        Integer idUnidad = Integer.parseInt(informacion[0]);
-                                        String nota= informacion[1];
-                                        String observaciones= informacion[2];
-                                        servicioSeleccionado.setIdUnidad(idUnidad);
-                                        servicioSeleccionado.setNotas(nota);
-                                        servicioSeleccionado.setObservaciones(observaciones);
-                                        if(conexionEscrituraServicios.asignarUnidad(servicioSeleccionado)){
-                                            table_servicios.refresh();
-                                        }
-
-
-                                    }
-                                });
         }
+        
      }
 
     private void cancelarServicio(String color){
         Servicio servicioSeleccionado = table_servicios.getSelectionModel().getSelectedItem().getValue();
-        int idSelected = servicioSeleccionado.getId_servicio();
-       // table_servicios.getSelectionModel().getSelectedItem().setGraphic(new Rectangle(110, 80, Paint.valueOf("CB3234")));
-       
-         if(conexionEscrituraServicios.cancelarServicio(idSelected)){
-            for(Servicio servicioActual : listaServicios){
-                if(servicioActual.getId_servicio() == idSelected){
-                    servicioActual.setServicioActivo(false);                 
-                }
-            }
+        
+        Servicio servicioSeleccionadoLista = listaServicios.get( listaServicios.indexOf(servicioSeleccionado) );
+        
+        int idSelected = servicioSeleccionadoLista.getId_servicio();
+        if(!servicioSeleccionadoLista.isServicioActivo() && servicioSeleccionadoLista.getIdUnidad()!=null)
+            if(servicioSeleccionadoLista.getIdUnidad()>0)
+                return;//cuando el servicio está incactivo y tiene unidad asignado, sigifica que ya fue aplicado.
+        if(!servicioSeleccionadoLista.isProgramadow()){//cancelar servicio regular
+            servicioSeleccionadoLista.setIdUnidad(0);//asigna unidad 0 de cancelado, y se hace la consulta para cambiar la unidad.
+            if(conexionEscrituraServicios.asignarUnidad(servicioSeleccionadoLista)) {
+                //servicioSeleccionado.setServicioActivo(false);  
+               // servicioSeleccionadoLista.cb_estado.fire();
+
+            }           
+        } 
+        //todos los marca como inactivos;
+        if(conexionEscrituraServicios.cancelarServicio(idSelected)){
+            servicioSeleccionadoLista.setServicioActivo(false);                 
         }
+        table_servicios.refresh();
+         
     }
     TreeItem<Models.Servicio> rootPendientes = new RecursiveTreeItem<>(listaServiciosPendientes, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
 

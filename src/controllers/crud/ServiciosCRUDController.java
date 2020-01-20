@@ -311,6 +311,8 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                    focus=-1;
                    break;   
            }
+        }else if(event.getCode()==KeyCode.ESCAPE){
+            btn_cerrar.fire();
         }
     }
       @FXML

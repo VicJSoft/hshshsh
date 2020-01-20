@@ -114,7 +114,8 @@ public class ConexionLecturaClientes
     public Clientes getClientByNumber(String numero){
         Clientes clienteObtenido = null;
         try {
-            query="SELECT * FROM clientes WHERE telefono = " + numero;
+            //Sin las comillas, al meter R, daba error, era por la concatenacion directa .
+            query="SELECT * FROM clientes WHERE telefono = '" + numero+"'";
             
             ps = connection.prepareStatement(query);
             rs=ps.executeQuery();

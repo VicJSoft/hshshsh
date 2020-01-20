@@ -202,7 +202,7 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
        this.setFieldValidations();
        rb_personalizado.fire();
        rb_Regular.fire();
-       
+       this.textField_telefono.setText("452");
     }    
 
     /*
@@ -438,7 +438,10 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         //solo numeros al campo changeListener
         this.textField_telefono.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if(!newValue.equals(""))
-            {
+            {   
+                if(newValue.charAt(0)=='r'||newValue.charAt(0)=='R'){
+                   textField_telefono.setText(newValue);
+                }else
                 if(newValue.charAt(newValue.length()-1)<48 )
                 {
                     textField_telefono.setText(oldValue);
@@ -447,6 +450,8 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                 {
                    textField_telefono.setText(oldValue);
                 }
+               
+                
             }
             else
             {

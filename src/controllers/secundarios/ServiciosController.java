@@ -331,6 +331,7 @@ public class ServiciosController implements Initializable {
                 
                 if(conexionEscrituraServicios.insertServicio(servicio)){
                     listaServicios.add(servicio);
+                    listaServiciosPendientes.add(servicio);
                     table_servicios.scrollTo(table_servicios.getCurrentItemsCount()==0?0:table_servicios.getCurrentItemsCount()-1);
                   // table_servicios.sort();
                    /* listaServicios.sort(new Comparator<Servicio>() {

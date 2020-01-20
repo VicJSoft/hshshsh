@@ -306,10 +306,15 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
                    textField_notas.requestFocus();
                    focus++;
                    break;
-                default:
+                case 7:
                    textField_observaciones.requestFocus();
-                   focus=-1;
-                   break;   
+                   focus++;
+                   break;  
+                default:
+                    btn_aceptar.fire();
+                    focus=-1;
+                    break;
+                             
            }
         }else if(event.getCode()==KeyCode.ESCAPE){
             btn_cerrar.fire();
@@ -352,7 +357,12 @@ public class ServiciosCRUDController implements Initializable,IValidateCRUD {
         }
         else if(textField_observaciones.isFocused())
         {
-            focus=-1;
+           focus=8;
+        }
+        else
+        {
+           btn_aceptar.fire();
+           focus=-1;
         }
 
     }

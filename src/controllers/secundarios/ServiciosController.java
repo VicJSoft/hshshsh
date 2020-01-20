@@ -499,7 +499,7 @@ public class ServiciosController implements Initializable {
                                     clientByNumber.getCalle(), clientByNumber.getColonia(), clientByNumber.getNumeroExt(), clientByNumber.getNumeroInt(),
                                     clientByNumber.getObservaciones(), ""/*notas*/,null/*idUnidad siempre pendientes*/, Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(), 
                                     true/*1, para que lo marque pendiente*/, ""/*destino*/,
-                                    LocalDate.now(), LocalTime.now(), false/*diario*/, "0000000", false, null/*fechafin*/);
+                                    LocalDate.now(), LocalTime.now(), false/*diario*/, null, false, null/*fechafin*/);
                     if(conexionEscrituraServicios.insertServicio(servicio))
                         listaServicios.add(servicio);
                 }

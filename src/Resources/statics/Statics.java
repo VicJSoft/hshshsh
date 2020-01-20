@@ -49,6 +49,7 @@ public class Statics
     public static class textoValidaciones{
         
       public static String CAMPO_REQUERIDO  = "Este campo es requerido.";
+      
   
     }
     

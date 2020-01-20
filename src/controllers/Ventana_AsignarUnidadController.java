@@ -9,6 +9,7 @@ import Interfaces.IAbrir_Edicion_Registros;
 import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.base.IFXLabelFloatControl;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
@@ -110,6 +111,10 @@ public class Ventana_AsignarUnidadController implements Initializable {
             //retornar valor seleccionado.
             if(cb_unidad.getSelectionModel().getSelectedItem().split(" ")[0].equals("0"))
                 return;
+            else if(cb_unidad.getItems().indexOf(cb_unidad.getEditor().getText()) == -1)
+                return;//si el elemento no existe (o sea, escribio algo que no).
+            
+            
             Integer idUnidad = new Integer(cb_unidad.getSelectionModel().getSelectedItem().split(" ")[0]);
             String nota= textField_notas.getText().toUpperCase().trim();
             String observaciones = textField_observaciones.getText().toLowerCase().trim();
@@ -130,49 +135,35 @@ public class Ventana_AsignarUnidadController implements Initializable {
     //cambiar este desmadre, por un switch , en key realeased, comparando
     //if eventKeyCode == enter->switch(event.getSource) case txtcombobox{notas.request...}, case txtnotas(observaciones.request)
     @FXML
-    void focusable_OnKey(KeyEvent event) 
+    void root_OnKeyReleased(KeyEvent event) 
     {
-         if(event.getCode() == KeyCode.ENTER)
-         {  
-           switch(focus)
-           {
-               case -1:
-                   cb_unidad.requestFocus();
-                   focus++;
-                   break;
-               case 0:
-                   textField_notas.requestFocus();
-                   focus++;
-                   break;
-                default:
-                   //textField_observaciones.requestFocus();
-                   //focus=-1;
+        if(event.getCode()==KeyCode.ENTER){
+            
+            /*switch((IFXLabelFloatControl)event.getSource()){
+                case cb_unidad:
+                    textField_observaciones.requestFocus();
+                break;
+                case textField_notas: 
+                    textField_observaciones.requestFocus();
+                break;
+                case textField_observaciones:
                     btnAceptar.fire();
-                   break;
-                
-                
-           }
-        }else{
-             if(event.getCode()==KeyCode.ESCAPE){
-                 btn_cerrar.fire();
-             }
-         }
+                break;
+            }*/
+            if(event.getSource() == cb_unidad){
+                textField_notas.requestFocus();
+            }else if(event.getSource() == textField_notas){
+                textField_observaciones.requestFocus();
+            }else if(event.getSource() == textField_observaciones){
+                btnAceptar.fire();
+            }
+            
+        } 
+        else if(event.getCode()==KeyCode.ESCAPE){
+            btn_cerrar.fire();
+        }
+         
     }
-      @FXML
-    void DetectFocusable_OnMouse(MouseEvent event) 
-    {
-        if(cb_unidad.isFocused())
-        {
-            focus=0;
-        }
-        else if(textField_notas.isFocused())
-        {
-            focus=1;
-        }
-        else if(textField_observaciones.isFocused())
-        {
-            focus=-1;
-        }
-    }
+
     
 }

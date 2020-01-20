@@ -358,6 +358,9 @@ public class ServiciosController implements Initializable {
     @FXML
     private void btnEdit_OnAction(ActionEvent event) {
         Servicio servicioSeleccionado = table_servicios.getSelectionModel().getSelectedItem().getValue();
+        
+       // Servicio servicioSeleccionadoLista = listaServicios.get( listaServicios.indexOf(servicioSeleccionado) );
+
         //Cuando está sin unidad (pendiente)(siempre)(si el idUnidad es 0 (cancelado) no entra 7u7)
         if(servicioSeleccionado.getIdUnidad()==null){
             
@@ -371,6 +374,7 @@ public class ServiciosController implements Initializable {
                     String informacion[] = registroS.split(":");
                     Integer idUnidad = Integer.parseInt(informacion[0]);
                     servicioSeleccionado.setIdUnidad(idUnidad);
+                    servicioSeleccionado.setServicioActivo(false);
                         try{
                             String nota= informacion[1];
                             servicioSeleccionado.setNotas(nota);

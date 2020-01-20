@@ -389,6 +389,9 @@ public class ServiciosController implements Initializable {
                     if(conexionEscrituraServicios.asignarUnidad(servicioSeleccionado)){
                         
                        table_servicios.refresh();
+                       if(togglebtn_ServiciosPendientes.isSelected()){
+                            listaServiciosPendientes.remove(servicioSeleccionado);
+                        }
                     }
 
 
@@ -419,7 +422,10 @@ public class ServiciosController implements Initializable {
         if(conexionEscrituraServicios.cancelarServicio(idSelected)){
             servicioSeleccionadoLista.setServicioActivo(false);                 
         }
-        table_servicios.refresh();
+        if(togglebtn_ServiciosPendientes.isSelected()){
+          listaServiciosPendientes.remove(servicioSeleccionado);
+        }
+        //table_servicios.refresh();
          
     }
     TreeItem<Models.Servicio> rootPendientes = new RecursiveTreeItem<>(listaServiciosPendientes, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
@@ -500,8 +506,10 @@ public class ServiciosController implements Initializable {
                                     clientByNumber.getObservaciones(), ""/*notas*/,null/*idUnidad siempre pendientes*/, Statics.EMPLEADO_SESION_ACTUAL.getId_empleado(), 
                                     true/*1, para que lo marque pendiente*/, ""/*destino*/,
                                     LocalDate.now(), LocalTime.now(), false/*diario*/, null, false, null/*fechafin*/);
-                    if(conexionEscrituraServicios.insertServicio(servicio))
+                    if(conexionEscrituraServicios.insertServicio(servicio)){
                         listaServicios.add(servicio);
+                        listaServiciosPendientes.add(servicio);
+                    }
                 }
                 txt_cantidad.clear();
                 txt_servicioRapido.clear();

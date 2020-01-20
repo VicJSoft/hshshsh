@@ -127,6 +127,8 @@ public class Ventana_AsignarUnidadController implements Initializable {
     public void setIAbrirEdicionRegistro(IAbrir_Edicion_Registros abrir_Edicion_Registros){
         this.abrir_Edicion_Registros = abrir_Edicion_Registros;
     }
+    //cambiar este desmadre, por un switch , en key realeased, comparando
+    //if eventKeyCode == enter->switch(event.getSource) case txtcombobox{notas.request...}, case txtnotas(observaciones.request)
     @FXML
     void focusable_OnKey(KeyEvent event) 
     {
@@ -143,8 +145,9 @@ public class Ventana_AsignarUnidadController implements Initializable {
                    focus++;
                    break;
                 default:
-                   textField_observaciones.requestFocus();
-                   focus=-1;
+                   //textField_observaciones.requestFocus();
+                   //focus=-1;
+                    btnAceptar.fire();
                    break;
                 
                 
@@ -168,7 +171,7 @@ public class Ventana_AsignarUnidadController implements Initializable {
         }
         else if(textField_observaciones.isFocused())
         {
-            btnAceptar.fire();
+            focus=-1;
         }
     }
     

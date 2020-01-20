@@ -119,14 +119,14 @@ public class ConexionEscrituraServicios {
     }
     
     /**
-     * Cuando se asigna la unidad, el servicio se marca como aplicado.
+     * Cuando se asigna la unidad, el servicio se marca como aplicado.? checar
      * @param servicioAAsignar
      * @return 
      */
     public boolean asignarUnidad(Servicio servicioAAsignar){
         try {
             key = false;
-            query = "UPDATE servicios SET idUnidad = ?,notas = ?,observaciones = ? WHERE servicios.IdServicio = ?";
+            query = "UPDATE servicios SET idUnidad = ?,notas = ?,observaciones = ?,servicioActivo = 0 WHERE servicios.IdServicio = ?";
             
             ps = connection.prepareStatement(query);
             

@@ -235,6 +235,9 @@ que además es independiente a la de sin foco*/
     /*.table-row-cell, .tree-table-row-cell {
         -fx-cell-size: 30px; 
     }*/
+    .table-row-cell, .tree-table-row-cell:hover {
+        -fx-cell-size: 100px; 
+    }
     .table-row-cell, .tree-table-row-cell:selected {
         -fx-cell-size: 100px; 
     }

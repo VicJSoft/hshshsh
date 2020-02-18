@@ -75,7 +75,7 @@ public class ConexionLecturaTaxistas
     public ObservableList<Taxistas> getTaxistas()
     {
         ObservableList<Taxistas> taxistas =  FXCollections.observableArrayList();
-        query="select * from taxistas";
+        query="select * from taxistas where id_taxista>0";
        // String direccion;
         try
         {

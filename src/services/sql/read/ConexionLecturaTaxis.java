@@ -37,7 +37,7 @@ public class ConexionLecturaTaxis
     
     public ObservableList<Taxis> getTaxis()
     {
-        query="select id_unidad, marca, modelo,placa,taxistas.nombre,taxistas.id_taxista from unidades, taxistas where unidades.id_taxista=taxistas.id_taxista order by id_unidad asc";
+        query="select id_unidad, marca, modelo,placa,taxistas.nombre,taxistas.id_taxista from unidades, taxistas where unidades.id_taxista=taxistas.id_taxista and taxistas.id_taxista>0 order by id_unidad asc";
 //la misma columna, no hay registro duplicados.        
 //select id_unidad, marca, modelo,placa,nombre,taxistas.id_taxista, unidades.id_taxista from unidades, taxistas where unidades.id_taxista=taxistas.id_taxista
         ObservableList<Taxis> listaTaxis = FXCollections.observableArrayList();

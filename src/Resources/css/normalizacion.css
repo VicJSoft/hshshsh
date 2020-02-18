@@ -232,8 +232,11 @@ que además es independiente a la de sin foco*/
         -fx-background-color:-label-color-1;
     }  
 
-    .table-row-cell, .tree-table-row-cell {
+    /*.table-row-cell, .tree-table-row-cell {
         -fx-cell-size: 30px; 
+    }*/
+    .table-row-cell, .tree-table-row-cell:selected {
+        -fx-cell-size: 100px; 
     }
 
     
@@ -244,6 +247,7 @@ que además es independiente a la de sin foco*/
     /*Vic xd*/
     .tree-table-cell {
         -fx-alignment: center ;
+        -fx-wrap-text: true;
     }
     .tree-table-cell:hover{
 

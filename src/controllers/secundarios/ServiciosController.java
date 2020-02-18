@@ -134,6 +134,8 @@ public class ServiciosController implements Initializable {
        
        estado.setCellValueFactory(new TreeItemPropertyValueFactory<>("cb_estado"));
        fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("dateTime"));
+       
+       
        nombre.setCellValueFactory(new TreeItemPropertyValueFactory<>("nombre"));
        telefono.setCellValueFactory(new TreeItemPropertyValueFactory<>("telefono"));
        direccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("direccion"));
@@ -142,36 +144,44 @@ public class ServiciosController implements Initializable {
        unidad.setCellValueFactory(new TreeItemPropertyValueFactory<>("idUnidad"));
        destino.setCellValueFactory(new TreeItemPropertyValueFactory<>("destino"));
        diasSeleccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("diasSeleccion"));
- 
-     /*  fecha.setComparator(new Comparator<LocalDateTime>() {
-           @Override
-           public int compare(LocalDateTime o1, LocalDateTime o2) {
-
-               if(o1.isBefore(o2))
-                   return -1;
-               if(o1.isEqual(o2))
-                   return 0;
-               else
-                   return 1;//mayor
-           }
-       });*/
- /*        Callback<Servicio,Observable[]> cb = new Callback<Servicio, Observable[]>() {
-           @Override
-           public Observable[] call(Servicio param) {
-
-               return new Observable[]{
-                   param.getDateTime(),//tiene que ser un property, se tendria que agregar al model
-               };
-               
-           }
-       };
-   */      
-        /**/
        listaServicios= conexionLecturaServicios.getServicios();
         root = new RecursiveTreeItem<>(listaServicios, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
        table_servicios.setRoot(root);
        table_servicios.setShowRoot(false);
-//       table_servicios.setSortMode(TreeSortMode.ONLY_FIRST_LEVEL);
+       // crear
+       table_servicios.setSortPolicy(new Callback<TreeTableView<Models.Servicio>, Boolean>()
+       {
+           @Override
+           public Boolean call(TreeTableView<Models.Servicio> param) 
+           {
+             Comparator<TreeItem<Models.Servicio>> comparator = new Comparator<TreeItem<Models.Servicio>>() 
+             {
+                 @Override
+                 public int compare(TreeItem<Models.Servicio> o1, TreeItem<Models.Servicio> o2)
+                 {
+                     Models.Servicio s1 = o1.getValue();
+                     Models.Servicio s2 = o2.getValue();
+                     
+                     if(s1.getFecha_inicio().isBefore(s2.getFecha_inicio()))// la fecha 1 es menor que la fecha 2
+                     {
+                         return 1;
+                     }
+                     else if(s1.getFecha_inicio().isEqual(s2.getFecha_inicio()))//iguales
+                     {
+                         return 0;
+                     }
+                     else// fecha 1 es mayor que fecha 2
+                     {
+                         return -1;
+                     }
+                             
+                    
+                 }
+             };
+               return true;
+           }
+        //To change body of generated lambdas, choose Tools | Templates.
+       });
        cargarListaFiltrada();//filtra la lista que se carga por defecto y el filtro lo tranfiera al observable secundario
        
        
@@ -330,6 +340,7 @@ public class ServiciosController implements Initializable {
                 
                 
                 if(conexionEscrituraServicios.insertServicio(servicio)){
+                    
                     listaServicios.add(servicio);
                     listaServiciosPendientes.add(servicio);
                     table_servicios.scrollTo(table_servicios.getCurrentItemsCount()==0?0:table_servicios.getCurrentItemsCount()-1);

@@ -16,7 +16,7 @@
       <JFXTreeTableView fx:id="table_servicios" layoutX="28.0" layoutY="98.0" prefHeight="367.0" prefWidth="1012.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="98.0">
          <columns>
             <TreeTableColumn fx:id="estado" maxWidth="80.0" minWidth="50.0" prefWidth="50.0" text="Estado" />
-            <TreeTableColumn fx:id="fecha" maxWidth="300.0" minWidth="147.0" prefWidth="147.0" text="Fecha" />
+            <TreeTableColumn fx:id="fecha" maxWidth="300.0" minWidth="147.0" prefWidth="147.0" sortType="DESCENDING" text="Fecha" />
             <TreeTableColumn fx:id="nombre" maxWidth="300.0" minWidth="163.0" prefWidth="179.0" sortable="false" text="Nombre" />
             <TreeTableColumn fx:id="telefono" maxWidth="140.0" minWidth="130.0" prefWidth="130.0" sortType="DESCENDING" text="Teléfono" />
             <TreeTableColumn fx:id="direccion" maxWidth="500.0" minWidth="215.0" prefWidth="215.0" sortable="false" text="Dirección" />

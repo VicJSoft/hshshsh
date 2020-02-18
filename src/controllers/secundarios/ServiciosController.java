@@ -16,7 +16,6 @@ import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
-import com.jfoenix.controls.cells.editors.base.JFXTreeTableCell;
 import controllers.Ventana_AsignarUnidadController;
 import controllers.crud.ServiciosCRUDController;
 import java.io.IOException;
@@ -36,10 +35,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.control.Control;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyCode;
@@ -48,6 +50,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.Servicios;
@@ -76,7 +79,7 @@ public class ServiciosController implements Initializable {
     private TreeTableColumn<Models.Servicio, String> telefono;
 
     @FXML
-    private TreeTableColumn<Models.Servicio, String> direccion;
+    private TreeTableColumn<Models.Servicio, Models.Servicio> direccion;
 
     @FXML
     private TreeTableColumn<Models.Servicio, String> observaciones;
@@ -137,20 +140,54 @@ public class ServiciosController implements Initializable {
        estado.setCellValueFactory(new TreeItemPropertyValueFactory<>("cb_estado"));
        fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("dateTime"));
        fecha.setCellFactory(new Callback<TreeTableColumn<Servicio, LocalDateTime>, TreeTableCell<Servicio, LocalDateTime>>() {
-           @Override
-           public TreeTableCell<Servicio, LocalDateTime> call(TreeTableColumn<Servicio, LocalDateTime> param) 
-           {
-               
-               return null ;
-               
-           }
-       });
+            @Override
+            public TreeTableCell<Servicio, LocalDateTime> call(TreeTableColumn<Servicio, LocalDateTime> param) {
+                
+                TreeTableCell<Servicio,LocalDateTime> cell = new TreeTableCell<Servicio,LocalDateTime>(){
+                    @Override
+                    protected void updateItem(LocalDateTime item, boolean empty) {
+                        super.updateItem(item, empty); 
+                        
+                        if(item!=null){
+                            setText(item.toString().replace("T", "\n"));
+                        }else{
+                            setText(null);
+                        }
+                    }                    
+                };               
+                return cell;
+            }
+        });
        
        
        nombre.setCellValueFactory(new TreeItemPropertyValueFactory<>("nombre"));
        telefono.setCellValueFactory(new TreeItemPropertyValueFactory<>("telefono"));
-       direccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("direccion"));
+       //direccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("direccion"));
+       direccion.setCellValueFactory(new TreeItemPropertyValueFactory<>("ServicioTHIS"));
+       direccion.setCellFactory(new Callback<TreeTableColumn<Servicio, Servicio>, TreeTableCell<Servicio, Servicio>>() {
+           @Override
+           public TreeTableCell<Servicio, Servicio> call(TreeTableColumn<Servicio, Servicio> param) {
+                TreeTableCell<Servicio,Servicio> cell = new TreeTableCell<Servicio,Servicio>(){
+                    @Override
+                    protected void updateItem(Servicio item, boolean empty) {
+                        super.updateItem(item, empty); 
+                        
+                        if(item!=null){
+                            setText(item.getCalle()+" Ext: "+item.getNumeroExt()+" Int: "+item.getNumeroInt() +"\n"+item.getColonia());
+                        }else{
+                            setText(null);
+                        }
+                    }                    
+                };               
+                return cell;
+               
+           }
+       });
+ 
        observaciones.setCellValueFactory(new TreeItemPropertyValueFactory<>("observaciones"));
+       
+ 
+       
        notas.setCellValueFactory(new TreeItemPropertyValueFactory<>("notas"));
        unidad.setCellValueFactory(new TreeItemPropertyValueFactory<>("idUnidad"));
        destino.setCellValueFactory(new TreeItemPropertyValueFactory<>("destino"));

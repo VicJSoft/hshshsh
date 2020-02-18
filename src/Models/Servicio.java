@@ -376,6 +376,8 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
         this.cb_estado = cb_estado;
     }
     
-    
+    public Servicio getServicioTHIS(){
+        return this;
+    }
     
 }

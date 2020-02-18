@@ -16,6 +16,7 @@ import com.jfoenix.controls.JFXToggleButton;
 import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.cells.editors.base.JFXTreeTableCell;
 import controllers.Ventana_AsignarUnidadController;
 import controllers.crud.ServiciosCRUDController;
 import java.io.IOException;
@@ -37,6 +38,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
@@ -134,6 +136,15 @@ public class ServiciosController implements Initializable {
        
        estado.setCellValueFactory(new TreeItemPropertyValueFactory<>("cb_estado"));
        fecha.setCellValueFactory(new TreeItemPropertyValueFactory<>("dateTime"));
+       fecha.setCellFactory(new Callback<TreeTableColumn<Servicio, LocalDateTime>, TreeTableCell<Servicio, LocalDateTime>>() {
+           @Override
+           public TreeTableCell<Servicio, LocalDateTime> call(TreeTableColumn<Servicio, LocalDateTime> param) 
+           {
+               
+               return null ;
+               
+           }
+       });
        
        
        nombre.setCellValueFactory(new TreeItemPropertyValueFactory<>("nombre"));

@@ -299,7 +299,7 @@ public class Servicio extends RecursiveTreeObject<Servicio> {
      * @return 
      */
     public String getFechaHora(){
-        return getFecha_inicio() + " " + getHora();
+        return getFecha_inicio() + "\n" + getHora();
     }
 
     public Date getFecha_fin() {

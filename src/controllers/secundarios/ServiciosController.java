@@ -179,6 +179,7 @@ public class ServiciosController implements Initializable {
      */
     private void setCancelledGraphic(){
         int i = 0;
+        
         for(TreeItem<Servicio> treeItem : table_servicios.getRoot().getChildren())
             if(!treeItem.getValue().isServicioActivo()){
                 treeItem.setGraphic(new Circle(5, Paint.valueOf(treeItem.getValue().isProgramadow()?ROJO:VERDE)));
